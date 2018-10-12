@@ -72,7 +72,6 @@ class App extends Component {
             {/* <h1 className="App-title">Recipe App</h1> */}
             <MainMenu />
           </header>
-          <p className="App-intro">{this.state.data}</p>
           <section className="App-body">
             <Switch>
               <Route exact path="/" component={ListRecipe} />
