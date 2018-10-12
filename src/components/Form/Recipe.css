@@ -1,0 +1,43 @@
+.Recipe-container {
+  margin: auto;
+  width: 75%;
+}
+
+.Recipe-field,
+.Ingredient-field {
+  margin: 20px 0;
+}
+
+.Ingredient-group {
+  display: block;
+  border: 1px solid #000;
+  border-radius: 4px;
+  padding: 10px;
+  margin: 20px 0;
+  background-color: #d6e6fc;
+}
+
+.Ingredient-fieldInline {
+  width: 40%;
+  display: inline-block;
+  margin: 0 10px 0 0;
+}
+
+.Ingredient-group input,
+.Ingredient-group textarea {
+  display: inline-block;
+}
+
+.Ingredient-removeBtn button {
+  background-color: #f9b6b6;
+}
+.Ingredient-addBtn button {
+  margin: auto 0;
+  background-color: #fcfaa1;
+}
+
+.Ingredient-removeBtn,
+.Ingredient-addBtn {
+  width: 100%;
+  text-align: center;
+}
