@@ -19,6 +19,51 @@ const MainMenu = () => {
 };
 
 class App extends Component {
+
+  /**
+   * App constructor.
+   *
+   * @public
+   */
+  constructor() {
+    super();
+    this.state = {
+      data: null
+    };
+  }
+  /**
+   * Proxy our requests.
+   *
+   * @public
+   */
+  componentDidMount() {
+    this.callBackendAPI()
+      .then(res => this.setState({ data: res.express }))
+      .catch(err => console.log(err));
+  }
+
+  /**
+   * Fetches our GET route from the Express server. 
+   *
+   * The route we are fetching matches the GET route from server.js
+   * @param {async}
+   * @public
+   */
+  callBackendAPI = async () => {
+    const response = await fetch('/express_backend');
+    const body = await response.json();
+
+    if (response.status !== 200) {
+      throw Error(body.message);
+    }
+    return body;
+  };
+
+  /**
+   * Render the component.
+   * 
+   * @public
+   */
   render() {
     return (
       <Router>
@@ -27,6 +72,7 @@ class App extends Component {
             {/* <h1 className="App-title">Recipe App</h1> */}
             <MainMenu />
           </header>
+          <p className="App-intro">{this.state.data}</p>
           <section className="App-body">
             <Switch>
               <Route exact path="/" component={ListRecipe} />

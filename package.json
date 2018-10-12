@@ -1,28 +1,23 @@
 {
-  "name": "recipes-app",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-scripts": "2.0.4"
-  },
+  "name": "recipe-app-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VinceJones/recipe-app.git"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
-  "devDependencies": {
-    "react-router-dom": "^4.4.0-beta.1"
+  "author": "Vince Jones-Muth",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VinceJones/recipe-app/issues"
+  },
+  "homepage": "https://github.com/VinceJones/recipe-app#readme",
+  "dependencies": {
+    "express": "^4.16.4"
   }
 }
