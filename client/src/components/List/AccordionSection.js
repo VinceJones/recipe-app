@@ -19,7 +19,6 @@ class AccordionSection extends React.Component {
   }
 
   onClick = () => {
-
     this.props.onClick(this.props.label);
   };
 
@@ -30,9 +29,9 @@ class AccordionSection extends React.Component {
     } = this;
 
     return (
-      <div className='Accordion-container'>
+      <div className="Accordion-container">
         <div
-          className='Accordion-details'
+          className="Accordion-details"
           onClick={onClick}
           style={{ cursor: 'pointer' }}
         >
@@ -43,9 +42,12 @@ class AccordionSection extends React.Component {
               {isOpen && <span>&#9660;</span>}
             </div>
           </h3>
-          <p>{description}</p>
+
           {isOpen && (
-            <div className='Accordion-inner'>{this.props.children}</div>
+            <div>
+              <p>{description}</p>
+              <div className="Accordion-inner">{this.props.children}</div>
+            </div>
           )}
         </div>
       </div>
