@@ -1,5 +1,7 @@
 import React from 'react';
 import StorageHandler from '../StorageHandler';
+import Accordion from './Accordion';
+import ListIngredient from './ListIngredient';
 
 const storageHandler = new StorageHandler('recipe');
 
@@ -9,28 +11,22 @@ export default class ListRecipe extends React.Component {
    *
    * @public
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       recipes: []
     };
-    this.getStoredData();
   }
 
   /**
-   * Get the stored recipes.
-   * 
+   * Get recipes and set them to state.
+   *
    * @public
    */
-  getStoredData = () => {
-    const storageData = storageHandler.getData();
-    console.log('stored data', storageData);
-
-    if (storageData && storageData.length > 0) {
-      //   this.setState({ recipes: storageData });
-      this.state.recipes = storageData;
-      console.log('this.state', this.state);
-    }
+  componentDidMount = () => {
+    storageHandler.getRecipes().then(res => {
+      this.setState({ recipes: res });
+    });
   };
 
   /**
@@ -42,22 +38,24 @@ export default class ListRecipe extends React.Component {
     return (
       <div className="ListRecipe-container">
         <h2>Recipes</h2>
+
         <ul>
-          {this.state.recipes.map((recipe, index) => (
-            <li key={index}>
-              <div>
-                {recipe.name}
-                {recipe.description ? ' - ' + recipe.description : ''}
-                <div>
-                  <ul>
-                    {recipe.ingredients.map((ingredient, index) => (
-                      <li key={index}>{ingredient.name}</li>
-                    ))}
-                  </ul>
-                </div>
+          <Accordion>
+            {this.state.recipes.map((recipe, index) => (
+              <div
+                key={index}
+                label={recipe.name}
+                description={recipe.description}
+              >
+                <ul>
+                  <h4>Ingredients</h4>
+                  {recipe.ingredients.map((ingredient, index) => (
+                    <ListIngredient key={index} ingredient={ingredient}/>
+                  ))}
+                </ul>
               </div>
-            </li>
-          ))}
+            ))}
+          </Accordion>
         </ul>
       </div>
     );

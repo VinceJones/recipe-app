@@ -1,6 +1,45 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul {
+  margin: 0;
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+  padding-inline-start: 0;
+  padding-inline-end: 0;
+  padding-block-start: 0;
+  padding-block-end: 0;
+}
+
+p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+ul,
+ol,
+li {
+  list-style: none;
+}
+
+html,
+body {
+  min-height: 600px;
+  height: auto !important;
+  height: 600px;
+}
+
 .App {
   text-align: center;
-  background-color: #F5F6F7;
+  background-color: #f5f6f7;
 }
 
 .App-header {
@@ -68,7 +107,6 @@ select {
   font-size: 12px;
   font-weight: 400;
   color: #7d7d7d;
-  /* background: 0 0; */
   background-color: #fff;
   box-sizing: border-box;
 }

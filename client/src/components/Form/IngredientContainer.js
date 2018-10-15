@@ -3,15 +3,6 @@ import Ingredient from './Ingredient';
 
 export default class IngredientContainer extends React.Component {
   /**
-   * IngredientContainer constructor.
-   *
-   * @public
-   */
-  constructor(props) {
-    super(props);
-  }
-
-  /**
    * Get the collection of values.
    */
   get valuesCollection() {

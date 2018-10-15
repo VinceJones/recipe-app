@@ -10,72 +10,42 @@ export default class StorageHandler {
    */
   constructor(storageKey) {
     this.storageKey = storageKey;
-    this.host = 'http://localhost:5000';
+    this.endpoints = {
+      host: 'http://localhost:5000',
+      postRecipes: '/recipes/post',
+      getRecipes: '/recipes/get'
+    };
+  }
+
+  /**
+   * Get headers to send a POST request.
+   *
+   * @public
+   */
+  get postHeaders() {
+    const headers = new Headers();
+    headers.append('Content-type', 'application/json');
+    headers.append('Accept', 'application/json');
+    return headers;
   }
 
   /**
    * Write the data to a storage.
    *
+   * @param {data}
    * @public
    */
-  writeData = data => {
-    // const json = this.prepareData(data);
+  postRecipe = data => {
     const json = JSON.stringify(data);
-    const endpoint = '/post-recipe';
+    const headers = this.postHeaders;
 
-    // const headers = new Headers();
-    // headers.append('Content-type', 'application/json');
-
-    // const options = {
-    //   method: 'POST',
-    //   headers,
-    //   body: json
-    // };
-
-    // const request = new Request(this.host + endpoint, options);
-    // console.log('request', request);
-    // const response = this.makeRequest(request).then(response => {
-    //   console.log('response', response.body);
-    // });
-
-    const response = fetch(this.host + endpoint, {
+    const options = {
       method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
+      headers,
       body: json
-    })
-      .then(response => response.json())
-      .then(
-        result => {
-          return result;
-        },
-        error => {
-          console.log('error', error);
-          return error;
-        }
-      );
+    };
 
-    console.log('response.body', response.body);
-
-    // localStorage.setItem(this.storageKey, json);
-  };
-
-  /**
-   * Make a request.
-   */
-  makeRequest = request => {
-    return fetch(request)
-      .then(res => res.json())
-      .then(
-        result => {
-          return result;
-        },
-        error => {
-          return error;
-        }
-      );
+    return this.makeRequest(this.endpoints.postRecipes, options);
   };
 
   /**
@@ -83,38 +53,29 @@ export default class StorageHandler {
    *
    * @public
    */
-  getData = () => {
-    const data = JSON.parse(localStorage.getItem(this.storageKey));
-    return data;
+  getRecipes = async () => {
+    return this.makeRequest(this.endpoints.getRecipes).then(responseJson => {
+      const responseData = JSON.parse(responseJson.data);
+      return responseData.data;
+    });
   };
 
   /**
-   * Prepare data for storage.
+   * Make a request.
    *
-   * @param {data}
+   * @param {endpoint}
+   * @param {options}
    * @public
    */
-  prepareData = data => {
-    let writeArray = [];
-    let currentData = this.getData();
-
-    // Prepare current data into write Array.
-    // If we only have one object in the current data
-    // then we need to stick it inside an array.
-    if (Object.prototype.toString.call(currentData) !== '[object Array]') {
-      if (currentData !== null) {
-        writeArray = writeArray.concat([currentData]);
-      }
-    } else {
-      writeArray = writeArray.concat(currentData);
-    }
-
-    // Add the new data to the existing data, again we
-    // need to stick it in an array so that we can merge
-    // it properly.
-    writeArray = writeArray.concat([data]);
-
-    // Prepare the array for storage.
-    return writeArray;
+  makeRequest = async (endpoint, options = {}) => {
+    return fetch(this.endpoints.host + endpoint, options)
+      .then(response => response.json())
+      .then(result => {
+        return result;
+      })
+      .catch(error => {
+        console.log('error', error);
+        return error;
+      });
   };
 }

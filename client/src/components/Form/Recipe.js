@@ -90,27 +90,7 @@ export default class Recipe extends React.Component {
    * @public
    */
   handleSubmit = event => {
-    storageHandler.writeData(this.state);
-    const { name, description, ingredients } = this.state;
-
-    let message =
-      'Name : ' + name + '\n' + 'Description : ' + description + '\n\n';
-
-    message += ingredients.map(
-      (ingredient, index) =>
-        'Ingredient ' +
-        index +
-        ' name : ' +
-        ingredient.name +
-        '\n' +
-        'Ingredient ' +
-        index +
-        ' description : ' +
-        ingredient.description +
-        '\n'
-    );
-
-    alert(message);
+    storageHandler.postRecipe(this.state);
     event.preventDefault();
     this.props.history.push('/');
   };

@@ -9,6 +9,10 @@ export default class RecipeConfig {
     get measurementTypes() {
         return [
             {
+                name: 'Each',
+                value: 'ea'
+            },
+            {
                 name: 'Teaspoon(s)',
                 value: 'tsp'
             },
