@@ -1,5 +1,16 @@
 # Recipes
 
+## Setup
+* Clone this [repo](https://github.com/VinceJones/recipe-app)
+* npm install at the root of the project to setup the server.
+  * `recipes-app> npm install`
+* Change directories into client/ and run npm install to install node modules for client application.
+  * `recipes-app/client> npm install`
+* In a terminal from root of project run 
+  * `recipes-app> node server.js`
+* In a terminal from the client folder run
+  * `recipes-app/client> npm run start`
+
 ## Parts to build
 * Create form to intake recipes
 * Edit form to edit recipes
