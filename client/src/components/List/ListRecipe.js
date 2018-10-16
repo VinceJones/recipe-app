@@ -31,6 +31,12 @@ export default class ListRecipe extends React.Component {
     });
   };
 
+  redirectToEdit = recipe => event => {
+    console.log("edit recipe click");
+    // event.preventDefault();
+    this.props.history.push('/', recipe);
+  }
+
   /**
    * Render the form.
    *
@@ -52,9 +58,12 @@ export default class ListRecipe extends React.Component {
                 <ul>
                   <h4>Ingredients</h4>
                   {recipe.ingredients.map((ingredient, index) => (
-                    <ListIngredient key={index} ingredient={ingredient}/>
+                    <ListIngredient key={index} ingredient={ingredient} />
                   ))}
                 </ul>
+                <div>
+                  <button type="button" onClick={this.redirectToEdit(recipe)}>Edit recipe</button>
+                </div>
               </div>
             ))}
           </Accordion>

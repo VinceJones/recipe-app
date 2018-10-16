@@ -62,7 +62,7 @@
     },
     {
       "name": "Pastrami",
-      "description": "Brine pastrami for 1 week, dry in cooler for 1 week, smoke at 250 degrees for approximately 5-6 hours until internal temp reaches 185 degrees for 1 hour.",
+      "description": "1.)Brine pastrami for 1 week.\n2.) dry in cooler for 1 week\n3.) smoke at 250 degrees for approximately 5-6 hours until internal temp reaches 185 degrees for 1 hour.",
       "ingredients": [
         {
           "name": "Brisket",
@@ -122,7 +122,7 @@
     },
     {
       "name": "Ham",
-      "description": "Brine ham for 1 week, dry in cooler for 1 week, smoke at 250 degrees for approximately 5-6 hours until internal temp reaches 145 degrees.",
+      "description": "1.) Brine ham for 1 week.\n2.) Dry in cooler for 1 week.\n3.) smoke at 250 degrees for approximately 5-6 hours until internal temp reaches 145 degrees.",
       "ingredients": [
         {
           "name": "Ham",
@@ -224,7 +224,7 @@
     },
     {
       "name": "Mushroom torte",
-      "description": "Line a mini pie tin with potato about 1/2 of the way up. Add mushrooms, add chevre, add fine herbs, roll out and cover pie tin with pie crust. Bake till done",
+      "description": "1.) Line a mini pie tin with potato about 1/2 of the way up.\n2.) Add mushrooms, add chevre, add fine herbs, roll out and cover pie tin with pie crust.\n4.) Bake till done",
       "ingredients": [
         {
           "name": "Pie Crust",
@@ -255,6 +255,27 @@
           "description": "Chervil, parsley, tarragon, chives",
           "amount": "1",
           "measurementType": "ea"
+        }
+      ]
+    },
+    {
+      "name": "Hollandaise",
+      "description": "1.) Start a pot of water on the stove.\n2.) Add egg yolks + 1 tsp of lemon juice to a bowl. \n3.) Whisk egg yolks over double boiler until they become lightly cooked and silky smooth. \n4.) Slowly put in cold cubes of whole butter and whisk over the double boiler to make an emulsion.\n5.) Season with cayenne, salt, and lemon juice to taste\n6.) Store in a warm environment in two containers with a lid.",
+      "ingredients": [
+        {
+          "name": "Butter",
+          "description": "Cold, Unsalted",
+          "amount": "1",
+          "measurementType": "lbs"
+        },
+        { "name": "Egg yok", "description": "", "amount": "8" },
+        { "name": "Cayenne pepper", "description": "", "amount": "pinch" },
+        { "name": "Salt", "description": "", "amount": "To taste" },
+        {
+          "name": "Lemon Juice",
+          "description": "",
+          "amount": "1.5",
+          "measurementType": "tbsp"
         }
       ]
     }

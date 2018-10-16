@@ -38,9 +38,6 @@ class Accordion extends Component {
 
     const isOpen = !!openSections[label];
 
-    console.log(this);
-    console.log(label);
-
     if (allowMultipleOpen) {
       this.setState({
         openSections: {
@@ -55,8 +52,6 @@ class Accordion extends Component {
         }
       });
     }
-
-    console.log(this);
   };
 
   render() {

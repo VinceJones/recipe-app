@@ -1,3 +1,10 @@
+html,
+body {
+  min-height: 600px;
+  height: auto !important;
+  background-color: #f5f6f7;
+}
+
 h1,
 h2,
 h3,
@@ -22,6 +29,7 @@ p {
   margin-block-end: 0;
   margin-inline-start: 0;
   margin-inline-end: 0;
+  white-space: pre-line;
 }
 
 ul,
@@ -33,34 +41,6 @@ li {
 label,
 button {
   font-weight: bold;
-}
-
-html,
-body {
-  min-height: 600px;
-  height: auto !important;
-  background-color: #f5f6f7;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 1vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-  padding: 20px;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-.App-body {
-  margin: 50px;
-  text-align: left;
 }
 
 button,
@@ -116,6 +96,28 @@ label {
   display: block;
   margin: 5px 0;
   color: #474747;
+}
+
+
+.App-header {
+  background-color: #282c34;
+  min-height: 1vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  padding: 20px;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.App-body {
+  margin: 50px;
+  text-align: left;
 }
 
 @media (max-width: 768px) {
