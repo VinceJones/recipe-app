@@ -33,11 +33,17 @@
 }
 .Ingredient-addBtn button {
   margin: auto 0;
-  background-color: #fcfaa1;
+  background-color: #f3be5d;
 }
 
 .Ingredient-removeBtn,
 .Ingredient-addBtn {
   width: 100%;
   text-align: center;
+}
+
+@media (max-width: 768px) {
+  .Recipe-container {
+    width: 100%;
+  }
 }

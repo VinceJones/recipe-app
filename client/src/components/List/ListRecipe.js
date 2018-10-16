@@ -3,6 +3,8 @@ import StorageHandler from '../StorageHandler';
 import Accordion from './Accordion';
 import ListIngredient from './ListIngredient';
 
+import './ListRecipe.css';
+
 const storageHandler = new StorageHandler('recipe');
 
 export default class ListRecipe extends React.Component {
@@ -37,10 +39,10 @@ export default class ListRecipe extends React.Component {
   render() {
     return (
       <div className="ListRecipe-container">
-        <h2>Recipes</h2>
+        <h2 className="ListRecipe-title">Recipes</h2>
 
         <ul>
-          <Accordion>
+          <Accordion allowMultipleOpen>
             {this.state.recipes.map((recipe, index) => (
               <div
                 key={index}

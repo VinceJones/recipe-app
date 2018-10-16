@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './Accordion.css';
-
 class AccordionSection extends React.Component {
   static propTypes = {
     children: PropTypes.instanceOf(Object).isRequired,
@@ -18,6 +16,23 @@ class AccordionSection extends React.Component {
     };
   }
 
+  /**
+   * Get arrow used for accordion section.
+   *
+   * @param {isOpen}
+   */
+  getArrowIcon(isOpen) {
+    if (isOpen) return <span>&#9660;</span>;
+
+    return <span>&#9650;</span>;
+  }
+
+  getContainerClass(isOpen) {
+    if (isOpen) return 'Accordion-container Accordion-selected';
+
+    return 'Accordion-container';
+  }
+
   onClick = () => {
     this.props.onClick(this.props.label);
   };
@@ -29,19 +44,14 @@ class AccordionSection extends React.Component {
     } = this;
 
     return (
-      <div className="Accordion-container">
-        <div
-          className="Accordion-details"
-          onClick={onClick}
-          style={{ cursor: 'pointer' }}
-        >
+      <div className={this.getContainerClass(isOpen)}>
+        <div className="Accordion-details" onClick={onClick}>
           <h3>
             {label}
-            <div style={{ float: 'right' }}>
-              {!isOpen && <span>&#9650;</span>}
-              {isOpen && <span>&#9660;</span>}
-            </div>
+            <div className="Accordion-icon">{this.getArrowIcon()}</div>
           </h3>
+
+          {isOpen && (<hr />)}
 
           {isOpen && (
             <div>

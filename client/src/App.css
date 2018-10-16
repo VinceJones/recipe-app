@@ -34,11 +34,6 @@ html,
 body {
   min-height: 600px;
   height: auto !important;
-  height: 600px;
-}
-
-.App {
-  text-align: center;
   background-color: #f5f6f7;
 }
 
@@ -115,4 +110,11 @@ label {
   display: block;
   margin: 5px 0;
   color: #474747;
+}
+
+@media (max-width: 768px) {
+  .App-body {
+    width: 90%;
+    margin: 15px;
+  }
 }
