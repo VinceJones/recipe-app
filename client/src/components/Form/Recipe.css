@@ -14,7 +14,7 @@
   border-radius: 4px;
   padding: 10px;
   margin: 20px 0;
-  background-color: #d6e6fc;
+  background-color: #8ab3c4;
 }
 
 .Ingredient-fieldInline {
@@ -29,11 +29,14 @@
 }
 
 .Ingredient-removeBtn button {
-  background-color: #f9b6b6;
+  background-color: #e56f3a;
+  color: #fff;
 }
 .Ingredient-addBtn button {
   margin: auto 0;
-  background-color: #f3be5d;
+  background-color: #5B7D8A;
+  color: #fff;
+  /* color: #455c66; */
 }
 
 .Ingredient-removeBtn,

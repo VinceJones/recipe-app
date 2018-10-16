@@ -30,6 +30,11 @@ li {
   list-style: none;
 }
 
+label,
+button {
+  font-weight: bold;
+}
+
 html,
 body {
   min-height: 600px;
@@ -60,7 +65,7 @@ body {
 
 button,
 input[type='submit'] {
-  min-width: 160px;
+  width: 160px;
   padding: 13px 20px 11px;
   font-size: 14px;
   border: 1px solid #474747;
@@ -75,7 +80,8 @@ input[type='submit'] {
 }
 
 input[type='submit'] {
-  background-color: #c2f9b6;
+  background-color: #3abde5;
+  color: #fff;
 }
 
 input,
