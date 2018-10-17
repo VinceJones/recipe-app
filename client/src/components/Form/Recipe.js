@@ -2,6 +2,11 @@ import React from 'react';
 import IngredientContainer from './IngredientContainer';
 import RecipeConfig from './RecipeConfig';
 import StorageHandler from '../StorageHandler';
+import Message from '../Message/Message';
+import {
+  MessageContext,
+  messagesContainer
+} from '../Message/messages-context';
 
 import './Recipe.css';
 
@@ -16,6 +21,7 @@ export default class Recipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      message: messagesContainer.message,
       name: '',
       description: '',
       ingredients: [
@@ -127,8 +133,11 @@ export default class Recipe extends React.Component {
    */
   render() {
     return (
-      <div className="Recipe-container">
-        <form onSubmit={this.handleSubmit}>
+      <div>
+        <MessageContext.Provider value={this.state.message}>
+          <Message message={this.state.message} />
+        </MessageContext.Provider>
+        <form className="Recipe-container" onSubmit={this.handleSubmit}>
           <div>
             <h2>Add a Recipe</h2>
           </div>

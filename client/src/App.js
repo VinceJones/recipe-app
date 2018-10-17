@@ -3,6 +3,10 @@ import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import Recipe from './components/Form/Recipe';
 import ListRecipe from './components/List/ListRecipe';
 import Message from './components/Message/Message';
+import {
+  MessageContext,
+  messagesContainer
+} from './components/Message/messages-context';
 
 import './App.css';
 
@@ -11,7 +15,7 @@ import './App.css';
  */
 const MainMenu = () => {
   return (
-    <div className='MainMenu-container'>
+    <div className="MainMenu-container">
       <Link to="/">
         <span>View Recipes</span>
       </Link>
@@ -37,8 +41,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      status: '',
-      message: ''
+      message: messagesContainer.message
     };
   }
 
@@ -53,21 +56,6 @@ class App extends Component {
     this.setState({ message: message, status: status });
   };
 
-  /**
-   * Get the Recipe Form.
-   *
-   * @param {Object} props
-   * @public
-   */
-  recipeForm = props => {
-    return (
-      <Recipe
-        setMessage={(status, message) => this.setMessage(status, message)}
-        {...props}
-      />
-    );
-  };
-
   render() {
     return (
       <Router>
@@ -75,13 +63,14 @@ class App extends Component {
           <header className="App-header">
             <MainMenu />
           </header>
-          <Message status={this.state.status} message={this.state.message} />
-          <section className="App-body">
-            <Switch>
-              <Route exact path="/" component={ListRecipe} />
-              <Route exact path="/create-recipe" component={this.recipeForm} />
-            </Switch>
-          </section>
+          <MessageContext.Provider value={this.state.message}>
+            <section className="App-body">
+              <Switch>
+                <Route exact path="/" component={ListRecipe} />
+                <Route exact path="/create-recipe" component={Recipe} />
+              </Switch>
+            </section>
+          </MessageContext.Provider>
         </div>
       </Router>
     );

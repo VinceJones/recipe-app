@@ -2,6 +2,8 @@ import React from 'react';
 import StorageHandler from '../StorageHandler';
 import Accordion from './Accordion';
 import ListIngredient from './ListIngredient';
+import Message from '../Message/Message';
+import { MessageContext, messagesContainer } from '../Message/messages-context';
 
 import './ListRecipe.css';
 import './Accordion.css';
@@ -17,7 +19,8 @@ export default class ListRecipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipes: []
+      recipes: [],
+      message: messagesContainer.message
     };
   }
 
@@ -39,10 +42,13 @@ export default class ListRecipe extends React.Component {
    */
   render() {
     return (
-      <div className="ListRecipe-container">
+      <div>
+        <MessageContext.Provider value={this.state.message}>
+          <Message message={this.state.message} />
+        </MessageContext.Provider>
         <h2 className="ListRecipe-title">Recipes</h2>
 
-        <ul>
+        <ul className="ListRecipe-container">
           <Accordion allowMultipleOpen>
             {this.state.recipes.map((recipe, index) => (
               <div

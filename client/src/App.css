@@ -149,13 +149,13 @@ label {
 }
 
 .App-body {
-  margin: 50px;
+  margin: 0 50px 50px 50px;
   text-align: left;
 }
 
 @media (max-width: 768px) {
   .App-body {
     width: 90%;
-    margin: 15px;
+    margin: 0 15px 15px 15px;
   }
 }

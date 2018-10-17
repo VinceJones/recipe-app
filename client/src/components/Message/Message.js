@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { MessageContext } from './messages-context';
 
 import './Message.css';
 
@@ -9,13 +10,14 @@ export default class Message extends Component {
   /**
    * Get the container class based on the status.
    *
+   * @param {string} status
    * @public
    */
-  getContainerClass = () => {
-    console.log(this.props.status);
+  getContainerClass = (status) => {
+    console.log(this);
     let containerClass = 'Message-container';
 
-    switch (this.props.status) {
+    switch (status) {
       case 'error':
         containerClass = containerClass.concat(' Message-error');
         console.log('error hit', containerClass);
@@ -39,9 +41,13 @@ export default class Message extends Component {
     return (
       <div>
         {message !== '' && (
-          <div className={this.getContainerClass()}>
-            <p className="Message-body">{this.props.message}</p>
-          </div>
+          <MessageContext.Consumer>
+            {message => (
+              <div className={this.getContainerClass(message.status)}>
+                <p className="Message-body">{message.text}</p>
+              </div>
+            )}
+          </MessageContext.Consumer>
         )}
       </div>
     );
