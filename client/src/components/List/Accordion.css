@@ -1,7 +1,6 @@
 .Accordion-container {
     width: 50%;
-    border: 2px solid #7d5e4f;
-    border-radius: 4px;
+    
     margin: 8px auto;
     padding: 5px;
   }
@@ -26,6 +25,8 @@
   
   .Accordion-selected {
     background-color: #fff;
+    border: 2px solid #000;
+    border-radius: 4px;
   }
   
   @media (max-width: 768px) {
