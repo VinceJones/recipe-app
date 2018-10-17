@@ -35,7 +35,7 @@ export default class StorageHandler {
    * @param {data}
    * @public
    */
-  postRecipe = data => {
+  postRecipe = async data => {
     const json = JSON.stringify(data);
     const headers = this.postHeaders;
 
@@ -45,7 +45,7 @@ export default class StorageHandler {
       body: json
     };
 
-    return this.makeRequest(this.endpoints.postRecipes, options);
+    return await this.makeRequest(this.endpoints.postRecipes, options);
   };
 
   /**

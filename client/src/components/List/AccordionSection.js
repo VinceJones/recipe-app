@@ -48,7 +48,7 @@ class AccordionSection extends React.Component {
         <div className="Accordion-details" onClick={onClick}>
           <h3>
             {label}
-            <div className="Accordion-icon">{this.getArrowIcon()}</div>
+            <div className="Accordion-icon">{this.getArrowIcon(isOpen)}</div>
           </h3>
 
           {isOpen && (<hr />)}

@@ -1,5 +1,5 @@
 import React from 'react';
-import ChildContainer from './IngredientContainer';
+import IngredientContainer from './IngredientContainer';
 import RecipeConfig from './RecipeConfig';
 import StorageHandler from '../StorageHandler';
 
@@ -11,11 +11,10 @@ const storageHandler = new StorageHandler('recipe');
 export default class Recipe extends React.Component {
   /**
    * Recipe constructor.
-   *
-   * @public
+   * @constructor
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       name: '',
       description: '',
@@ -35,7 +34,7 @@ export default class Recipe extends React.Component {
   /**
    * Handle top level field changes.
    *
-   * @param {event}
+   * @param {Object} event
    * @public
    */
   handleRecipeFieldChange = () => event => {
@@ -46,8 +45,8 @@ export default class Recipe extends React.Component {
   /**
    * Handle child field changes.
    *
-   * @param {field}
-   * @param {newValuesCollection}
+   * @param {string} field
+   * @param {Object} newValuesCollection
    * @public
    */
   handleChildFieldChange = field => newValuesCollection => {
@@ -72,7 +71,7 @@ export default class Recipe extends React.Component {
   /**
    * Remove an ingredient group.
    *
-   * @param {index}
+   * @param {number} index
    * @public
    */
   handleDeleteIngredientGroup = index => {
@@ -86,13 +85,39 @@ export default class Recipe extends React.Component {
   /**
    * Handle form submit.
    *
-   * @param {event}
+   * @async
+   * @param {Object} event
    * @public
    */
-  handleSubmit = event => {
-    storageHandler.postRecipe(this.state);
+  handleSubmit = async event => {
     event.preventDefault();
+    const saved = await storageHandler.postRecipe(this.state);
+    this.props.setMessage(
+      this.getMessageStatus(saved.data),
+      this.getSavedMessage(saved.data)
+    );
     this.props.history.push('/');
+  };
+
+  /**
+   * Get the message after recipe POST has completed.
+   *
+   * @param {Boolean} saved
+   * @public
+   *
+   */
+  getSavedMessage = saved => {
+    return saved ? 'Recipe has been saved.' : 'Recipe has not been saved.';
+  };
+
+  /**
+   * Get the message status after recipe POST has completed.
+   *
+   * @param {bool} saved
+   * @public
+   */
+  getMessageStatus = saved => {
+    return saved ? 'success' : 'error';
   };
 
   /**
@@ -127,7 +152,7 @@ export default class Recipe extends React.Component {
             />
           </div>
 
-          <ChildContainer
+          <IngredientContainer
             value={this.state.ingredients}
             onChange={this.handleChildFieldChange('ingredients')}
             requestDeleteGroup={index =>

@@ -2,9 +2,13 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import Recipe from './components/Form/Recipe';
 import ListRecipe from './components/List/ListRecipe';
+import Message from './components/Message/Message';
 
 import './App.css';
 
+/**
+ * MainMenu component.
+ */
 const MainMenu = () => {
   return (
     <div>
@@ -18,64 +22,64 @@ const MainMenu = () => {
   );
 };
 
-class App extends Component {
+// const RecipeForm = (props) => {
+//   return (
+//     <Recipe setMessage={message => this.setMessage(message)} {...props}/>
+//   )
+// }
 
+class App extends Component {
   /**
-   * App constructor.
+   * App contructor.
    *
    * @public
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      data: null
+      status: '',
+      message: ''
     };
   }
-  /**
-   * Proxy our requests.
-   *
-   * @public
-   */
-  componentDidMount() {
-    this.callBackendAPI()
-      .then(res => this.setState({ data: res.express }))
-      .catch(err => console.log(err));
-  }
 
   /**
-   * Fetches our GET route from the Express server. 
+   * Set the message to be displayed.
    *
-   * The route we are fetching matches the GET route from server.js
-   * @param {async}
+   * @param {string} status
+   * @param {string} message
    * @public
    */
-  callBackendAPI = async () => {
-    const response = await fetch('/express_backend');
-    const body = await response.json();
-
-    if (response.status !== 200) {
-      throw Error(body.message);
-    }
-    return body;
+  setMessage = (status, message) => {
+    this.setState({ message: message, status: status });
   };
 
   /**
-   * Render the component.
-   * 
+   * Get the Recipe Form.
+   *
+   * @param {Object} props
    * @public
    */
+  recipeForm = props => {
+    return (
+      <Recipe
+        setMessage={(status, message) => this.setMessage(status, message)}
+        {...props}
+      />
+    );
+  };
+
   render() {
     return (
       <Router>
         <div className="App">
           <header className="App-header">
-            {/* <h1 className="App-title">Recipe App</h1> */}
             <MainMenu />
           </header>
+          <Message status={this.state.status} message={this.state.message} />
           <section className="App-body">
             <Switch>
               <Route exact path="/" component={ListRecipe} />
-              <Route exact path="/create-recipe" component={Recipe} />
+              <Route exact path="/create-recipe" component={this.recipeForm} />
             </Switch>
           </section>
         </div>

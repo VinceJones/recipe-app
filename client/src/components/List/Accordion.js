@@ -20,10 +20,8 @@ class Accordion extends Component {
 
     this.props.children.forEach((child, index) => {
       if (child.props.isOpen) {
-        this.props.children[index].innerClass = 'Accordion-details Accordion-selected'
         openSections[child.props.label] = true;
       } else {
-        this.props.children[index].innerClass = 'Accordion-details'
       }
     });
 
