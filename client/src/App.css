@@ -44,23 +44,57 @@ button {
 }
 
 button,
-input[type='submit'] {
+input[type='submit'],
+.btn {
   width: 160px;
   padding: 13px 20px 11px;
   font-size: 14px;
   border: 1px solid #474747;
   font: 400 12px/1 Antenna, Arial, 'Helvetica Neue', Helvetica, sans-serif;
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: 5px;
   transition: background-color 0.25s ease, color 0.25s ease;
   background: #fff;
   color: #474747;
-  font-weight: 900;
+  font-weight: bold;
   margin: 15px 10px;
 }
 
-input[type='submit'] {
+.btn_primary,
+.btn.btn_primary,
+.MainMenu-container a:hover {
   background-color: #3abde5;
+  border: 2px solid #257a94;
+  border-radius: 5px;
+  color: #000;
+}
+
+.MainMenu-container a {
+  padding: 13px 20px;
+  font-size: 14px;
+  color: #fff;
+  text-decoration: none;
+  border: 2px solid #282c34;
+}
+
+.MainMenu-container a:hover {
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+.btn.btn_secondary,
+.btn_secondary {
+  background-color: #e56f3a;
+  border: 2px solid #b1572d;
+  border-radius: 5px;
+  color: #fff;
+}
+
+.btn.btn_tertiary,
+.btn_tertiary {
+  background-color: #5b7d8a;
+  border: 2px solid #47616b;
+  border-radius: 5px;
   color: #fff;
 }
 
@@ -98,7 +132,6 @@ label {
   color: #474747;
 }
 
-
 .App-header {
   background-color: #282c34;
   min-height: 1vh;
@@ -106,7 +139,7 @@ label {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(2vmin);
   color: white;
   padding: 20px;
 }

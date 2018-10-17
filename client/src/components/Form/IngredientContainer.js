@@ -48,7 +48,7 @@ export default class IngredientContainer extends React.Component {
           />
         ))}
         <div className="Ingredient-addBtn">
-          <button type="button" onClick={this.props.requestAddGroup}>
+          <button className="btn btn_tertiary" type="button" onClick={this.props.requestAddGroup}>
             Add Ingredient
           </button>
         </div>

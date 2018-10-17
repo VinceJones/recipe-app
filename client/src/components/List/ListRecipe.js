@@ -4,6 +4,7 @@ import Accordion from './Accordion';
 import ListIngredient from './ListIngredient';
 
 import './ListRecipe.css';
+import './Accordion.css';
 
 const storageHandler = new StorageHandler('recipe');
 
@@ -56,7 +57,9 @@ export default class ListRecipe extends React.Component {
                   ))}
                 </ul>
                 <div>
-                  <a className="btn btn-primary" href="recipe/edit/">Edit recipe</a>
+                  <a className="ListRecipe-editBtn" href="recipe/edit/">
+                    <button>Edit recipe</button>
+                  </a>
                 </div>
               </div>
             ))}

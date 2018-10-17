@@ -3,41 +3,15 @@
   margin: 15px auto;
 }
 
-.Accordion-container {
-  width: 50%;
-  border: 2px solid #7d5e4f;
-  border-radius: 4px;
-  margin: 8px auto;
-  padding: 5px;
-}
-
-.Accordion-details {
-  padding: 8px;
-  cursor: pointer;
-  color: #664c40;
-}
-
-.Accordion-icon {
-  float: right;
-  color: #7d5e4f;
-}
-
-.Accordion-inner {
-  margin: 7px 0;
-  padding: 13px 8px;
-}
-
-.Accordion-inner li {
-  margin: 8px;
-}
-
-.Accordion-selected {
-  background-color: #fff;
+.ListRecipe-editBtn button {
+  font-weight: 900;
+  background-color: #e56f3a;
+  border: 2px solid #b1572d;
+  color: #fff;
 }
 
 @media (max-width: 768px) {
-  .ListRecipe-title,
-  .Accordion-container {
+  .ListRecipe-title {
     width: 100%;
   }
 }

@@ -79,7 +79,7 @@ export default class Ingredient extends React.Component {
 
         <div className="Ingredient-removeBtn">
           {this.props.showDeleteButton ? (
-            <button type="button" onClick={this.props.requestDeleteGroup}>
+            <button className="btn btn_secondary" type="button" onClick={this.props.requestDeleteGroup}>
               Remove Ingredient
             </button>
           ) : null}

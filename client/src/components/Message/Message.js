@@ -15,11 +15,6 @@ export default class Message extends Component {
     console.log(this.props.status);
     let containerClass = 'Message-container';
 
-    // if (this.props.status === 'error') {
-    //     containerClass = containerClass.concat('Message-error');
-    //   console.log('error hit', containerClass);
-    // }
-
     switch (this.props.status) {
       case 'error':
         containerClass = containerClass.concat(' Message-error');

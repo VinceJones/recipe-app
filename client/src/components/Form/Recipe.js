@@ -162,7 +162,7 @@ export default class Recipe extends React.Component {
           />
 
           <div>
-            <input type="submit" value="Submit" />
+            <input className="btn btn_primary" type="submit" value="Submit" />
           </div>
         </form>
       </div>

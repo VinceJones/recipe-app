@@ -11,12 +11,12 @@ import './App.css';
  */
 const MainMenu = () => {
   return (
-    <div>
+    <div className='MainMenu-container'>
       <Link to="/">
-        <button>View Recipes</button>
+        <span>View Recipes</span>
       </Link>
       <Link to="/create-recipe">
-        <button>Add a Recipe</button>
+        <span>Add a Recipe</span>
       </Link>
     </div>
   );
