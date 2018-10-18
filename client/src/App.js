@@ -18,7 +18,7 @@ const MainMenu = () => {
       <Link to="/">
         <span>View Recipes</span>
       </Link>
-      <Link to="/create-recipe">
+      <Link to="/recipe/add">
         <span>Add a Recipe</span>
       </Link>
     </div>
@@ -52,7 +52,8 @@ class App extends Component {
             <section className="App-body">
               <Switch>
                 <Route exact path="/" component={ListRecipe} />
-                <Route exact path="/create-recipe" component={Recipe} />
+                <Route exact path="/recipe/add" component={Recipe} />
+                <Route exact path="/recipe/edit/:recipeId" component={Recipe} />
               </Switch>
             </section>
           </MessageContext.Provider>

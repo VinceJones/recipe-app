@@ -6,7 +6,6 @@ const port = process.env.PORT || 5000;
 const fs = require('fs');
 const recipeService = require('./src/Recipe/RecipeService');
 
-
 var whitelist = ['http://localhost:3000', 'http://localhost:5000'];
 var corsOptions = {
   origin: function(origin, callback) {
@@ -36,9 +35,28 @@ app.get('/recipes/get', (req, res) => {
 });
 
 /**
+ * GET recipe by id.
+ */
+app.get('/recipes/get/:recipeId', (req, res) => {
+  const recipeId = parseInt(req.params.recipeId);
+  const content = recipeService.getRecipeById(recipeId);
+  res.send({ data: content });
+});
+
+/**
  * POST recipes.
  */
 app.post('/recipes/post', (req, res) => {
+  console.log('POST recipe');
   const saved = recipeService.saveRecipe(req.body);
+  res.send({ data: saved });
+});
+
+/**
+ * PUT recipe.
+ */
+app.put('/recipes/update', (req, res) => {
+  console.log('PUT recipe');
+  const saved = recipeService.updateRecipe(req.body);
   res.send({ data: saved });
 });

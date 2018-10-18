@@ -19,8 +19,11 @@ export default class ListRecipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      recipes: [],
-      message: messagesContext.message
+      message: {
+        status: '',
+        text: ''
+      },
+      recipes: []
     };
   }
 
@@ -33,11 +36,23 @@ export default class ListRecipe extends React.Component {
     storageHandler.getRecipes().then(res => {
       this.setState({ recipes: res });
     });
+    this.setState({ message: messagesContext.message });
   };
 
-  componentWillUnmount = () => {
-    messagesContext.clearMessages();
-  }
+  /**
+   * Handle componentWillUnmount actions.
+   *
+   * @public
+   */
+  componentWillUnmount = async () => {
+    await messagesContext.clearMessages();
+    console.log(messagesContext);
+    console.log('componentWillUnmount');
+  };
+
+  handleDeleteRecipe = recipeId => {
+    console.log('delete', recipeId);
+  };
 
   /**
    * Render the form.
@@ -67,9 +82,17 @@ export default class ListRecipe extends React.Component {
                   ))}
                 </ul>
                 <div>
-                  <a className="ListRecipe-editBtn" href="recipe/edit/">
-                    <button>Edit recipe</button>
+                  <a href={'recipe/edit/' + recipe.id}>
+                    <button className="btn btn_tertiary">Edit recipe</button>
                   </a>
+
+                  <button
+                    type="button"
+                    className="btn btn_secondary"
+                    onClick={() => this.handleDeleteRecipe(recipe.id)}
+                  >
+                    Delete recipe
+                  </button>
                 </div>
               </div>
             ))}

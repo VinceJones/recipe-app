@@ -20,8 +20,12 @@ export default class Recipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: messagesContext.message,
+      message: {
+        status: '',
+        text: ''
+      },
       recipe: {
+        id: '',
         name: '',
         description: '',
         ingredients: [
@@ -39,6 +43,52 @@ export default class Recipe extends React.Component {
   }
 
   /**
+   * Component did mount.
+   *
+   * @public
+   */
+  componentDidMount = () => {
+    this.getRecipeFromPath();
+    this.setState({ message: messagesContext.message });
+  };
+
+  /**
+   * Handle componentWillUnmount actions.
+   *
+   * @public
+   */
+  componentWillUnmount = async () => {
+    await messagesContext.clearMessages();
+    console.log(messagesContext);
+    console.log('componentWillUnmount');
+  };
+
+  /**
+   * Get recipe from path for editing.
+   *
+   * @public
+   */
+  getRecipeFromPath = () => {
+    if (!this.props.match.params.hasOwnProperty('recipeId')) {
+      return;
+    }
+
+    const recipeId = parseInt(this.props.match.params.recipeId);
+    storageHandler.getRecipeById(recipeId).then(recipe => {
+      if (recipe !== undefined) {
+        this.setState({ recipe: recipe });
+      } else {
+        messagesContext.setMessage(
+          messageService.getRecipeNotFoundStatus(),
+          messageService.getRecipeNotFoundMessage()
+        );
+        this.setState({ message: messagesContext.message });
+        this.props.history.push('/recipe/add');
+      }
+    });
+  };
+
+  /**
    * Handle top level field changes.
    *
    * @param {Object} event
@@ -51,7 +101,6 @@ export default class Recipe extends React.Component {
     this.setState({
       recipe: recipe
     });
-    console.log(this.state);
   };
 
   /**
@@ -107,16 +156,24 @@ export default class Recipe extends React.Component {
    */
   handleSubmit = async event => {
     event.preventDefault();
-    const saved = await storageHandler.postRecipe(this.state.recipe);
-    messagesContext.setMessage(
-      messageService.getPostMessageStatus(saved.data),
-      messageService.getSavedRecipeMessage(saved.data)
-    );
-    this.props.history.push('/');
-  };
 
-  componentWillUnmount = () => {
-    messagesContext.clearMessages();
+    if (this.state.recipe.hasOwnProperty('id') && this.state.recipe.id !== '') {
+      // Handle update recipe.
+      const saved = await storageHandler.putRecipe(this.state.recipe);
+      messagesContext.setMessage(
+        messageService.getRecipeUpdateStatus(saved.data),
+        messageService.getRecipeUpdateMessage(this.state.recipe.name)
+      );
+    } else {
+      // Handle save new recipe.
+      const saved = await storageHandler.postRecipe(this.state.recipe);
+      messagesContext.setMessage(
+        messageService.getPostMessageStatus(saved.data),
+        messageService.getSavedRecipeMessage(saved.data)
+      );
+    }
+
+    this.props.history.push('/');
   };
 
   /**

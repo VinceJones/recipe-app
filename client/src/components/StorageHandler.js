@@ -13,6 +13,7 @@ export default class StorageHandler {
     this.endpoints = {
       host: 'http://localhost:5000',
       postRecipes: '/recipes/post',
+      updateRecipes: '/recipes/update',
       getRecipes: '/recipes/get'
     };
   }
@@ -49,6 +50,25 @@ export default class StorageHandler {
   };
 
   /**
+   * Write the data to a storage.
+   *
+   * @param {data}
+   * @public
+   */
+  putRecipe = async data => {
+    const json = JSON.stringify(data);
+    const headers = this.postHeaders;
+
+    const options = {
+      method: 'PUT',
+      headers,
+      body: json
+    };
+
+    return await this.makeRequest(this.endpoints.updateRecipes, options);
+  };
+
+  /**
    * Get the data from storage.
    *
    * @public
@@ -59,6 +79,20 @@ export default class StorageHandler {
       return responseData.data;
     });
   };
+
+  /**
+   * Get recipe by ID.
+   * 
+   * @param {number} id
+   * @public
+   */
+  getRecipeById = async (id) => {
+    return await this.makeRequest(this.endpoints.getRecipes + '/' + id).then(responseJson => {
+      const responseData = JSON.parse(responseJson.data);
+      const recipe = responseData.shift()
+      return recipe;
+    });
+  }
 
   /**
    * Make a request.

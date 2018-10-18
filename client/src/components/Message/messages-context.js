@@ -5,7 +5,7 @@ export const messagesContext = {
     status: '',
     text: ''
   },
-  clearMessages: () => {
+  clearMessages: async () => {
     messagesContext.message = {
       status: '',
       text: ''
@@ -16,7 +16,7 @@ export const messagesContext = {
       status: status,
       text: text
     };
-  },
+  }
 };
 
 export const MessageContext = React.createContext(messagesContext);
