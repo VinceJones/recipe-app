@@ -33,8 +33,8 @@ class AccordionSection extends React.Component {
     return 'Accordion-container';
   }
 
-  onClick = () => {
-    this.props.onClick(this.props.label);
+  onClick = (event) => {
+    this.props.onClick(this.props.label, event);
   };
 
   render() {

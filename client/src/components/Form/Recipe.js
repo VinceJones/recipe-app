@@ -59,8 +59,6 @@ export default class Recipe extends React.Component {
    */
   componentWillUnmount = async () => {
     await messagesContext.clearMessages();
-    console.log(messagesContext);
-    console.log('componentWillUnmount');
   };
 
   /**
@@ -75,6 +73,7 @@ export default class Recipe extends React.Component {
 
     const recipeId = parseInt(this.props.match.params.recipeId);
     storageHandler.getRecipeById(recipeId).then(recipe => {
+
       if (recipe !== undefined) {
         this.setState({ recipe: recipe });
       } else {
@@ -122,12 +121,17 @@ export default class Recipe extends React.Component {
    * @public
    */
   handleAddIngredientGroup = () => {
-    this.setState({
-      recipe: {
-        ingredients: this.state.recipe.ingredients.concat([
-          { name: '', description: '' }
-        ])
+    const recipe = this.state.recipe;
+    recipe.ingredients = recipe.ingredients.concat([
+      {
+        name: '',
+        description: '',
+        amount: '',
+        measurementType: ''
       }
+    ]);
+    this.setState({
+      recipe: recipe
     });
   };
 
@@ -157,22 +161,32 @@ export default class Recipe extends React.Component {
   handleSubmit = async event => {
     event.preventDefault();
 
+    let status = messagesContext.message.status;
+    let text = messagesContext.message.text;
+    let saved = true;
+
     if (this.state.recipe.hasOwnProperty('id') && this.state.recipe.id !== '') {
       // Handle update recipe.
-      const saved = await storageHandler.putRecipe(this.state.recipe);
-      messagesContext.setMessage(
-        messageService.getRecipeUpdateStatus(saved.data),
-        messageService.getRecipeUpdateMessage(this.state.recipe.name)
-      );
+      saved = await storageHandler.putRecipe(this.state.recipe).then(res => {
+        console.log('res', res);
+        return res;
+      });
+      console.log('saved', saved);
+      status = messageService.getRecipeUpdateStatus(saved.data);
+      text = messageService.getRecipeUpdateMessage(this.state.recipe.name);
     } else {
       // Handle save new recipe.
-      const saved = await storageHandler.postRecipe(this.state.recipe);
-      messagesContext.setMessage(
-        messageService.getPostMessageStatus(saved.data),
-        messageService.getSavedRecipeMessage(saved.data)
-      );
+      saved = await storageHandler.postRecipe(this.state.recipe).then(res => {
+        console.log('res', res);
+        return res;
+      });
+      console.log('saved', saved);
+      status = messageService.getPostMessageStatus(saved.data);
+      text = messageService.getSavedRecipeMessage(saved.data);
     }
 
+    console.log(status, text, saved);
+    messagesContext.setMessage(status, text);
     this.props.history.push('/');
   };
 

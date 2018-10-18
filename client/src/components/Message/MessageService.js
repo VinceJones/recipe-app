@@ -62,4 +62,40 @@ export default class MessageService {
   getRecipeUpdateMessage = (name = '') => {
     return name + ' recipe has been updated.';
   }
+
+  /**
+   * Get the recipe delete status.
+   *
+   * @public
+   */
+  getRecipeDeleteStatus = () => {
+    return SUCCESS;
+  }
+
+  /**
+   * Get recipe delete message.
+   * 
+   * @public
+   */
+  getRecipeDeleteMessage = (name = '') => {
+    return name + ' recipe has been deleted.';
+  }
+
+  /**
+   * Get the recipe delete status.
+   *
+   * @public
+   */
+  getRecipeDeleteFailStatus = () => {
+    return ERROR;
+  }
+
+  /**
+   * Get recipe delete message.
+   * 
+   * @public
+   */
+  getRecipeDeleteFailMessage = (name = '') => {
+    return name + ' recipe has not been deleted.';
+  }
 }

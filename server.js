@@ -40,6 +40,7 @@ app.get('/recipes/get', (req, res) => {
 app.get('/recipes/get/:recipeId', (req, res) => {
   const recipeId = parseInt(req.params.recipeId);
   const content = recipeService.getRecipeById(recipeId);
+  console.log(content);
   res.send({ data: content });
 });
 
@@ -47,7 +48,6 @@ app.get('/recipes/get/:recipeId', (req, res) => {
  * POST recipes.
  */
 app.post('/recipes/post', (req, res) => {
-  console.log('POST recipe');
   const saved = recipeService.saveRecipe(req.body);
   res.send({ data: saved });
 });
@@ -56,7 +56,15 @@ app.post('/recipes/post', (req, res) => {
  * PUT recipe.
  */
 app.put('/recipes/update', (req, res) => {
-  console.log('PUT recipe');
   const saved = recipeService.updateRecipe(req.body);
   res.send({ data: saved });
+});
+
+/**
+ * DELETE recipe by id.
+ */
+app.delete('/recipes/delete/:recipeId', (req, res) => {
+  const recipeId = parseInt(req.params.recipeId);
+  const deleted = recipeService.deleteRecipeById(recipeId);
+  res.send({ data: deleted });
 });

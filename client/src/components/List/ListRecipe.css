@@ -10,6 +10,16 @@
   color: #fff;
 }
 
+.ListRecipe-deleteModal {
+  width: 100%;
+  margin: 15px auto;
+  text-align: center;
+}
+
+.ListRecipe-deleteModal .ListRecipe-buttonGroup button {
+  margin: 20px
+}
+
 @media (max-width: 768px) {
   .ListRecipe-title {
     width: 100%;

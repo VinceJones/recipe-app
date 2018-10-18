@@ -15,7 +15,7 @@ export default class Ingredient extends React.Component {
   /**
    * Handle recipe change events.
    *
-   * @param {event}
+   * @param {Object} event
    * @public
    */
   handleFieldChange = () => event => {

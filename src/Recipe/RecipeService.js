@@ -26,70 +26,23 @@ class RecipeService {
    * @public
    */
   getRecipeById(id) {
-    const recipes = JSON.parse(this.getRecipes());
+    const currentData = JSON.parse(this.getRecipes());
 
-    if (recipes.data === undefined || recipes.data.length === 0) {
+    if (currentData.data === undefined || currentData.data.length === 0) {
       return {};
     }
 
-    const recipe = recipes.data.filter(function(item) {
-      return item.id === id;
-    });
+    // Get position of recipe by id.
+    const index = this.getIndexOfRecipeById(currentData, id);
 
-    if (recipe.length !== 0 && recipe[0].hasOwnProperty('name')) {
-      console.log('GET recipe', recipe[0].name);
+    if (index === undefined || index === null || index === '' || index === -1) {
+      return {};
     }
+
+    const recipe = currentData.data[index];
+    console.log('GET recipe', recipe.name);
 
     return JSON.stringify(recipe);
-  }
-
-  /**
-   * Sort recipes by name
-   *
-   * @param {Object} recipes
-   * @public
-   */
-  sortRecipesByName(recipes) {
-    recipes.data.sort(function(a, b) {
-      var nameA = a.name.toUpperCase();
-      var nameB = b.name.toUpperCase();
-      if (nameA < nameB) return -1;
-      if (nameA > nameB) return 1;
-      return 0;
-    });
-  }
-
-  /**
-   * Make sure every recipe has an ID.
-   *
-   * @param {recipeData}
-   * @public
-   */
-  assignIdToRecipes(recipeData) {
-    recipeData.data.forEach((recipe, index) => {
-      if (!recipeValidationService.validateRecipeId(recipe)) {
-        recipe.id = this.createRecipeId(recipeData, index);
-      }
-    });
-  }
-
-  /**
-   * Create a recipe ID.
-   *
-   * @param {recipeData}
-   * @param {index}
-   * @public
-   */
-  createRecipeId(recipeData, index) {
-    let hasIndex = recipeData.data.filter(function(item) {
-      return item.id === index;
-    });
-
-    if (hasIndex === undefined || hasIndex.length === 0) {
-      return this.createRecipeId(recipeData, index + 1);
-    }
-
-    return index;
   }
 
   /**
@@ -120,9 +73,17 @@ class RecipeService {
     this.assignIdToRecipes(currentData);
 
     fileStorageService.saveDatatoFile(currentData);
+    console.log('POST recipe ', newData.name);
+
     return true;
   }
 
+  /**
+   * Update the recipe.
+   *
+   * @param {Object} recipe
+   * @public
+   */
   updateRecipe(recipe) {
     let currentData = JSON.parse(this.getRecipes());
 
@@ -141,14 +102,109 @@ class RecipeService {
     //   - Filter the values.
 
     // Get position of recipe.
-    const elementPos = currentData.data
+    const elementPos = this.getIndexOfRecipeById(currentData, recipe.id);
+
+    currentData.data[elementPos] = recipe;
+    fileStorageService.saveDatatoFile(currentData);
+    console.log('PUT recipe ', recipe.name);
+  }
+
+  /**
+   * Delete recipe by ID.
+   *
+   * @param {number} id
+   * @public
+   */
+  deleteRecipeById(id) {
+    const currentData = JSON.parse(this.getRecipes());
+
+    if (currentData.data === undefined || currentData.data.length === 0) {
+      return false;
+    }
+
+    // Get position of recipe by id.
+    const index = this.getIndexOfRecipeById(currentData, id);
+
+    if (index === undefined || index === null || index === '') {
+      return false;
+    }
+
+    console.log('DELETE recipe ', currentData.data[index].name);
+    currentData.data.splice(index, 1);
+    fileStorageService.saveDatatoFile(currentData);
+
+    return true;
+  }
+
+  /**
+   * Get index of recipe by id.
+   *
+   * @param {Object} currentData
+   * @param {number} id
+   * @private
+   */
+  getIndexOfRecipeById(currentData, id) {
+    return currentData.data
       .map(function(item) {
         return item.id;
       })
-      .indexOf(recipe.id);
+      .indexOf(id);
+  }
 
-    currentData.data[elementPos] = recipe
-    fileStorageService.saveDatatoFile(currentData);
+  /**
+   * Sort recipes by name
+   *
+   * @param {Object} recipes
+   * @private
+   */
+  sortRecipesByName(recipes) {
+    recipes.data.sort(function(a, b) {
+      
+      if (a.name === undefined || b.name === undefined) {
+        return 0;
+      }
+
+      var nameA = a.name.toUpperCase();
+      var nameB = b.name.toUpperCase();
+      if (nameA < nameB) return -1;
+      if (nameA > nameB) return 1;
+      return 0;
+    });
+  }
+
+  /**
+   * Make sure every recipe has an ID.
+   *
+   * @param {recipeData}
+   * @private
+   */
+  assignIdToRecipes(recipeData) {
+    recipeData.data.forEach((recipe, index) => {
+      if (!recipeValidationService.validateRecipeId(recipe)) {
+        recipe.id = this.createRecipeId(recipeData, index);
+      }
+    });
+  }
+
+  /**
+   * Create a recipe ID.
+   *
+   * @param {recipeData}
+   * @param {index}
+   * @private
+   */
+  createRecipeId(recipeData, index) {
+    const recipeIndex = this.getIndexOfRecipeById(recipeData, index);
+
+    if (
+      recipeIndex === undefined ||
+      recipeIndex === null ||
+      recipeIndex === ''
+    ) {
+      return this.createRecipeId(recipeData, index + 1);
+    }
+
+    return index;
   }
 }
 
