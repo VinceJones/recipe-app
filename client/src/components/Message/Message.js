@@ -14,13 +14,11 @@ export default class Message extends Component {
    * @public
    */
   getContainerClass = (status) => {
-    console.log(this);
     let containerClass = 'Message-container';
 
     switch (status) {
       case 'error':
         containerClass = containerClass.concat(' Message-error');
-        console.log('error hit', containerClass);
         break;
       case 'success':
         containerClass = containerClass.concat(' Message-success');

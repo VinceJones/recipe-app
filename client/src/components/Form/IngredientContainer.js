@@ -6,7 +6,7 @@ export default class IngredientContainer extends React.Component {
    * Get the collection of values.
    */
   get valuesCollection() {
-    return this.props.value;
+    return this.props.value
   }
 
   /**
@@ -48,7 +48,11 @@ export default class IngredientContainer extends React.Component {
           />
         ))}
         <div className="Ingredient-addBtn">
-          <button className="btn btn_tertiary" type="button" onClick={this.props.requestAddGroup}>
+          <button
+            className="btn btn_tertiary"
+            type="button"
+            onClick={this.props.requestAddGroup}
+          >
             Add Ingredient
           </button>
         </div>

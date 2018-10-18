@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
 import Recipe from './components/Form/Recipe';
 import ListRecipe from './components/List/ListRecipe';
-import Message from './components/Message/Message';
 import {
   MessageContext,
-  messagesContainer
+  messagesContext
 } from './components/Message/messages-context';
 
 import './App.css';
@@ -26,12 +25,9 @@ const MainMenu = () => {
   );
 };
 
-// const RecipeForm = (props) => {
-//   return (
-//     <Recipe setMessage={message => this.setMessage(message)} {...props}/>
-//   )
-// }
-
+/**
+ * App component.
+ */
 class App extends Component {
   /**
    * App contructor.
@@ -41,20 +37,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: messagesContainer.message
+      message: messagesContext.message
     };
   }
-
-  /**
-   * Set the message to be displayed.
-   *
-   * @param {string} status
-   * @param {string} message
-   * @public
-   */
-  setMessage = (status, message) => {
-    this.setState({ message: message, status: status });
-  };
 
   render() {
     return (

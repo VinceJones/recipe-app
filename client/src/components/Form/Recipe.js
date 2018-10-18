@@ -3,15 +3,14 @@ import IngredientContainer from './IngredientContainer';
 import RecipeConfig from './RecipeConfig';
 import StorageHandler from '../StorageHandler';
 import Message from '../Message/Message';
-import {
-  MessageContext,
-  messagesContainer
-} from '../Message/messages-context';
+import MessageService from '../Message/MessageService';
+import { MessageContext, messagesContext } from '../Message/messages-context';
 
 import './Recipe.css';
 
 const recipeConfig = new RecipeConfig();
 const storageHandler = new StorageHandler('recipe');
+const messageService = new MessageService();
 
 export default class Recipe extends React.Component {
   /**
@@ -21,17 +20,19 @@ export default class Recipe extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: messagesContainer.message,
-      name: '',
-      description: '',
-      ingredients: [
-        {
-          name: '',
-          description: '',
-          amount: '',
-          measurementType: ''
-        }
-      ]
+      message: messagesContext.message,
+      recipe: {
+        name: '',
+        description: '',
+        ingredients: [
+          {
+            name: '',
+            description: '',
+            amount: '',
+            measurementType: ''
+          }
+        ]
+      }
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -45,7 +46,12 @@ export default class Recipe extends React.Component {
    */
   handleRecipeFieldChange = () => event => {
     const recipeFieldElement = event.target;
-    this.setState({ [recipeFieldElement.name]: recipeFieldElement.value });
+    const recipe = this.state.recipe;
+    recipe[recipeFieldElement.name] = recipeFieldElement.value;
+    this.setState({
+      recipe: recipe
+    });
+    console.log(this.state);
   };
 
   /**
@@ -56,9 +62,9 @@ export default class Recipe extends React.Component {
    * @public
    */
   handleChildFieldChange = field => newValuesCollection => {
-    const recipeData = { ...this.state };
-    recipeData[field] = newValuesCollection;
-    this.setState(recipeData);
+    const state = { ...this.state };
+    state.recipe[field] = newValuesCollection;
+    this.setState(state);
   };
 
   /**
@@ -68,9 +74,11 @@ export default class Recipe extends React.Component {
    */
   handleAddIngredientGroup = () => {
     this.setState({
-      ingredients: this.state.ingredients.concat([
-        { name: '', description: '' }
-      ])
+      recipe: {
+        ingredients: this.state.recipe.ingredients.concat([
+          { name: '', description: '' }
+        ])
+      }
     });
   };
 
@@ -82,9 +90,11 @@ export default class Recipe extends React.Component {
    */
   handleDeleteIngredientGroup = index => {
     this.setState({
-      ingredients: this.state.ingredients.filter(
-        (ingredient, ingredientIndex) => index !== ingredientIndex
-      )
+      recipe: {
+        ingredients: this.state.recipe.ingredients.filter(
+          (ingredient, ingredientIndex) => index !== ingredientIndex
+        )
+      }
     });
   };
 
@@ -97,33 +107,16 @@ export default class Recipe extends React.Component {
    */
   handleSubmit = async event => {
     event.preventDefault();
-    const saved = await storageHandler.postRecipe(this.state);
-    this.props.setMessage(
-      this.getMessageStatus(saved.data),
-      this.getSavedMessage(saved.data)
+    const saved = await storageHandler.postRecipe(this.state.recipe);
+    messagesContext.setMessage(
+      messageService.getPostMessageStatus(saved.data),
+      messageService.getSavedRecipeMessage(saved.data)
     );
     this.props.history.push('/');
   };
 
-  /**
-   * Get the message after recipe POST has completed.
-   *
-   * @param {Boolean} saved
-   * @public
-   *
-   */
-  getSavedMessage = saved => {
-    return saved ? 'Recipe has been saved.' : 'Recipe has not been saved.';
-  };
-
-  /**
-   * Get the message status after recipe POST has completed.
-   *
-   * @param {bool} saved
-   * @public
-   */
-  getMessageStatus = saved => {
-    return saved ? 'success' : 'error';
+  componentWillUnmount = () => {
+    messagesContext.clearMessages();
   };
 
   /**
@@ -146,7 +139,7 @@ export default class Recipe extends React.Component {
             <input
               type="text"
               name="name"
-              value={this.state.name}
+              value={this.state.recipe.name}
               onChange={this.handleRecipeFieldChange()}
             />
           </div>
@@ -156,13 +149,13 @@ export default class Recipe extends React.Component {
               name="description"
               rows={recipeConfig.textAreaConfig.rows}
               cols={recipeConfig.textAreaConfig.columns}
-              value={this.state.description}
+              value={this.state.recipe.description}
               onChange={this.handleRecipeFieldChange()}
             />
           </div>
 
           <IngredientContainer
-            value={this.state.ingredients}
+            value={this.state.recipe.ingredients}
             onChange={this.handleChildFieldChange('ingredients')}
             requestDeleteGroup={index =>
               this.handleDeleteIngredientGroup(index)

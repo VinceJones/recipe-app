@@ -1,13 +1,22 @@
 import React from 'react';
 
-export const messagesContainer = {
+export const messagesContext = {
   message: {
-    status: 'error',
-    text: 'Error message!'
-  }
+    status: '',
+    text: ''
+  },
+  clearMessages: () => {
+    messagesContext.message = {
+      status: '',
+      text: ''
+    };
+  },
+  setMessage: (status, text) => {
+    messagesContext.message = {
+      status: status,
+      text: text
+    };
+  },
 };
 
-export const MessageContext = React.createContext(
-  // default value
-  messagesContainer.message
-);
+export const MessageContext = React.createContext(messagesContext);

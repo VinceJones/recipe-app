@@ -3,7 +3,7 @@ import StorageHandler from '../StorageHandler';
 import Accordion from './Accordion';
 import ListIngredient from './ListIngredient';
 import Message from '../Message/Message';
-import { MessageContext, messagesContainer } from '../Message/messages-context';
+import { MessageContext, messagesContext } from '../Message/messages-context';
 
 import './ListRecipe.css';
 import './Accordion.css';
@@ -20,7 +20,7 @@ export default class ListRecipe extends React.Component {
     super(props);
     this.state = {
       recipes: [],
-      message: messagesContainer.message
+      message: messagesContext.message
     };
   }
 
@@ -34,6 +34,10 @@ export default class ListRecipe extends React.Component {
       this.setState({ recipes: res });
     });
   };
+
+  componentWillUnmount = () => {
+    messagesContext.clearMessages();
+  }
 
   /**
    * Render the form.
