@@ -91,11 +91,13 @@ class RecipeService {
     if (!currentData.hasOwnProperty('data')) {
       return false;
     }
+    console.log('has property data', recipe);
 
     // Make sure the recipe to update has an id.
     if (!recipeValidationService.validateRecipeId(recipe)) {
       return false;
     }
+    console.log('validates');
 
     // TODO: Validate the data:
     //   - Check the schema.

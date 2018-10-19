@@ -1,29 +1,15 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Recipe from './components/Form/Recipe';
 import ListRecipe from './components/List/ListRecipe';
 import {
   MessageContext,
   messagesContext
 } from './components/Message/messages-context';
+import MainMenu from './components/Menu/MenuContainer';
+import MenuItems from './components/Menu/MenuItems';
 
 import './App.css';
-
-/**
- * MainMenu component.
- */
-const MainMenu = () => {
-  return (
-    <div className="MainMenu-container">
-      <Link to="/">
-        <span>View Recipes</span>
-      </Link>
-      <Link to="/recipe/add">
-        <span>Add a Recipe</span>
-      </Link>
-    </div>
-  );
-};
 
 /**
  * App component.
@@ -37,7 +23,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      message: messagesContext.message
+      message: messagesContext.message,
+      menuItems: MenuItems
     };
   }
 
@@ -46,7 +33,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <header className="App-header">
-            <MainMenu />
+            <MainMenu menuItems={this.state.menuItems} />
           </header>
           <MessageContext.Provider value={this.state.message}>
             <section className="App-body">

@@ -27,7 +27,6 @@
     background-color: #fff;
     border: 2px solid #000;
     border-radius: 4px;
-    transition: height 4s;
   }
   
   @media (max-width: 768px) {
