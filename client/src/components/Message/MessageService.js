@@ -14,6 +14,7 @@ export default class MessageService {
    * @public
    */
   getPostMessageStatus = saved => {
+    console.log('getPostMessageStatus saved', saved);
     return saved ? SUCCESS : ERROR;
   };
 

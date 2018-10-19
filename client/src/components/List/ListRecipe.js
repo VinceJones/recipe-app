@@ -38,7 +38,11 @@ export default class ListRecipe extends React.Component {
    */
   componentDidMount = () => {
     this.updateStateWithRecipes();
-    this.setState({ message: messagesContext.message });
+
+    if (!messagesContext.message.show) {
+      this.setState({ message: messagesContext.message });
+      messagesContext.toggleShown();
+    }
   };
 
   /**
@@ -47,8 +51,9 @@ export default class ListRecipe extends React.Component {
    * @public
    */
   componentWillUnmount = async () => {
-    await messagesContext.clearMessages();
-    console.log('componentWillUnmount');
+    if (messagesContext.message.shown) {
+      await messagesContext.clearMessages();
+    }
   };
 
   showModal = () => {
@@ -90,7 +95,6 @@ export default class ListRecipe extends React.Component {
       }
 
       messagesContext.setMessage(status, text);
-
       this.setState({ message: messagesContext.message });
       this.setState({ showModal: false });
       this.updateStateWithRecipes();

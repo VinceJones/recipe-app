@@ -40,7 +40,6 @@ app.get('/recipes/get', (req, res) => {
 app.get('/recipes/get/:recipeId', (req, res) => {
   const recipeId = parseInt(req.params.recipeId);
   const content = recipeService.getRecipeById(recipeId);
-  console.log(content);
   res.send({ data: content });
 });
 

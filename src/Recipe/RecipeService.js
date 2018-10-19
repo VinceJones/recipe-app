@@ -33,7 +33,7 @@ class RecipeService {
     }
 
     // Get position of recipe by id.
-    const index = this.getIndexOfRecipeById(currentData, id);
+    const index = recipeValidationService.getIndexOfRecipeById(currentData, id);
 
     if (index === undefined || index === null || index === '' || index === -1) {
       return {};
@@ -102,7 +102,7 @@ class RecipeService {
     //   - Filter the values.
 
     // Get position of recipe.
-    const elementPos = this.getIndexOfRecipeById(currentData, recipe.id);
+    const elementPos = recipeValidationService.getIndexOfRecipeById(currentData, recipe.id);
 
     currentData.data[elementPos] = recipe;
     fileStorageService.saveDatatoFile(currentData);
@@ -123,7 +123,7 @@ class RecipeService {
     }
 
     // Get position of recipe by id.
-    const index = this.getIndexOfRecipeById(currentData, id);
+    const index = recipeValidationService.getIndexOfRecipeById(currentData, id);
 
     if (index === undefined || index === null || index === '') {
       return false;
@@ -134,21 +134,6 @@ class RecipeService {
     fileStorageService.saveDatatoFile(currentData);
 
     return true;
-  }
-
-  /**
-   * Get index of recipe by id.
-   *
-   * @param {Object} currentData
-   * @param {number} id
-   * @private
-   */
-  getIndexOfRecipeById(currentData, id) {
-    return currentData.data
-      .map(function(item) {
-        return item.id;
-      })
-      .indexOf(id);
   }
 
   /**
@@ -180,7 +165,7 @@ class RecipeService {
    */
   assignIdToRecipes(recipeData) {
     recipeData.data.forEach((recipe, index) => {
-      if (!recipeValidationService.validateRecipeId(recipe)) {
+      if (!recipeValidationService.validateRecipeId(recipeData, recipe)) {
         recipe.id = this.createRecipeId(recipeData, index);
       }
     });
@@ -194,13 +179,7 @@ class RecipeService {
    * @private
    */
   createRecipeId(recipeData, index) {
-    const recipeIndex = this.getIndexOfRecipeById(recipeData, index);
-
-    if (
-      recipeIndex === undefined ||
-      recipeIndex === null ||
-      recipeIndex === ''
-    ) {
+    if (recipeValidationService.indexExists(recipeData, index)) {
       return this.createRecipeId(recipeData, index + 1);
     }
 
