@@ -29,11 +29,6 @@ class Accordion extends Component {
   }
 
   onClick = (label, event) => {
-    
-    // If the 
-    if (event.target.name === 'deleteRecipeModalButton') {
-      return;
-    }
     const {
       props: { allowMultipleOpen },
       state: { openSections }

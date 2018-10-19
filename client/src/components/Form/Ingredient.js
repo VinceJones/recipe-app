@@ -66,16 +66,6 @@ export default class Ingredient extends React.Component {
             ))}
           </select>
         </div>
-        <div className="Ingredient-field">
-          <label>Description:</label>
-          <textarea
-            name="description"
-            rows={recipeConfig.textAreaConfig.rows}
-            cols={recipeConfig.textAreaConfig.columns}
-            value={this.props.value.description}
-            onChange={this.handleFieldChange()}
-          />
-        </div>
 
         <div className="Ingredient-removeBtn">
           {this.props.showDeleteButton ? (

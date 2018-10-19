@@ -23,6 +23,7 @@ export default class ListRecipe extends React.Component {
     super(props);
     this.state = {
       showModal: false,
+      deleteRecipe: {},
       message: {
         status: '',
         text: ''
@@ -56,10 +57,21 @@ export default class ListRecipe extends React.Component {
     }
   };
 
-  showModal = () => {
-    this.setState({ showModal: true });
+  /**
+   * Show the modal.
+   *
+   * @param {Object} recipe
+   * @public
+   */
+  showModal = recipe => {
+    this.setState({ showModal: true, deleteRecipe: recipe });
   };
 
+  /**
+   * Hide the modal
+   *
+   * @public
+   */
   hideModal = () => {
     this.setState({ showModal: false });
   };
@@ -137,41 +149,37 @@ export default class ListRecipe extends React.Component {
                   <button
                     type="button"
                     className="btn btn_secondary"
-                    name="deleteRecipeModalButton"
-                    onClick={() => this.showModal()}
+                    onClick={() => this.showModal(recipe)}
                   >
                     Delete recipe
                   </button>
-                  <Modal
-                    show={this.state.showModal}
-                    handleClose={this.hideModal}
-                  >
-                    <div className="ListRecipe-deleteModal">
-                      <h3>Are you sure you would like delete this recipe?</h3>
-                      <div className="ListRecipe-buttonGroup">
-                        <button
-                          type="button"
-                          className="btn btn_secondary"
-                          name="deleteRecipeModalButton"
-                          onClick={() => this.handleDeleteRecipe(recipe)}
-                        >
-                          Yes
-                        </button>
-                        <button
-                          type="button"
-                          className="btn btn_primary"
-                          name="deleteRecipeModalButton"
-                          onClick={() => this.hideModal()}
-                        >
-                          No
-                        </button>
-                      </div>
-                    </div>
-                  </Modal>
                 </div>
               </div>
             ))}
           </Accordion>
+          <Modal show={this.state.showModal} handleClose={this.hideModal}>
+            <div className="ListRecipe-deleteModal">
+              <h3>Are you sure you would like delete this recipe?</h3>
+              <div className="ListRecipe-buttonGroup">
+                <button
+                  type="button"
+                  className="btn btn_secondary"
+                  onClick={() =>
+                    this.handleDeleteRecipe(this.state.deleteRecipe)
+                  }
+                >
+                  Yes
+                </button>
+                <button
+                  type="button"
+                  className="btn btn_primary"
+                  onClick={() => this.hideModal()}
+                >
+                  No
+                </button>
+              </div>
+            </div>
+          </Modal>
         </ul>
       </div>
     );

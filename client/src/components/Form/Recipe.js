@@ -31,7 +31,6 @@ export default class Recipe extends React.Component {
         ingredients: [
           {
             name: '',
-            description: '',
             amount: '',
             measurementType: ''
           }
@@ -132,7 +131,6 @@ export default class Recipe extends React.Component {
     recipe.ingredients = recipe.ingredients.concat([
       {
         name: '',
-        description: '',
         amount: '',
         measurementType: ''
       }

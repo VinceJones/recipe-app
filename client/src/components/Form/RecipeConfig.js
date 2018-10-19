@@ -13,6 +13,10 @@ export default class RecipeConfig {
                 value: 'ea'
             },
             {
+                name: 'Pinch',
+                value: 'pinch'
+            },
+            {
                 name: 'Teaspoon(s)',
                 value: 'tsp'
             },

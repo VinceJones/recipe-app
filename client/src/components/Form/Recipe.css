@@ -8,13 +8,20 @@
   margin: 20px 0;
 }
 
+.Ingredient-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .Ingredient-group {
   display: block;
   border: 1px solid #000;
   border-radius: 4px;
   padding: 10px;
-  margin: 20px 0;
+  margin: 20px 10px;
   background-color: #8ab3c4;
+  height: 17em;
+  width: 17em;
 }
 
 .Ingredient-fieldInline {

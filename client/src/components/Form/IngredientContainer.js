@@ -6,7 +6,7 @@ export default class IngredientContainer extends React.Component {
    * Get the collection of values.
    */
   get valuesCollection() {
-    return this.props.value
+    return this.props.value;
   }
 
   /**
@@ -35,26 +35,27 @@ export default class IngredientContainer extends React.Component {
    */
   render() {
     return (
-      <div className="Ingredient-container">
+      <div>
         <h4>Ingredients</h4>
-
-        {this.valuesCollection.map((subform, index) => (
-          <Ingredient
-            key={index}
-            value={subform}
-            onChange={this.handleFieldChange(index)}
-            showDeleteButton={this.shouldShowDeleteButton}
-            requestDeleteGroup={() => this.props.requestDeleteGroup(index)}
-          />
-        ))}
-        <div className="Ingredient-addBtn">
-          <button
-            className="btn btn_tertiary"
-            type="button"
-            onClick={this.props.requestAddGroup}
-          >
-            Add Ingredient
-          </button>
+        <div className="Ingredient-container">
+          {this.valuesCollection.map((subform, index) => (
+            <Ingredient
+              key={index}
+              value={subform}
+              onChange={this.handleFieldChange(index)}
+              showDeleteButton={this.shouldShowDeleteButton}
+              requestDeleteGroup={() => this.props.requestDeleteGroup(index)}
+            />
+          ))}
+          <div className="Ingredient-addBtn">
+            <button
+              className="btn btn_tertiary"
+              type="button"
+              onClick={this.props.requestAddGroup}
+            >
+              Add Ingredient
+            </button>
+          </div>
         </div>
       </div>
     );
