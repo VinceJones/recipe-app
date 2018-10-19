@@ -28,7 +28,7 @@ class Accordion extends Component {
     this.state = { openSections };
   }
 
-  onClick = (label, event) => {
+  onClick = label => {
     const {
       props: { allowMultipleOpen },
       state: { openSections }
