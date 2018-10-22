@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import './Modal.css';
 
 /**
- * DeleteModal.
+ * DeleteModal component.
  *
  * @public
  */
-export default class Modal extends React.Component {
+export default class Modal extends Component {
   /**
    * Get the show hide class name.
    *
@@ -25,10 +25,10 @@ export default class Modal extends React.Component {
    */
   render() {
     return (
-      <div className={this.props.show ? 'modal display-block' : 'modal display-none'}>
+      <div className={this.getShowHideClassName(this.props.show)}>
         <section className="modal-main">
           {this.props.children}
-          <button className="btn btn_tertiary btn_modalClose" onClick={() => this.props.handleClose()}>close</button>
+          <button className="btn btn_tertiary btn_modalClose" onClick={() => this.props.hideModal()}>close</button>
         </section>
       </div>
     );

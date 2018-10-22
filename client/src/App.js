@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Recipe from './components/Form/Recipe';
-import ListRecipe from './components/List/ListRecipe';
+import ListPage from './components/Page/ListPage/ListPage';
 import {
   MessageContext,
   messagesContext
@@ -20,8 +20,8 @@ class App extends Component {
    *
    * @public
    */
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       message: messagesContext.message,
       menuItems: MenuItems
@@ -38,7 +38,7 @@ class App extends Component {
           <MessageContext.Provider value={this.state.message}>
             <section className="App-body">
               <Switch>
-                <Route exact path="/" component={ListRecipe} />
+                <Route exact path="/" component={ListPage} />
                 <Route exact path="/recipe/add" component={Recipe} />
                 <Route exact path="/recipe/edit/:recipeId" component={Recipe} />
               </Switch>

@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import AccordionSection from './AccordionSection';
 
+import './Accordion.css';
+
+/**
+ * Accordion component.
+ * 
+ * @public
+ */
 class Accordion extends Component {
   static propTypes = {
     allowMultipleOpen: PropTypes.bool,
@@ -13,6 +19,11 @@ class Accordion extends Component {
     allowMultipleOpen: false
   };
 
+  /**
+   * Accordion constructor.
+   *
+   * @param {Object} props
+   */
   constructor(props) {
     super(props);
 
@@ -28,6 +39,12 @@ class Accordion extends Component {
     this.state = { openSections };
   }
 
+  /**
+   * Handle opening and closing accordions.
+   *
+   * @param {string} label
+   * @public
+   */
   onClick = label => {
     const {
       props: { allowMultipleOpen },
@@ -52,6 +69,11 @@ class Accordion extends Component {
     }
   };
 
+  /**
+   * Render Accordion.
+   *
+   * @public
+   */
   render() {
     const {
       onClick,
