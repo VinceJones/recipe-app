@@ -9,15 +9,16 @@ export const messagesContext = {
   clearMessages: async () => {
     messagesContext.message = {
       status: '',
-      text: ''
+      text: '',
+      shown: true
     };
   },
   setMessage: async (status, text) => {
     messagesContext.message = {
       status: status,
-      text: text
+      text: text,
+      shown: false
     };
-    messagesContext.toggleShown();
   },
   toggleShown: async () => {
     messagesContext.message.shown =
