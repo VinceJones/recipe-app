@@ -1,3 +1,4 @@
+/* TODO: refactor to not target button tag */
 .ListRecipe-editBtn button {
   font-weight: 900;
   background-color: #e56f3a;
@@ -11,6 +12,7 @@
   text-align: center;
 }
 
+/* TODO: refactor to not target button tag */
 .ListRecipe-deleteModal .ListRecipe-buttonGroup button {
   margin: 20px
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Button from '../Button/Button';
 
 import './Modal.css';
 
@@ -15,7 +16,7 @@ export default class Modal extends Component {
    * @public
    */
   getShowHideClassName = show => {
-    return show ? 'modal display-block' : 'modal display-none';
+    return show ? 'Modal Modal-display' : 'Modal Modal-hide';
   };
 
   /**
@@ -26,9 +27,17 @@ export default class Modal extends Component {
   render() {
     return (
       <div className={this.getShowHideClassName(this.props.show)}>
-        <section className="modal-main">
+        <section className="Modal-main">
           {this.props.children}
-          <button className="btn btn_tertiary btn_modalClose" onClick={() => this.props.hideModal()}>close</button>
+          <div className="Modal-btnCloseContainer">
+            <Button
+              text="Close"
+              link="#"
+              className="btn btn_tertiary btn_modalClose"
+              isBtn={true}
+              onClick={() => this.props.hideModal()}
+            />
+          </div>
         </section>
       </div>
     );

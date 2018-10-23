@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Recipe from './components/Form/Recipe';
+import FormPage from './components/Page/FormPage/FormPage';
 import ListPage from './components/Page/ListPage/ListPage';
 import {
   MessageContext,
   messagesContext
 } from './components/Message/messages-context';
-import MainMenu from './components/Menu/MenuContainer';
-import MenuItems from './components/Menu/MenuItems';
+import MainMenu from './components/Menu/MainMenu';
+import Routes from './Routes';
 
 import './App.css';
 
@@ -24,23 +24,28 @@ class App extends Component {
     super();
     this.state = {
       message: messagesContext.message,
-      menuItems: MenuItems
+      routes: Routes
     };
   }
 
+  /**
+   * Render App component.
+   * 
+   * @public
+   */
   render() {
     return (
       <Router>
         <div className="App">
           <header className="App-header">
-            <MainMenu menuItems={this.state.menuItems} />
+            <MainMenu routes={this.state.routes} />
           </header>
           <MessageContext.Provider value={this.state.message}>
             <section className="App-body">
               <Switch>
                 <Route exact path="/" component={ListPage} />
-                <Route exact path="/recipe/add" component={Recipe} />
-                <Route exact path="/recipe/edit/:recipeId" component={Recipe} />
+                <Route exact path="/recipe/add" component={FormPage} />
+                <Route exact path="/recipe/edit/:recipeId" component={FormPage} />
               </Switch>
             </section>
           </MessageContext.Provider>

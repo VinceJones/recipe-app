@@ -1,17 +1,15 @@
-import React from 'react';
-import RecipeConfig from './RecipeConfig';
+import React, { Component } from 'react';
+import Button from '../Button/Button';
+import RecipeConfig from '../RecipeConfig';
 
 const recipeConfig = new RecipeConfig();
 
-export default class Ingredient extends React.Component {
-
-  /**
-   * Get the values of this objects properties.
-   */
-  get ingredientValues() {
-    return this.props.value;
-  }
-
+/**
+ * IngredientForm component.
+ *
+ * @public
+ */
+export default class IngredientForm extends Component {
   /**
    * Handle recipe change events.
    *
@@ -20,11 +18,9 @@ export default class Ingredient extends React.Component {
    */
   handleFieldChange = () => event => {
     const inputElement = event.target;
-
-    let newValuesObject = { ...this.ingredientValues };
-    newValuesObject[inputElement.name] = inputElement.value;
-
-    this.props.onChange(newValuesObject);
+    let ingredient = { ...this.props.ingredient };
+    ingredient[inputElement.name] = inputElement.value;
+    this.props.onChange(ingredient);
   };
 
   /**
@@ -40,7 +36,7 @@ export default class Ingredient extends React.Component {
           <input
             type="text"
             name="name"
-            value={this.ingredientValues.name}
+            value={this.props.ingredient.name}
             onChange={this.handleFieldChange()}
           />
         </div>
@@ -50,7 +46,7 @@ export default class Ingredient extends React.Component {
             className="Ingredient-amount"
             type="text"
             name="amount"
-            value={this.ingredientValues.amount}
+            value={this.props.ingredient.amount}
             onChange={this.handleFieldChange()}
           />
         </div>
@@ -58,20 +54,26 @@ export default class Ingredient extends React.Component {
           <label>Measurement Type</label>
           <select
             name="measurementType"
-            value={this.ingredientValues.measurementType}
+            value={this.props.ingredient.measurementType}
             onChange={this.handleFieldChange()}
           >
             {recipeConfig.measurementTypes.map((measurement, index) => (
-              <option value={measurement.value} key={index}>{measurement.name}</option>
+              <option value={measurement.value} key={index}>
+                {measurement.name}
+              </option>
             ))}
           </select>
         </div>
 
         <div className="Ingredient-removeBtn">
           {this.props.showDeleteButton ? (
-            <button className="btn btn_secondary" type="button" onClick={this.props.requestDeleteGroup}>
-              Remove Ingredient
-            </button>
+            <Button
+              text="Remove Ingredient"
+              link="#"
+              className="btn btn_secondary"
+              isBtn={true}
+              onClick={this.props.requestDeleteGroup}
+            />
           ) : null}
         </div>
       </div>

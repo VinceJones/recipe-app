@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from './Modal';
+import Button from '../Button/Button';
 
 /**
  * DeleteRecipeModal component.
@@ -38,20 +39,20 @@ export default class DeleteRecipeModal extends Component {
         <div className="ListRecipe-deleteModal">
           <h3>Are you sure you would like delete {this.recipeName} recipe?</h3>
           <div className="ListRecipe-buttonGroup">
-            <button
-              type="button"
+            <Button
+              text="Yes"
+              link="#"
               className="btn btn_secondary"
+              isBtn={true}
               onClick={() => this.props.handleDeleteRecipe()}
-            >
-              Yes
-            </button>
-            <button
-              type="button"
+            />
+            <Button
+              text="No"
+              link="#"
               className="btn btn_primary"
+              isBtn={true}
               onClick={() => this.props.hideModal()}
-            >
-              No
-            </button>
+            />
           </div>
         </div>
       </Modal>

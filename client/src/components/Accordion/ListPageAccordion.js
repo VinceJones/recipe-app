@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Accordion from './Accordion';
 import ListIngredient from '../Page/ListPage/ListIngredient';
+import Button from '../Button/Button';
 
 /**
  * ListPageAccordion component.
@@ -36,17 +37,19 @@ export default class ListPageAccordion extends Component {
                 ))}
               </ul>
               <div>
-                <a href={'recipe/edit/' + recipe.id}>
-                  <button className="btn btn_tertiary">Edit recipe</button>
-                </a>
-
-                <button
-                  type="button"
+                <Button
+                  text="Edit recipe"
+                  link={"recipe/edit/" + recipe.id}
+                  className="btn btn_tertiary"
+                  isBtn={true}
+                />
+                <Button
+                  text="Delete recipe"
+                  link="#"
                   className="btn btn_secondary"
+                  isBtn={true}
                   onClick={() => this.props.showModal(recipe)}
-                >
-                  Delete recipe
-                </button>
+                />
               </div>
             </div>
           ))}

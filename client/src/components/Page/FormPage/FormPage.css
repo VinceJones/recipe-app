@@ -35,13 +35,19 @@
   display: inline-block;
 }
 
-.Ingredient-removeBtn button {
+/* TODO: refactor to not target anchor tag */
+.Ingredient-removeBtn button,
+.Ingredient-removeBtn a {
   background-color: #e56f3a;
   border: 2px solid #b1572d;
   color: #fff;
 }
-.Ingredient-addBtn button {
+
+/* TODO: refactor to not target anchor tag */
+.Ingredient-addBtn button,
+.Ingredient-addBtn a {
   margin: auto 0;
+  margin: 0;
   background-color: #5B7D8A;
   border: 2px solid #47616b;
   color: #fff;

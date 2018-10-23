@@ -1,15 +1,17 @@
 import React from 'react';
 import MenuItem from './MenuItem';
 
-const MainMenu = ({ menuItems }) => {
+import './MainMenu.css';
+
+const MainMenu = ({ routes }) => {
   return (
     <div className="MainMenu-container">
-      {menuItems.map((menuItem, index) => (
+      {routes.map((route, index) => (
         <MenuItem
           key={index}
-          menuClass={menuItem.className}
-          path={menuItem.path}
-          text={menuItem.text}
+          menuClass={route.className}
+          path={route.path}
+          text={route.text}
         />
       ))}
     </div>

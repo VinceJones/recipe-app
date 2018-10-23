@@ -38,48 +38,47 @@ li {
   list-style: none;
 }
 
+a {
+  text-decoration-style: none;
+  text-decoration-line: none;
+}
+
 label,
-button {
+button,
+a {
   font-weight: bold;
 }
 
 button,
+a,
 input[type='submit'],
 .btn {
-  width: 160px;
-  padding: 13px 20px 11px;
+  display: inline-block;
   font-size: 14px;
-  border: 1px solid #474747;
-  font: 400 12px/1 Antenna, Arial, 'Helvetica Neue', Helvetica, sans-serif;
-  box-sizing: border-box;
+  font: 400 12px Arial, sans-serif;
+  font-weight: bold;
+  text-align: center;
   border-radius: 5px;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  border: 1px solid #474747;
   background: #fff;
   color: #474747;
-  font-weight: bold;
   margin: 15px 10px;
+  padding: 13px 20px 11px;
+  box-sizing: border-box;
+  width: auto;
+  min-width: 110px;
+}
+
+input[type='submit'] {
+ min-width: 160px; 
 }
 
 .btn_primary,
-.btn.btn_primary,
-.MainMenu-container a:hover {
+.btn.btn_primary {
   background-color: #3abde5;
   border: 2px solid #257a94;
   border-radius: 5px;
   color: #000;
-}
-
-.MainMenu-container a {
-  padding: 13px 20px;
-  font-size: 14px;
-  color: #fff;
-  text-decoration: none;
-  border: 2px solid #282c34;
-}
-
-.MainMenu-container a:hover {
-  font-weight: bold;
-  margin: 0 10px;
 }
 
 .btn.btn_secondary,
@@ -132,11 +131,8 @@ label {
   min-height: 1vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(2vmin);
+  align-items: flex-end;
   color: white;
-  padding: 20px;
 }
 
 .App-link {

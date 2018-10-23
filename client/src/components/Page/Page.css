@@ -1,4 +1,6 @@
 .Page-title {
-  width: 50%;
+  width: auto;
   margin: 15px auto;
+  min-width: 160px;
+  text-align: center;
 }

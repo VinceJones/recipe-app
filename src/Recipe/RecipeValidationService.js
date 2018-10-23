@@ -10,7 +10,7 @@ class RecipeValidationService {
    * @param {Object} recipe
    * @public
    */
-  validateRecipeId(recipeData, recipe) {
+  validateRecipeId(recipe) {
     if (!recipe.hasOwnProperty('id')) {
       return false;
     }
