@@ -6,7 +6,7 @@ import StorageHandler from '../../StorageHandler';
 import MessageService from '../../Message/MessageService';
 import { messagesContext } from '../../Message/messages-context';
 
-import './ListRecipe.css';
+import './ListPage.css';
 
 const storageHandler = new StorageHandler('recipe');
 const messageService = new MessageService();
