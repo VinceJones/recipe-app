@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import IngredientForm from './IngredientForm';
 import Button from '../Button/Button';
+import Ingredient from '../../models/Ingredient';
 
 /**
  * IngredientFormContainer component.
@@ -8,6 +10,13 @@ import Button from '../Button/Button';
  * @public
  */
 export default class IngredientFormContainer extends Component {
+  static propTypes = {
+    ingredients: PropTypes.arrayOf(PropTypes.instanceOf(Ingredient)),
+    onChange: PropTypes.func.isRequired,
+    requestDeleteGroup: PropTypes.func.isRequired,
+    requestAddGroup: PropTypes.func.isRequired
+  };
+
   /**
    * Get whether we should delete the the group.
    */

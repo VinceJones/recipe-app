@@ -1,3 +1,5 @@
+import Recipe from '../models/Recipe';
+
 /**
  * Handle storage of data.
  */
@@ -78,14 +80,20 @@ export default class StorageHandler {
   };
 
   /**
-   * Get the data from storage.
+   * Get the recipes from storage.
    *
    * @public
    */
   getRecipes = async () => {
     return this.makeRequest(this.endpoints.getRecipes).then(responseJson => {
       const responseData = JSON.parse(responseJson.data);
-      return responseData.data;
+      const recipes = [];
+
+      responseData.data.forEach(recipeData => {
+        recipes.push(new Recipe(recipeData));
+      });
+
+      return recipes;
     });
   };
 
@@ -102,7 +110,13 @@ export default class StorageHandler {
       if (this.isEmpty(responseJson.data)) {
         return undefined;
       }
-      return JSON.parse(responseJson.data);
+      const parsedData = JSON.parse(responseJson.data);
+
+      if (parsedData !== undefined) {
+        return new Recipe(parsedData);
+      }
+
+      return undefined;
     });
   };
 

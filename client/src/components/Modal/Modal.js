@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Button from '../Button/Button';
 
 import './Modal.css';
@@ -9,6 +10,12 @@ import './Modal.css';
  * @public
  */
 export default class Modal extends Component {
+  static propTypes = {
+    show: PropTypes.bool.isRequired,
+    hideModal: PropTypes.func.isRequired,
+    children: PropTypes.instanceOf(Object).isRequired,
+  };
+
   /**
    * Get the show hide class name.
    *

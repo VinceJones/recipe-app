@@ -72,7 +72,7 @@ export default class FormPage extends Component {
 
     const recipeId = parseInt(this.props.match.params.recipeId);
     await storageHandler.getRecipeById(recipeId).then(recipe => {
-      if (recipe !== undefined) {
+      if (recipe instanceof Recipe) {
         this.setState({ recipe: recipe });
       } else {
         messagesContext.setMessage(

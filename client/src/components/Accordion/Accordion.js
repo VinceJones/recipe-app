@@ -75,21 +75,15 @@ class Accordion extends Component {
    * @public
    */
   render() {
-    const {
-      onClick,
-      props: { children },
-      state: { openSections }
-    } = this;
-
     return (
       <li>
-        {children.map((child, index) => (
+        {this.props.children.map((child, index) => (
           <AccordionSection
             key={index}
-            isOpen={!!openSections[child.props.label]}
+            isOpen={!!this.state.openSections[child.props.label]}
             label={child.props.label}
             description={child.props.description}
-            onClick={onClick}
+            onClick={this.onClick}
           >
             {child.props.children}
           </AccordionSection>

@@ -7,6 +7,7 @@ import MessageService from '../../Message/MessageService';
 import { messagesContext } from '../../Message/messages-context';
 
 import './ListPage.css';
+import Recipe from '../../../models/Recipe';
 
 const storageHandler = new StorageHandler('recipe');
 const messageService = new MessageService();
@@ -60,8 +61,12 @@ export default class ListPage extends Component {
    * @public
    */
   updateStateWithRecipes = () => {
-    storageHandler.getRecipes().then(res => {
-      this.setState({ recipes: res });
+    storageHandler.getRecipes().then(recipes => {
+      if (recipes && recipes.length > 0 && recipes[0] instanceof Recipe) {
+        this.setState({ recipes: recipes });
+      } else {
+        this.setState({ recipes: [] });
+      }
     });
   };
 
@@ -75,8 +80,6 @@ export default class ListPage extends Component {
     storageHandler.deleteRecipeById(recipe.id).then(res => {
       let status = messagesContext.message.status;
       let text = messagesContext.message.text;
-
-      console.log(res);
 
       if (res) {
         status = messageService.getRecipeDeleteStatus();

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import RecipeConfig from '../RecipeConfig';
 import IngredientFormContainer from './IngredientFormContainer';
+import Recipe from '../../models/Recipe';
 
 const recipeConfig = new RecipeConfig();
 
@@ -10,6 +12,15 @@ const recipeConfig = new RecipeConfig();
  * @public
  */
 export default class RecipeForm extends Component {
+  static propTypes = {
+    recipe: PropTypes.instanceOf(Recipe),
+    handleSubmit: PropTypes.func.isRequired,
+    handleRecipeFieldChange: PropTypes.func.isRequired,
+    handleChildFieldChange: PropTypes.func.isRequired,
+    handleDeleteIngredientGroup: PropTypes.func.isRequired,
+    handleAddIngredientGroup: PropTypes.func.isRequired,
+  };
+
   /**
    * Handle form submit.
    *

@@ -28,11 +28,10 @@ class AccordionSection extends Component {
   /**
    * Get the container class to specify if the accordion is open or not.
    *
-   * @param {Boolean} isOpen
    * @public
    */
-  getContainerClass(isOpen) {
-    if (isOpen) return 'Accordion-container Accordion-selected';
+  getContainerClass() {
+    if (this.props.isOpen) return 'Accordion-container Accordion-selected';
 
     return 'Accordion-container';
   }
@@ -52,24 +51,20 @@ class AccordionSection extends Component {
    * @public
    */
   render() {
-    const {
-      onClick,
-      props: { isOpen, label, description }
-    } = this;
-
     return (
-      <div className={this.getContainerClass(isOpen)}>
-        <div className="Accordion-details" onClick={onClick}>
-          <h3>
-            {label}
-            <div className="Accordion-icon">{this.getArrowIcon(isOpen)}</div>
-          </h3>
+      <div className={this.getContainerClass()}>
+        <div className="Accordion-details" onClick={this.onClick}>
+          <div>
+            <h3 className="Accordion-title">{this.props.label}</h3>
+            <span className="Accordion-icon">
+              {this.getArrowIcon(this.props.isOpen)}
+            </span>
+          </div>
 
-          {isOpen && <hr />}
-
-          {isOpen && (
+          {this.props.isOpen && (
             <div>
-              <p>{description}</p>
+              <hr />
+              <p>{this.props.description}</p>
               <div className="Accordion-inner">{this.props.children}</div>
             </div>
           )}

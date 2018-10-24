@@ -1,36 +1,41 @@
 .Accordion-container {
-    width: 50%;
-    margin: 8px auto;
-    padding: 5px;
-    background-color: #fff;
+  width: 50%;
+  margin: 8px auto;
+  padding: 5px;
+  background-color: #fff;
+}
+
+.Accordion-title {
+  width: 80%;
+  display: inline-block;
+}
+
+.Accordion-details {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.Accordion-icon {
+  float: right;
+}
+
+.Accordion-inner {
+  margin: 7px 0;
+  padding: 13px 8px;
+}
+
+.Accordion-inner li {
+  margin: 8px;
+}
+
+.Accordion-selected {
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .Accordion-container {
+    width: 100%;
   }
-  
-  .Accordion-details {
-    padding: 8px;
-    cursor: pointer;
-  }
-  
-  .Accordion-icon {
-    float: right;
-  }
-  
-  .Accordion-inner {
-    margin: 7px 0;
-    padding: 13px 8px;
-  }
-  
-  .Accordion-inner li {
-    margin: 8px;
-  }
-  
-  .Accordion-selected {
-    background-color: #fff;
-    border: 2px solid #000;
-    border-radius: 4px;
-  }
-  
-  @media (max-width: 768px) {
-    .Accordion-container {
-      width: 100%;
-    }
-  }
+}
