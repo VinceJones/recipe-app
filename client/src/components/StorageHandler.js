@@ -7,11 +7,9 @@ export default class StorageHandler {
   /**
    * StorageHandler constructor.
    *
-   * @param {*} storageKey
    * @public
    */
-  constructor(storageKey) {
-    this.storageKey = storageKey;
+  constructor() {
     this.endpoints = {
       host: 'http://localhost:5000',
       postRecipes: '/recipes/post',

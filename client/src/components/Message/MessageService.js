@@ -6,6 +6,19 @@ const SUCCESS = 'success';
  * MessageService.
  */
 export default class MessageService {
+
+  /**
+   * Available Statuses.
+   * 
+   * @public
+   */
+  statuses = () => {
+    return {
+      WARNING: WARNING,
+      ERROR: ERROR,
+      SUCCESS: SUCCESS
+    }
+  }
   
   /**
    * Get the message status after recipe POST has completed.

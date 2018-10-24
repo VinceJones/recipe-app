@@ -4,12 +4,10 @@ import ListPageAccordion from '../../Accordion/ListPageAccordion';
 import DeleteRecipeModal from '../../Modal/DeleteRecipeModal';
 import StorageHandler from '../../StorageHandler';
 import MessageService from '../../Message/MessageService';
-import { messagesContext } from '../../Message/messages-context';
-
-import './ListPage.css';
 import Recipe from '../../../models/Recipe';
+import './ListPage.css';
 
-const storageHandler = new StorageHandler('recipe');
+const storageHandler = new StorageHandler();
 const messageService = new MessageService();
 
 export default class ListPage extends Component {
@@ -18,8 +16,8 @@ export default class ListPage extends Component {
    *
    * @public
    */
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       showModal: false,
       deleteRecipe: {},
@@ -78,18 +76,18 @@ export default class ListPage extends Component {
   handleDeleteRecipe = () => {
     const recipe = this.state.deleteRecipe;
     storageHandler.deleteRecipeById(recipe.id).then(res => {
-      let status = messagesContext.message.status;
-      let text = messagesContext.message.text;
-
       if (res) {
-        status = messageService.getRecipeDeleteStatus();
-        text = messageService.getRecipeDeleteMessage(recipe.name);
+        this.props.messageUtility.setMessage(
+          messageService.getRecipeDeleteStatus(),
+          messageService.getRecipeDeleteMessage(recipe.name)
+        );
       } else {
-        status = messageService.getRecipeDeleteFailStatus();
-        text = messageService.getRecipeDeleteFailMessage(recipe.name);
+        this.props.messageUtility.setMessage(
+          messageService.getRecipeDeleteFailStatus(),
+          messageService.getRecipeDeleteFailMessage(recipe.name)
+        );
       }
 
-      messagesContext.setMessage(status, text);
       this.setState({ showModal: false });
       this.updateStateWithRecipes();
     });
@@ -102,7 +100,7 @@ export default class ListPage extends Component {
    */
   render() {
     return (
-      <Page pageTitle="Recipes" message={messagesContext.message}>
+      <Page pageTitle="Recipes" messageUtility={this.props.messageUtility}>
         <ListPageAccordion
           recipes={this.state.recipes}
           showModal={recipe => this.showModal(recipe)}

@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { MessageContext } from './messages-context';
-
 import './Message.css';
 
 /**
@@ -8,12 +6,23 @@ import './Message.css';
  */
 export default class Message extends Component {
   /**
+   * Get the message properties from message utility.
+   */
+  get message() {
+    if (this.props && this.props.messageUtility) {
+      return this.props.messageUtility.getMessage();
+    }
+    
+    return {};
+  }
+
+  /**
    * Get the container class based on the status.
    *
    * @param {string} status
    * @public
    */
-  getContainerClass = (status) => {
+  getContainerClass = status => {
     let containerClass = 'Message-container';
 
     switch (status) {
@@ -31,21 +40,19 @@ export default class Message extends Component {
     }
     return containerClass;
   };
-  render() {
-    const {
-      props: { message }
-    } = this;
 
+  /**
+   * Render Message.
+   *
+   * @public
+   */
+  render() {
     return (
       <div>
-        {message !== '' && (
-          <MessageContext.Consumer>
-            {message => (
-              <div className={this.getContainerClass(message.status)}>
-                <p className="Message-body">{message.text}</p>
-              </div>
-            )}
-          </MessageContext.Consumer>
+        {this.message && (
+          <div className={this.getContainerClass(this.message.status)}>
+            <p className="Message-body">{this.message.text}</p>
+          </div>
         )}
       </div>
     );

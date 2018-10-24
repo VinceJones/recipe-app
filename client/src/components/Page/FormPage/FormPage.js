@@ -5,11 +5,10 @@ import Ingredient from '../../../models/Ingredient';
 import StorageHandler from '../../StorageHandler';
 import RecipeForm from '../../Form/RecipeForm';
 import MessageService from '../../Message/MessageService';
-import { messagesContext } from '../../Message/messages-context';
 
 import './FormPage.css';
 
-const storageHandler = new StorageHandler('recipe');
+const storageHandler = new StorageHandler();
 const messageService = new MessageService();
 
 /**
@@ -31,6 +30,7 @@ export default class FormPage extends Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    console.log(this);
   }
 
   /**
@@ -75,13 +75,10 @@ export default class FormPage extends Component {
       if (recipe instanceof Recipe) {
         this.setState({ recipe: recipe });
       } else {
-        messagesContext.setMessage(
+        this.props.messageUtility.setMessage(
           messageService.getRecipeNotFoundStatus(),
           messageService.getRecipeNotFoundMessage()
         );
-        this.setState({ message: messagesContext.message });
-        messagesContext.toggleShown();
-
         this.props.history.push('/recipe/add');
       }
     });
@@ -153,21 +150,19 @@ export default class FormPage extends Component {
     if (this.state.recipe.hasOwnProperty('id') && this.state.recipe.id !== '') {
       // Handle update recipe.
       await storageHandler.putRecipe(this.state.recipe).then(res => {
-        messagesContext.setMessage(
+        this.props.messageUtility.setMessage(
           messageService.getRecipeUpdateStatus(res.data),
           messageService.getRecipeUpdateMessage(this.state.recipe.name)
         );
-        this.setState({ message: messagesContext.message });
         return res;
       });
     } else {
       // Handle save new recipe.
       await storageHandler.postRecipe(this.state.recipe).then(res => {
-        messagesContext.setMessage(
+        this.props.messageUtility.setMessage(
           messageService.getPostMessageStatus(res.data),
           messageService.getSavedRecipeMessage(res.data)
         );
-        this.setState({ message: messagesContext.message });
         return res;
       });
     }
@@ -182,7 +177,7 @@ export default class FormPage extends Component {
    */
   render() {
     return (
-      <Page pageTitle={this.state.pageTitle} message={messagesContext.message}>
+      <Page pageTitle={this.state.pageTitle} messageUtility={this.props.messageUtility}>
         <RecipeForm
           recipe={this.state.recipe}
           handleSubmit={event => this.handleSubmit(event)}

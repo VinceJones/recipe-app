@@ -1,36 +1,20 @@
 import React, { Component } from 'react';
 import Message from '../Message/Message';
 import PropTypes from 'prop-types';
-import { MessageContext, messagesContext } from '../Message/messages-context';
 
 import './Page.css';
 
 /**
  * Page component.
- * 
+ *
  * @public
  */
 export default class Page extends Component {
   static propTypes = {
     children: PropTypes.instanceOf(Object).isRequired,
-    pageTitle: PropTypes.string.isRequired
+    pageTitle: PropTypes.string.isRequired,
+    messageUtility: PropTypes.object.isRequired
   };
-
-  /**
-   * Page constructor.
-   *
-   * @public
-   */
-  constructor(props) {
-    super(props);
-    this.state = {
-      message: {
-        status: '',
-        text: '',
-        shown: false
-      }
-    };
-  }
 
   /**
    * Set message state.
@@ -38,9 +22,8 @@ export default class Page extends Component {
    * @public
    */
   componentDidMount = () => {
-    if (!messagesContext.message.show) {
-      this.setState({ message: messagesContext.message });
-      messagesContext.toggleShown();
+    if (this.props.messageUtility && !this.props.messageUtility.message.shown) {
+      this.props.messageUtility.toggleMessageShown();
     }
   };
 
@@ -50,8 +33,8 @@ export default class Page extends Component {
    * @public
    */
   componentWillUnmount = async () => {
-    if (messagesContext.message.shown) {
-      await messagesContext.clearMessages();
+    if (this.props.messageUtility.message.shown) {
+      await this.props.messageUtility.clearMessages();
     }
   };
 
@@ -64,9 +47,7 @@ export default class Page extends Component {
     return (
       <div>
         <div>
-          <MessageContext.Provider value={this.state.message}>
-            <Message message={this.state.message} />
-          </MessageContext.Provider>
+          <Message messageUtility={this.props.messageUtility}/>
         </div>
         <div className="page container">
           <div>
