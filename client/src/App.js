@@ -7,7 +7,6 @@ import {
   messagesContext
 } from './components/Message/messages-context';
 import MainMenu from './components/Menu/MainMenu';
-import Routes from './Routes';
 
 import './App.css';
 
@@ -23,8 +22,7 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      message: messagesContext.message,
-      routes: Routes
+      message: messagesContext.message
     };
   }
 
@@ -38,7 +36,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <header className="App-header">
-            <MainMenu routes={this.state.routes} />
+            <MainMenu/>
           </header>
           <MessageContext.Provider value={this.state.message}>
             <section className="App-body">

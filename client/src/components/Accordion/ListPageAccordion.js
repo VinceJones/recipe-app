@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Accordion from './Accordion';
 import ListIngredient from '../Page/ListPage/ListIngredient';
 import Button from '../Button/Button';
+import Recipe from '../../models/Recipe';
 
 /**
  * ListPageAccordion component.
@@ -12,7 +13,7 @@ import Button from '../Button/Button';
 export default class ListPageAccordion extends Component {
   static propTypes = {
     showModal: PropTypes.func.isRequired,
-    recipes: PropTypes.arrayOf(PropTypes.instanceOf(Object)).isRequired
+    recipes: PropTypes.arrayOf(PropTypes.instanceOf(Recipe)).isRequired
   };
 
   /**

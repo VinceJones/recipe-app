@@ -27,12 +27,13 @@ export default class IngredientFormContainer extends Component {
   /**
    * Handle ingredient change events.
    *
-   * @param {event}
+   * @param {number} index
+   * @param {Object} newIngValues
    * @public
    */
-  handleFieldChange = index => newValuesObject => {
+  handleFieldChange = index => newIngValues => {
     const ingredients = [...this.props.ingredients];
-    ingredients[index] = newValuesObject;
+    ingredients[index] = new Ingredient(newIngValues);
     this.props.onChange(ingredients);
   };
 
