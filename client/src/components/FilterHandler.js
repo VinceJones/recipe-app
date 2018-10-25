@@ -36,18 +36,14 @@ export default class FilterHandler {
   getMatchByType(item) {
     let match = false;
 
-    // Check if value is a object and not a function.
     if (typeof item === 'object' && typeof item !== 'function') {
       match = this.checkObjectMatch(item);
     }
 
-    // Check if a value is an array and loop to check the
-    // name property if it exists to see if it matches.
     if (item instanceof Array) {
       match = this.checkArrayMatch(item);
     }
 
-    // Check if the value is a string and see if it matches.
     if (typeof item === 'string') {
       match = this.checkStringMatch(item);
     }

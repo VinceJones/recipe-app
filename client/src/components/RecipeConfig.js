@@ -49,6 +49,10 @@ export default class RecipeConfig {
                 value: 'lt'
             },
             {
+                name: 'Milliliter(s)',
+                value: 'ml'
+            },
+            {
                 name: 'Gram(s)',
                 value: 'gr'
             },

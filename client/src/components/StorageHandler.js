@@ -47,6 +47,8 @@ export default class StorageHandler {
       body: json
     };
 
+    console.log('postRecipe', this);
+
     return await this.makeRequest(this.endpoints.postRecipes, options).then(
       responseJson => {
         return responseJson;

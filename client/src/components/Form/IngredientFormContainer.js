@@ -63,6 +63,7 @@ export default class IngredientFormContainer extends Component {
               className="btn btn_tertiary"
               isBtn={true}
               onClick={this.props.requestAddGroup}
+              preventDefault={true}
             />
           </div>
         </div>

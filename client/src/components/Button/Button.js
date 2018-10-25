@@ -13,7 +13,8 @@ export default class Button extends Component {
     attr: PropTypes.objectOf(PropTypes.string),
     isBtn: PropTypes.bool,
     className: PropTypes.string,
-    onClick: PropTypes.func
+    onClick: PropTypes.func,
+    preventDefault: PropTypes.bool
   };
 
   /**
@@ -46,10 +47,23 @@ export default class Button extends Component {
     attr['href'] = this.props.link;
 
     if (this.props.isBtn) attr['role'] = 'button';
-    if (this.props.onClick) attr['onClick'] = this.props.onClick;
+    if (this.props.onClick) attr['onClick'] = this.onClick;
     if (this.props.className) attr['className'] = this.props.className;
 
     return {...attr, ...this.props.attr};
+  }
+
+  /**
+   * Handle click events and preventDefault when needed.
+   * 
+   * @public
+   */
+  onClick = (e) => {
+    if (this.props.preventDefault) {
+      e.preventDefault();
+    }
+
+    this.props.onClick();
   }
 
   /**

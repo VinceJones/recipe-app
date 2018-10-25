@@ -173,7 +173,11 @@ export default class FormPage extends Component {
   handleSubmit = async event => {
     event.preventDefault();
 
-    if (this.state.recipe.hasOwnProperty('id') && this.state.recipe.id !== '') {
+    if (
+      this.state.recipe.hasOwnProperty('id') &&
+      this.state.recipe.id !== '' &&
+      this.state.recipe.id !== undefined
+    ) {
       // Handle update recipe.
       await storageHandler.putRecipe(this.state.recipe).then(res => {
         this.props.messageUtility.setMessage(
