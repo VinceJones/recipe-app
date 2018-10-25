@@ -109,7 +109,9 @@ export default class ListPage extends Component {
       return;
     }
 
-    let updatedList = this.state.recipes;
+    // Start filtering with the filtered list of recipes so filtering
+    // can go quicker.
+    let updatedList = this.state.filteredRecipes;
 
     updatedList = updatedList.filter(recipe => {
       // Check the name of the Recipe.
