@@ -5,80 +5,80 @@
  */
 export default class FilterHandler {
   /**
-   * Filter a array of objects by filter value.
+   * Filter a array by filter value.
    *
    * @param {Object[]} items
    * @param {string}} filterValue
    */
   filterItems(items, filterValue) {
-    items = items.filter(recipe => {
-      const matches = [];
-      Object.entries(recipe).forEach(([key, value]) => {
-        let match = false;
-
-        // Check if a value is an array and loop to check the
-        // name property if it exists to see if it matches.
-        if (value instanceof Array) {
-          match = this.checkArrayMatch(value, filterValue);
-        }
-
-        // Check if the value is a string and see if it matches.
-        if (typeof value === 'string') {
-          match = this.checkStringMatch(value, filterValue);
-        }
-
-        matches.push(match);
-      });
-
-      return matches.indexOf(true) > -1;
+    this.setFilterValue(filterValue);
+    items = items.filter(item => {
+      return this.getMatchByType(item);
     });
 
     return items;
   }
 
   /**
-   * Recursively check if array of objects matches the filter value.
+   * Set the value to filter by
    *
-   * @param {Array} array
-   * @param {string} filterValue
    * @private
    */
-  checkArrayMatch(array, filterValue) {
+  setFilterValue = filterValue => {
+    this.filterValue = filterValue;
+  };
+
+  /**
+   * Get a match value based on type of item.
+   *
+   * @param {*} item
+   */
+  getMatchByType(item) {
+    let match = false;
+
+    // Check if value is a object and not a function.
+    if (typeof item === 'object' && typeof item !== 'function') {
+      match = this.checkObjectMatch(item);
+    }
+
+    // Check if a value is an array and loop to check the
+    // name property if it exists to see if it matches.
+    if (item instanceof Array) {
+      match = this.checkArrayMatch(item);
+    }
+
+    // Check if the value is a string and see if it matches.
+    if (typeof item === 'string') {
+      match = this.checkStringMatch(item);
+    }
+
+    return match;
+  }
+
+  /**
+   * Recursively check if object values match the filter value.
+   *
+   * @param {Object} obj
+   */
+  checkObjectMatch(obj) {
+    const matches = [];
+    Object.entries(obj).forEach(([key, value]) => {
+      matches.push(this.getMatchByType(value));
+    });
+
+    return matches.indexOf(true) > -1;
+  }
+
+  /**
+   * Recursively check if array values match the filter value.
+   *
+   * @param {Array} array
+   * @private
+   */
+  checkArrayMatch(array) {
     const matches = [];
     array.forEach(item => {
-      let match = false;
-
-      if (typeof item === 'object' && typeof item !== 'function') {
-        const arrayMatches = [];
-        Object.entries(item).forEach(([key, value]) => {
-          // Check if a value is an array and loop to check the
-          // name property if it exists to see if it matches.
-          if (value instanceof Array) {
-            match = this.checkArrayMatch(value, filterValue);
-          }
-
-          // Check if the value is a string and see if it matches.
-          if (typeof value === 'string') {
-            match = this.checkStringMatch(value, filterValue);
-          }
-
-          arrayMatches.push(match);
-        });
-
-        match = arrayMatches.indexOf(true) > -1;
-      }
-
-      // Check if item is an array.
-      if (item instanceof Array) {
-        match = this.checkArrayMatch(item, filterValue);
-      }
-
-      // Check if item is a string.
-      if (typeof value === 'string') {
-        match = this.checkStringMatch(item, filterValue);
-      }
-
-      matches.push(match);
+      matches.push(this.getMatchByType(item));
     });
 
     return matches.indexOf(true) > -1;
@@ -88,15 +88,13 @@ export default class FilterHandler {
    * Check if a string matches the filter value.
    *
    * @param {string} value
-   * @param {*} filterValue
    * @private
    */
-  checkStringMatch(value, filterValue) {
-    let match = false;
-    let stringMatch =
-      value.toLowerCase().search(filterValue.toLowerCase()) !== -1;
-    match = stringMatch ? stringMatch : match;
-    return match;
+  checkStringMatch(value) {
+    const match = false;
+    const stringMatch =
+      value.toLowerCase().search(this.filterValue.toLowerCase()) !== -1;
+    return stringMatch ? stringMatch : match;
   }
 
   /**
