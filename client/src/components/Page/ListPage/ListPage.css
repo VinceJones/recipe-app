@@ -14,7 +14,12 @@
 
 /* TODO: refactor to not target button tag */
 .ListRecipe-deleteModal .ListRecipe-buttonGroup button {
-  margin: 20px
+  margin: 20px;
+}
+
+.ListPage-filterInput {
+  width: 50%;
+  margin: 20px auto;
 }
 
 @media (max-width: 768px) {

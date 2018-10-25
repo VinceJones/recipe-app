@@ -24,6 +24,7 @@ export default class TagFormContainer extends Component {
    * @public
    */
   handleFieldChange = index => newTagValues => {
+    
     const tags = [...this.props.tags];
     tags[index] = new Tag(newTagValues);
     this.props.onChange(tags);

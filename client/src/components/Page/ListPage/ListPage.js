@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Page from '../Page';
-import ListPageAccordion from '../../Accordion/ListPageAccordion';
 import DeleteRecipeModal from '../../Modal/DeleteRecipeModal';
 import StorageHandler from '../../StorageHandler';
 import MessageService from '../../Message/MessageService';
 import Recipe from '../../../models/Recipe';
+import ListPageFilterForm from '../../Form/ListPageFilterForm';
 import './ListPage.css';
+
 
 const storageHandler = new StorageHandler();
 const messageService = new MessageService();
@@ -21,7 +22,8 @@ export default class ListPage extends Component {
     this.state = {
       showModal: false,
       deleteRecipe: {},
-      recipes: []
+      recipes: [],
+      filteredRecipes: []
     };
   }
 
@@ -61,9 +63,9 @@ export default class ListPage extends Component {
   updateStateWithRecipes = () => {
     storageHandler.getRecipes().then(recipes => {
       if (recipes && recipes.length > 0 && recipes[0] instanceof Recipe) {
-        this.setState({ recipes: recipes });
+        this.setState({ recipes: recipes, filteredRecipes: recipes });
       } else {
-        this.setState({ recipes: [] });
+        this.setState({ recipes: [], filteredRecipes: [] });
       }
     });
   };
@@ -94,6 +96,53 @@ export default class ListPage extends Component {
   };
 
   /**
+   * Filter the recipes.
+   *
+   * @param {Object} event
+   * @public
+   */
+  filterList = event => {
+    // If there is no filter applied then we should revert
+    // the list to the original list of recipes.
+    if (event.target.value === '') {
+      this.setState({ filteredRecipes: this.state.recipes });
+      return;
+    }
+
+    let updatedList = this.state.recipes;
+
+    updatedList = updatedList.filter(recipe => {
+      // Check the name of the Recipe.
+      const nameMatch =
+        recipe.name.toLowerCase().search(event.target.value.toLowerCase()) !==
+        -1;
+
+      // Check the name of each Ingredient;
+      let ingMatch = recipe.ingredients.filter(ingredient => {
+        return (
+          ingredient.name
+            .toLowerCase()
+            .search(event.target.value.toLowerCase()) !== -1
+        );
+      });
+
+      ingMatch = (ingMatch !== undefined && ingMatch.length > 0);
+
+      // Check the name of each Tag.
+      let tagMatch = recipe.tags.filter(tag => {
+        return (
+          tag.name.toLowerCase().search(event.target.value.toLowerCase()) !== -1
+        );
+      });
+      tagMatch = (tagMatch !== undefined && tagMatch.length > 0);
+
+      return nameMatch || ingMatch || tagMatch;
+    });
+
+    this.setState({ filteredRecipes: updatedList });
+  };
+
+  /**
    * Render the form.
    *
    * @public
@@ -101,9 +150,10 @@ export default class ListPage extends Component {
   render() {
     return (
       <Page pageTitle="Recipes" messageUtility={this.props.messageUtility}>
-        <ListPageAccordion
-          recipes={this.state.recipes}
+        <ListPageFilterForm
+          recipes={this.state.filteredRecipes}
           showModal={recipe => this.showModal(recipe)}
+          filterList={event => this.filterList(event)}
         />
         <DeleteRecipeModal
           showModal={this.state.showModal}
