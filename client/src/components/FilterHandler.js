@@ -11,7 +11,6 @@ export default class FilterHandler {
    * @param {string}} filterValue
    */
   filterItems(items, filterValue) {
-    console.log('base items', items);
     items = items.filter(recipe => {
       const matches = [];
       Object.entries(recipe).forEach(([key, value]) => {
@@ -45,13 +44,11 @@ export default class FilterHandler {
    * @private
    */
   checkArrayMatch(array, filterValue) {
-    let match = false;
-
     const matches = [];
     array.forEach(item => {
-      if (typeof item === 'object' && typeof item !== 'function') {
-        console.log('obj');
+      let match = false;
 
+      if (typeof item === 'object' && typeof item !== 'function') {
         const arrayMatches = [];
         Object.entries(item).forEach(([key, value]) => {
           // Check if a value is an array and loop to check the
@@ -68,7 +65,7 @@ export default class FilterHandler {
           arrayMatches.push(match);
         });
 
-        match = arrayMatches.indexOf(true) > -1
+        match = arrayMatches.indexOf(true) > -1;
       }
 
       // Check if item is an array.
@@ -84,7 +81,7 @@ export default class FilterHandler {
       matches.push(match);
     });
 
-    return matches.indexOf(true) > -1
+    return matches.indexOf(true) > -1;
   }
 
   /**
