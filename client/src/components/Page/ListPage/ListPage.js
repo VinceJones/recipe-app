@@ -7,7 +7,6 @@ import Recipe from '../../../models/Recipe';
 import ListPageFilterForm from '../../Form/ListPageFilterForm';
 import './ListPage.css';
 
-
 const storageHandler = new StorageHandler();
 const messageService = new MessageService();
 
@@ -111,34 +110,44 @@ export default class ListPage extends Component {
 
     // Start filtering with the filtered list of recipes so filtering
     // can go quicker.
-    let updatedList = this.state.filteredRecipes;
+    let updatedList = this.state.recipes;
 
     updatedList = updatedList.filter(recipe => {
-      // Check the name of the Recipe.
-      const nameMatch =
-        recipe.name.toLowerCase().search(event.target.value.toLowerCase()) !==
-        -1;
+      const matches = [];
+      Object.entries(recipe).forEach(([key, value]) => {
+        let match = false;
 
-      // Check the name of each Ingredient;
-      let ingMatch = recipe.ingredients.filter(ingredient => {
-        return (
-          ingredient.name
-            .toLowerCase()
-            .search(event.target.value.toLowerCase()) !== -1
-        );
+        // Check if a value is an array and loop to check the
+        // name property if it exists to see if it matches.
+        if (value instanceof Array) {
+          let arrayMatch = recipe[key].filter(item => {
+            if (item.hasOwnProperty('name')) {
+              return (
+                item.name
+                  .toLowerCase()
+                  .search(event.target.value.toLowerCase()) !== -1
+              );
+            } else {
+              return false;
+            }
+          });
+          arrayMatch = arrayMatch !== undefined && arrayMatch.length > 0;
+          match = arrayMatch ? arrayMatch : match;
+        }
+
+        // Check if the value is a string and see if it matches.
+        if (typeof value === 'string' || value instanceof String) {
+          let stringMatch =
+            recipe[key]
+              .toLowerCase()
+              .search(event.target.value.toLowerCase()) !== -1;
+          match = stringMatch ? stringMatch : match;
+        }
+
+        matches.push(match);
       });
 
-      ingMatch = (ingMatch !== undefined && ingMatch.length > 0);
-
-      // Check the name of each Tag.
-      let tagMatch = recipe.tags.filter(tag => {
-        return (
-          tag.name.toLowerCase().search(event.target.value.toLowerCase()) !== -1
-        );
-      });
-      tagMatch = (tagMatch !== undefined && tagMatch.length > 0);
-
-      return nameMatch || ingMatch || tagMatch;
+      return matches.indexOf(true) > -1;
     });
 
     this.setState({ filteredRecipes: updatedList });

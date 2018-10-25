@@ -137,6 +137,11 @@ label {
   display: none;
 }
 
+.container {
+  width: 85%;
+  margin: 5px auto;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 1vh;
@@ -159,5 +164,10 @@ label {
   .App-body {
     width: 90%;
     margin: 0 15px 15px 15px;
+  }
+
+  .container {
+    width: 100%;
+    margin: 5px auto;
   }
 }

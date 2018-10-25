@@ -1,6 +1,6 @@
 .Recipe-container {
   margin: auto;
-  width: 75%;
+  width: 100%;
 }
 
 .Recipe-field,
@@ -83,7 +83,7 @@
   border: none;
   background: transparent;
   color: #474747;
-  margin: 4px;
+  margin: 1px;
   padding: 0;
   min-width: 0;
   font-size: 20px;
@@ -92,5 +92,9 @@
 @media (max-width: 768px) {
   .Recipe-container {
     width: 100%;
+  }
+
+  .TagForm-container {
+    width: 48%;
   }
 }

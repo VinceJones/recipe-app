@@ -18,7 +18,11 @@
 }
 
 .ListPage-filterInput {
-  width: 50%;
+  width: 100%;
+  margin: 20px auto;
+}
+
+.ListPage-container {
   margin: 20px auto;
 }
 

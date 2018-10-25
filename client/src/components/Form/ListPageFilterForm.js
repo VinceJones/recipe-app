@@ -26,7 +26,7 @@ export default class ListPageFilterForm extends Component {
    */
   render() {
     return (
-      <div>
+      <div className="ListPage-container">
         <form>
           <fieldset>
             <input

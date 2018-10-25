@@ -13,7 +13,7 @@ export default class Recipe {
    * @param {Object} recipe
    */
   constructor(recipe = {}) {
-    this.id = recipe.id ? recipe.id : '';
+    this.id = recipe.id !== '' ? recipe.id : '';
     this.name = recipe.name ? recipe.name : '';
     this.description = recipe.description ? recipe.description : '';
     this.ingredients = this.tranformIngredientData(recipe.ingredients);
