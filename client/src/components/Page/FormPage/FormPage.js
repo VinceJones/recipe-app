@@ -7,6 +7,7 @@ import RecipeForm from '../../Form/RecipeForm';
 import MessageService from '../../Message/MessageService';
 
 import './FormPage.css';
+import Tag from '../../../models/Tag';
 
 const storageHandler = new StorageHandler();
 const messageService = new MessageService();
@@ -30,7 +31,6 @@ export default class FormPage extends Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    console.log(this);
   }
 
   /**
@@ -124,6 +124,17 @@ export default class FormPage extends Component {
   };
 
   /**
+   * Add a tag.
+   *
+   * @public
+   */
+  handleAddTag = () => {
+    const recipe = this.state.recipe;
+    recipe.tags = recipe.tags.concat([new Tag()]);
+    this.setState({ recipe: recipe });
+  };
+
+  /**
    * Remove an ingredient group.
    *
    * @param {number} index
@@ -133,6 +144,21 @@ export default class FormPage extends Component {
     const recipe = this.state.recipe;
     recipe.ingredients = recipe.ingredients.filter(
       (ing, ingIdx) => index !== ingIdx
+    );
+    this.setState({ recipe: recipe });
+  };
+
+  /**
+   * Remove an item from array.
+   *
+   * @param {number} index
+   * @public
+   */
+  handleDeleteItemFromArray = (index, propName) => {
+    console.log(index, propName);
+    const recipe = this.state.recipe;
+    recipe[propName] = recipe[propName].filter(
+      (item, itemIdx) => index !== itemIdx
     );
     this.setState({ recipe: recipe });
   };
@@ -177,7 +203,10 @@ export default class FormPage extends Component {
    */
   render() {
     return (
-      <Page pageTitle={this.state.pageTitle} messageUtility={this.props.messageUtility}>
+      <Page
+        pageTitle={this.state.pageTitle}
+        messageUtility={this.props.messageUtility}
+      >
         <RecipeForm
           recipe={this.state.recipe}
           handleSubmit={event => this.handleSubmit(event)}
@@ -188,7 +217,11 @@ export default class FormPage extends Component {
           handleDeleteIngredientGroup={index =>
             this.handleDeleteIngredientGroup(index)
           }
+          handleDeleteItemFromArray={(index, propName) => {
+            this.handleDeleteItemFromArray(index, propName);
+          }}
           handleAddIngredientGroup={() => this.handleAddIngredientGroup()}
+          handleAddTag={() => this.handleAddTag()}
         />
       </Page>
     );

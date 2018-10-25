@@ -48,15 +48,45 @@
 .Ingredient-addBtn a {
   margin: auto 0;
   margin: 0;
-  background-color: #5B7D8A;
+  background-color: #5b7d8a;
   border: 2px solid #47616b;
   color: #fff;
 }
 
 .Ingredient-removeBtn,
-.Ingredient-addBtn {
+.Ingredient-addBtn,
+.Tag-addBtn {
   width: 100%;
   text-align: center;
+}
+
+.TagForm-container {
+  width: 20%;
+  margin: 2px;
+  display: inline-block;
+}
+
+.TagForm-input,
+.Tag-removeIcon {
+  display: inline-block;
+}
+
+.TagForm-input {
+  width: 90%;
+}
+
+.Tag-removeIcon {
+  width: 1%;
+  display: inline-block;
+  text-align: center;
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  color: #474747;
+  margin: 4px;
+  padding: 0;
+  min-width: 0;
+  font-size: 20px;
 }
 
 @media (max-width: 768px) {

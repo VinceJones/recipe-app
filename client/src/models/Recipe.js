@@ -1,4 +1,5 @@
 import Ingredient from './Ingredient';
+import Tag from './Tag';
 
 /**
  * Recipe model.
@@ -16,6 +17,7 @@ export default class Recipe {
     this.name = recipe.name ? recipe.name : '';
     this.description = recipe.description ? recipe.description : '';
     this.ingredients = this.tranformIngredientData(recipe.ingredients);
+    this.tags = this.transformTagData(recipe.tags);
   }
 
   /**
@@ -33,6 +35,26 @@ export default class Recipe {
     ingData.forEach(ing => {
       ingredients.push(new Ingredient(ing));
     });
+
     return ingredients;
+  }
+
+  /**
+   * Transform ingredient data into array of Ingredients.
+   * 
+   * @param {Object[]} tagData
+   * @public
+   */
+  transformTagData = tagData => {
+    if (!tagData) {
+      return [new Tag()];
+    }
+
+    const tags = [];
+    tagData.forEach(tag => {
+      tags.push(new Tag(tag));
+    })
+
+    return tags;
   }
 }

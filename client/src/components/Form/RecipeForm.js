@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import RecipeConfig from '../RecipeConfig';
 import IngredientFormContainer from './IngredientFormContainer';
 import Recipe from '../../models/Recipe';
+import TagFormContainer from './TagFormContainer';
 
 const recipeConfig = new RecipeConfig();
 
@@ -18,7 +19,7 @@ export default class RecipeForm extends Component {
     handleRecipeFieldChange: PropTypes.func.isRequired,
     handleChildFieldChange: PropTypes.func.isRequired,
     handleDeleteIngredientGroup: PropTypes.func.isRequired,
-    handleAddIngredientGroup: PropTypes.func.isRequired,
+    handleAddIngredientGroup: PropTypes.func.isRequired
   };
 
   /**
@@ -59,6 +60,12 @@ export default class RecipeForm extends Component {
             onChange={this.props.handleRecipeFieldChange()}
           />
         </div>
+        <TagFormContainer
+          tags={this.props.recipe.tags}
+          onChange={this.props.handleChildFieldChange('tags')}
+          requestDeleteTag={index => this.props.handleDeleteItemFromArray(index, 'tags')}
+          requestAddTag={() => this.props.handleAddTag()}
+        />
         <IngredientFormContainer
           ingredients={this.props.recipe.ingredients}
           onChange={this.props.handleChildFieldChange('ingredients')}

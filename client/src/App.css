@@ -126,6 +126,10 @@ label {
   color: #474747;
 }
 
+.isHidden {
+  display: none;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 1vh;
