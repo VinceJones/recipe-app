@@ -50,7 +50,6 @@ class App extends Component {
    * @public
    */
   setMessage = async (status, text) => {
-    console.log('setMessage()', status, text);
     await this.setState({ message: new Message({ status, text }) });
   };
 
