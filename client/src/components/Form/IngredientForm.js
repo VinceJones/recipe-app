@@ -82,6 +82,7 @@ export default class IngredientForm extends Component {
               className="btn btn_secondary"
               isBtn={true}
               onClick={this.props.requestDeleteGroup}
+              preventDefault={true}
             />
           ) : null}
         </div>

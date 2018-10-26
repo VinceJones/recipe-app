@@ -55,6 +55,7 @@ export default class TagFormContainer extends Component {
             className="btn btn_tertiary"
             isBtn={true}
             onClick={this.props.requestAddTag}
+            preventDefault={true}
           />
         </div>
       </div>

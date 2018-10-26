@@ -68,7 +68,7 @@ export default class RecipeConfig {
      */
     get textAreaConfig() {
         return {
-            rows: '5',
+            rows: '10',
             columns: '30',
         }
     }
