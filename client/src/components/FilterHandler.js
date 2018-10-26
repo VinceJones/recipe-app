@@ -12,7 +12,6 @@ export default class FilterHandler {
    */
   filterItems(items, filterValue) {
     items = items.filter(item => {
-      // return this.getMatchByType(item);
       return this.search(item, filterValue);
     });
 
