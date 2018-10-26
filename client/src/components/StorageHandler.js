@@ -11,7 +11,7 @@ export default class StorageHandler {
    */
   constructor() {
     this.endpoints = {
-      host: 'http://localhost:5000',
+      host: 'https://vincentjonesmuth.com',
       postRecipes: '/recipes/post',
       updateRecipe: '/recipes/update',
       deleteRecipe: '/recipes/delete',
