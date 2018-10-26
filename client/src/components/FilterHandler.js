@@ -11,137 +11,42 @@ export default class FilterHandler {
    * @param {string}} filterValue
    */
   filterItems(items, filterValue) {
-    this.setFilterValue(filterValue);
     items = items.filter(item => {
-      return this.getMatchByType(item);
+      // return this.getMatchByType(item);
+      return this.search(item, filterValue);
     });
 
     return items;
   }
 
   /**
-   * Set the value to filter by
+   * Search for a match recursively.
    *
-   * @private
+   * @param {*} haystack
+   * @param {string} string
+   * @public
    */
-  setFilterValue = filterValue => {
-    this.filterValue = filterValue;
-  };
-
-  /**
-   * Get a match value based on type of item.
-   *
-   * @param {*} item
-   */
-  getMatchByType(item) {
-    let match = false;
-
-    if (typeof item === 'object' && typeof item !== 'function') {
-      match = this.checkObjectMatch(item);
-    }
-
-    if (item instanceof Array) {
-      match = this.checkArrayMatch(item);
-    }
-
-    if (typeof item === 'string') {
-      match = this.checkStringMatch(item);
-    }
-
-    return match;
-  }
-
-  /**
-   * Recursively check if object values match the filter value.
-   *
-   * @param {Object} obj
-   */
-  checkObjectMatch(obj) {
-    const matches = [];
-    Object.entries(obj).forEach(([key, value]) => {
-      matches.push(this.getMatchByType(value));
-    });
-
-    return matches.indexOf(true) > -1;
-  }
-
-  /**
-   * Recursively check if array values match the filter value.
-   *
-   * @param {Array} array
-   * @private
-   */
-  checkArrayMatch(array) {
-    const matches = [];
-    array.forEach(item => {
-      matches.push(this.getMatchByType(item));
-    });
-
-    return matches.indexOf(true) > -1;
-  }
-
-  /**
-   * Check if a string matches the filter value.
-   *
-   * @param {string} value
-   * @private
-   */
-  checkStringMatch(value) {
-    const match = false;
-    const stringMatch =
-      value.toLowerCase().search(this.filterValue.toLowerCase()) !== -1;
-    return stringMatch ? stringMatch : match;
-  }
-
-  /**
-   * Check if a array of objects matches the filter value.
-   *
-   * @param {*} updatedList
-   * @param {*} event
-   *
-   * @deprecated
-   *   This function assumes an array is a array of ojects and
-   *   those objects have a name property. We want to recursively
-   *   loop through an array until a string is found and then return
-   *   the comparison against that string. checkArrayMatch() accomplishes
-   *   this.
-   *
-   * @private
-   */
-  _filterItems_BAK(updatedList, event) {
-    const filterValue = event.target.value;
-    updatedList = updatedList.filter(recipe => {
-      const matches = [];
-      Object.entries(recipe).forEach(([key, value]) => {
-        let match = false;
-
-        // Check if a value is an array and loop to check the
-        // name property if it exists to see if it matches.
-        if (value instanceof Array) {
-          let arrayMatch = recipe[key].filter(item => {
-            if (item.hasOwnProperty('name')) {
-              return (
-                item.name.toLowerCase().search(filterValue.toLowerCase()) !== -1
-              );
-            } else {
-              return false;
-            }
-          });
-          arrayMatch = arrayMatch !== undefined && arrayMatch.length > 0;
-          match = arrayMatch ? arrayMatch : match;
+  search(haystack, needle) {
+    if (haystack instanceof Array) {
+      for (let i = 0; i < haystack.length; i++) {
+        if (this.search(haystack[i], needle)) {
+          return true;
         }
-
-        // Check if the value is a string and see if it matches.
-        if (typeof value === 'string' || value instanceof String) {
-          let stringMatch =
-            recipe[key].toLowerCase().search(filterValue.toLowerCase()) !== -1;
-          match = stringMatch ? stringMatch : match;
+      }
+    } else if (typeof haystack === 'object') {
+      for (const key in haystack) {
+        if (this.search(haystack[key], needle)) {
+          return true;
         }
+      }
+    } else {
+      return (
+        String(haystack)
+          .toLowerCase()
+          .search(needle.toLowerCase()) !== -1
+      );
+    }
 
-        matches.push(match);
-      });
-
-      return matches.indexOf(true) > -1;
-    });
+    return false;
   }
 }
