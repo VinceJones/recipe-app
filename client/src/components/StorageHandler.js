@@ -11,12 +11,20 @@ export default class StorageHandler {
    */
   constructor() {
     this.endpoints = {
-      host: 'http://vincentjonesmuth.com:5000',
+      host: this.host + '://vincentjonesmuth.com:5000',
       postRecipes: '/recipes/post',
       updateRecipe: '/recipes/update',
       deleteRecipe: '/recipes/delete',
       getRecipes: '/recipes/get'
     };
+  }
+
+  get host() {
+    if (process.env.NODE_ENV === 'production') {
+      return 'https';
+    }
+
+    return 'http';
   }
 
   /**
@@ -46,8 +54,6 @@ export default class StorageHandler {
       headers,
       body: json
     };
-
-    console.log('postRecipe', this);
 
     return await this.makeRequest(this.endpoints.postRecipes, options).then(
       responseJson => {
