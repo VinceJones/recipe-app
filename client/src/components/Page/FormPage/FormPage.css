@@ -97,4 +97,8 @@
   .TagForm-container {
     width: 48%;
   }
+
+  .Ingredient-group {
+    width: 100%
+  }
 }
