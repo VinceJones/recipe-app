@@ -3,7 +3,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.PORT || 5000;
-const fs = require('fs');
+const path = require('path')
 const recipeService = require('./src/Recipe/RecipeService');
 
 var whitelist = ['http://localhost:3000', 'http://localhost:5000'];
@@ -20,6 +20,7 @@ var corsOptions = {
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use( express.static( `${__dirname}/./client/build` ) );
 
 /**
  * console.log that your server is up and running
@@ -67,3 +68,10 @@ app.delete('/recipes/delete/:recipeId', (req, res) => {
   const deleted = recipeService.deleteRecipeById(recipeId);
   res.send({ data: deleted });
 });
+
+/**
+ * Server App to client.
+ */
+app.get('*', (req, res)=>{
+  res.sendFile(path.join(__dirname, './client/build/index.html'));
+})
