@@ -21,7 +21,7 @@ export default class StorageHandler {
 
   get host() {
     if (process.env.NODE_ENV === 'production') {
-      return 'https';
+      return 'http';
     }
 
     return 'http';
