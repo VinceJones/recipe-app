@@ -11,7 +11,7 @@ export default class StorageHandler {
    */
   constructor() {
     this.endpoints = {
-      host: this.host + '://vincentjonesmuth.com:5000',
+      host: this.host + '://localhost:5000',
       postRecipes: '/recipes/post',
       updateRecipe: '/recipes/update',
       deleteRecipe: '/recipes/delete',
@@ -55,11 +55,13 @@ export default class StorageHandler {
       body: json
     };
 
-    return await this.makeRequest(this.endpoints.postRecipes, options).then(
-      responseJson => {
+    return await this.makeRequest(this.endpoints.postRecipes, options)
+      .then(responseJson => {
         return responseJson;
-      }
-    );
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   /**
@@ -78,11 +80,13 @@ export default class StorageHandler {
       body: json
     };
 
-    return await this.makeRequest(this.endpoints.updateRecipe, options).then(
-      responseJson => {
+    return await this.makeRequest(this.endpoints.updateRecipe, options)
+      .then(responseJson => {
         return responseJson;
-      }
-    );
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   /**
@@ -91,16 +95,20 @@ export default class StorageHandler {
    * @public
    */
   getRecipes = async () => {
-    return this.makeRequest(this.endpoints.getRecipes).then(responseJson => {
-      const responseData = JSON.parse(responseJson.data);
-      const recipes = [];
+    return this.makeRequest(this.endpoints.getRecipes)
+      .then(responseJson => {
+        const responseData = JSON.parse(responseJson.data);
+        const recipes = [];
 
-      responseData.data.forEach(recipeData => {
-        recipes.push(new Recipe(recipeData));
+        responseData.data.forEach(recipeData => {
+          recipes.push(new Recipe(recipeData));
+        });
+
+        return recipes;
+      })
+      .catch(error => {
+        console.log(error);
       });
-
-      return recipes;
-    });
   };
 
   /**
@@ -112,23 +120,27 @@ export default class StorageHandler {
   getRecipeById = async id => {
     const endpoint = this.endpoints.getRecipes + '/' + id;
 
-    return await this.makeRequest(endpoint).then(responseJson => {
-      if (this.isEmpty(responseJson.data)) {
+    return await this.makeRequest(endpoint)
+      .then(responseJson => {
+        if (this.isEmpty(responseJson.data)) {
+          return undefined;
+        }
+        const parsedData = JSON.parse(responseJson.data);
+
+        if (parsedData !== undefined) {
+          return new Recipe(parsedData);
+        }
+
         return undefined;
-      }
-      const parsedData = JSON.parse(responseJson.data);
-
-      if (parsedData !== undefined) {
-        return new Recipe(parsedData);
-      }
-
-      return undefined;
-    });
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   /**
    * Check if an object is empty.
-   * 
+   *
    * @param {Object} obj
    * @public
    */
@@ -152,10 +164,14 @@ export default class StorageHandler {
       method: 'DELETE'
     };
 
-    return await this.makeRequest(endpoint, options).then(responseJson => {
-      const responseData = JSON.parse(responseJson.data);
-      return responseData;
-    });
+    return await this.makeRequest(endpoint, options)
+      .then(responseJson => {
+        const responseData = JSON.parse(responseJson.data);
+        return responseData;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
 
   /**

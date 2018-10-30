@@ -24,7 +24,8 @@ export default class ListPage extends Component {
       showModal: false,
       deleteRecipe: {},
       recipes: [],
-      filteredRecipes: []
+      filteredRecipes: [],
+      filterValue: ''
     };
   }
 
@@ -103,6 +104,10 @@ export default class ListPage extends Component {
    * @public
    */
   filterList = event => {
+    const state = this.state;
+    state.filterValue = event.target.value;
+    this.setState(state);
+
     // If there is no filter applied then we should revert
     // the list to the original list of recipes.
     if (event.target.value === '') {
@@ -129,6 +134,7 @@ export default class ListPage extends Component {
     return (
       <Page pageTitle="Recipes" messageUtility={this.props.messageUtility}>
         <ListPageFilterForm
+          filterValue={this.state.filterValue}
           recipes={this.state.filteredRecipes}
           showModal={recipe => this.showModal(recipe)}
           filterList={event => this.filterList(event)}

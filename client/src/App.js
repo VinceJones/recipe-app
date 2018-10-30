@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import FormPage from './components/Page/FormPage/FormPage';
 import ListPage from './components/Page/ListPage/ListPage';
+import LoginPage from './components/Page/Login/LoginPage';
 import MainMenu from './components/Menu/MainMenu';
 import Message from './components/Message/Message';
 import './App.css';
@@ -96,6 +97,12 @@ class App extends Component {
                   exact
                   path="/recipe/edit/:recipeId"
                   component={FormPage}
+                  messageUtility={this.state}
+                />
+                <PropsRoute
+                  exact
+                  path="/login"
+                  component={LoginPage}
                   messageUtility={this.state}
                 />
               </Switch>

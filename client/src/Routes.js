@@ -9,6 +9,11 @@ const Routes = () => {
         path: '/',
         text: 'View Recipes',
         className: ''
+      },
+      {
+        path: '/login',
+        text: 'Login',
+        className: ''
       }
     ];
   };
