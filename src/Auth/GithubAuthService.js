@@ -1,5 +1,6 @@
 const fetch = require('node-fetch');
 const authConfig = require('../../AuthConfig');
+const qs = require('querystring');
 
 /**
  * GithubAuthService.
@@ -16,7 +17,8 @@ class GithubAuthService {
    */
   constructor() {
     this.endpoints = {
-      accessToken: 'https://github.com/login/oauth/access_token'
+      accessToken: 'https://github.com/login/oauth/access_token',
+      user: 'https://api.github.com/user',
     };
   }
 
@@ -35,29 +37,38 @@ class GithubAuthService {
    *
    * @param {string} code
    */
-  async getAccesstoken(code) {
+  async getAccessToken(code) {
     const headers = this.getHeaders();
 
     const options = {
       method: 'POST',
       headers: headers,
-      body: {
-        code: code,
-        client_id: authConfig.client_id,
-        client_secret: authConfig.client_secret
-      }
     };
 
-    console.log('Request options:\n', options);
+    const accessTokenQueryString = qs.stringify({
+      code: code,
+      client_id: authConfig.client_id,
+      client_secret: authConfig.client_secret,
+      scope: ['user'],
+      redirectUri: 'http://localhost:5000/login'
+    });
 
-    const accessToken = await this.makeRequest(
-      this.endpoints.accessToken,
+    const accessTokenObj = await this.makeRequest(
+      this.endpoints.accessToken + '?' + accessTokenQueryString,
       options
     );
 
-    console.log('Access token:\n', accessToken);
+    console.log('Access token:\n', accessTokenObj);
 
-    return accessToken;
+    const userQueryString = qs.stringify({
+      access_token: accessTokenObj.access_token,
+    });
+
+    const user = await this.makeRequest(this.endpoints.user + '?' + userQueryString);
+
+    console.log('User: ', user);
+
+    return user;
   }
 
   async makeRequest(endpoint, options) {

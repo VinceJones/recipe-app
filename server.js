@@ -81,7 +81,7 @@ app.post('/auth/login/', async (req, res) => {
 
   console.log('Try to get access token');
 
-  const accessToken = await githubAuthService.getAccesstoken(req.body.code);
+  const accessToken = await githubAuthService.getAccessToken(req.body.code);
   res.send({ data: accessToken });
 });
 
