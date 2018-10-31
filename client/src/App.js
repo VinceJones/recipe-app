@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect
+} from 'react-router-dom';
 import FormPage from './components/Page/FormPage/FormPage';
 import ListPage from './components/Page/ListPage/ListPage';
 import LoginPage from './components/Page/Login/LoginPage';
@@ -33,7 +38,10 @@ class App extends Component {
       userUtility: {
         user: new User(),
         storageKey: 'recipeAppUser',
-        setUser: accessToken => this.setUser(accessToken)
+        isUserAdmin: false,
+        setUser: accessToken => this.setUser(accessToken),
+        setClientId: () => this.setClientId(),
+        getIsUserAdmin: () => this.getIsUserAdmin()
       }
     };
   }
@@ -43,11 +51,12 @@ class App extends Component {
    *
    * @public
    */
-  componentDidMount = () => {
+  componentDidMount = async () => {
     this.getUser();
 
-    if (!this.state.userUtility.user.clientId) {
-      this.setClientId();
+    if (this.state.userUtility.user.clientId !== '') {
+      await this.setClientId();
+      await this.getIsUserAdmin();
     }
   };
 
@@ -57,7 +66,7 @@ class App extends Component {
    * @public
    */
   clearMessages = async () => {
-    await this.setState(new Message());
+    await this.setState(new Message({}));
   };
 
   /**
@@ -112,8 +121,10 @@ class App extends Component {
    *
    * @public
    */
-  getUser = () => {
-    const storageItem = localStorage.getItem(this.state.userUtility.storageKey);
+  getUser = async () => {
+    const storageItem = await localStorage.getItem(
+      this.state.userUtility.storageKey
+    );
 
     if (!storageItem) {
       return;
@@ -121,6 +132,21 @@ class App extends Component {
 
     const state = this.state;
     state.userUtility.user = new User(JSON.parse(storageItem));
+    this.setState(state);
+  };
+
+  /**
+   * Get whether a user is admin.
+   *
+   * @public
+   */
+  getIsUserAdmin = async () => {
+    const isUserAdmin = await authHandler.isUserAdmin(
+      this.state.userUtility.user
+    );
+    console.log('getIsUserAdmin', isUserAdmin);
+    const state = this.state;
+    state.userUtility.isUserAdmin = isUserAdmin;
     this.setState(state);
   };
 
@@ -137,15 +163,12 @@ class App extends Component {
 
     const state = this.state;
     state.userUtility.user.accessToken = accessToken;
-    state.userUtility.user.isUserAdmin = await authHandler.isUserAdmin(
-      this.state.userUtility.user
-    );
 
     this.setState(state);
     console.log('setUser user', this.state.userUtility.user);
 
     // Set the user to local storage for future use.
-    localStorage.setItem(
+    await localStorage.setItem(
       this.state.userUtility.storageKey,
       JSON.stringify(this.state.userUtility.user)
     );
@@ -161,7 +184,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <header className="App-header">
-            <MainMenu />
+            <MainMenu userUtility={this.state.userUtility} />
           </header>
           <section className="App-body">
             <Switch>
@@ -169,6 +192,13 @@ class App extends Component {
                 exact
                 path="/"
                 component={ListPage}
+                messageUtility={this.state.messageUtility}
+                userUtility={this.state.userUtility}
+              />
+              <PropsRoute
+                exact
+                path="/login"
+                component={LoginPage}
                 messageUtility={this.state.messageUtility}
                 userUtility={this.state.userUtility}
               />
@@ -183,13 +213,6 @@ class App extends Component {
                 exact
                 path="/recipe/edit/:recipeId"
                 component={FormPage}
-                messageUtility={this.state.messageUtility}
-                userUtility={this.state.userUtility}
-              />
-              <PropsRoute
-                exact
-                path="/login"
-                component={LoginPage}
                 messageUtility={this.state.messageUtility}
                 userUtility={this.state.userUtility}
               />
@@ -225,6 +248,33 @@ const PropsRoute = ({ component, ...props }) => {
       {...props}
       render={routeProps => {
         return renderMergedProps(component, routeProps, props);
+      }}
+    />
+  );
+};
+
+/**
+ * Add props to a private route.
+ *
+ * @param {Object} Object
+ * @param {Object} component
+ * @param {...any} props
+ */
+const PrivatePropsRoute = ({ component, ...props }) => {
+  return (
+    <Route
+      {...props}
+      render={routeProps => {
+        console.log(
+          'PrivatePropRoute isUserAdmin',
+          props.userUtility.isUserAdmin
+        );
+        console.log('\n\n\n');
+        if (props.userUtility.isUserAdmin) {
+          return renderMergedProps(component, routeProps, props);
+        } else {
+          return <Redirect to="/login" />;
+        }
       }}
     />
   );

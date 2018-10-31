@@ -21,7 +21,8 @@ export default class LoginPage extends Component {
       accessToken = accessTokenResponse.data;
     }
 
-    this.props.userUtility.setUser(accessToken);
+    await this.props.userUtility.setUser(accessToken);
+    this.props.history.push('/');
   };
 
   /**
@@ -39,7 +40,7 @@ export default class LoginPage extends Component {
    */
   render() {
     return (
-      <Page pageTitle="Login" messageUtility={this.props.messageUtility}>
+      <Page pageTitle="Login" messageUtility={this.props.messageUtility} userUtility={this.props.userUtility}>
         <GitHubLogin
           clientId={this.props.userUtility.user.clientId}
           onSuccess={this.onSuccess}

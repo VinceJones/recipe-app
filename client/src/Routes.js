@@ -3,17 +3,20 @@ const Routes = () => {
       {
         path: '/recipe/add',
         text: 'Add a Recipe',
-        className: ''
+        className: '',
+        isAdmin: true,
       },
       {
         path: '/',
         text: 'View Recipes',
-        className: ''
+        className: '',
+        isAdmin: false,
       },
       {
         path: '/login',
         text: 'Login',
-        className: ''
+        className: '',
+        isAdmin: false,
       }
     ];
   };

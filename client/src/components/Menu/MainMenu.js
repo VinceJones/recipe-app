@@ -4,10 +4,18 @@ import Routes from '../../Routes';
 
 import './MainMenu.css';
 
-const MainMenu = () => {
+const MainMenu = ({ userUtility }) => {
+  let routes = Routes;
+
+  if (userUtility.isUserAdmin === false) {
+    routes = routes.filter((route, index) => {
+      return !route.isAdmin;
+    });
+  }
+
   return (
     <div className="MainMenu-container">
-      {Routes.map((route, index) => (
+      {routes.map((route, index) => (
         <MenuItem
           key={index}
           menuClass={route.className}

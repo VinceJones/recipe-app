@@ -1,5 +1,5 @@
 const fetch = require('node-fetch');
-const authConfig = require('../../AuthConfig');
+const config = require('../../Config');
 const qs = require('querystring');
 
 /**
@@ -51,8 +51,8 @@ class GithubAuthService {
 
     const accessTokenQueryString = qs.stringify({
       code: code,
-      client_id: authConfig.client_id,
-      client_secret: authConfig.client_secret,
+      client_id: config.client_id,
+      client_secret: config.client_secret,
       scope: ['user'],
       redirectUri: this.endpoints.redirectUri
     });
@@ -82,7 +82,7 @@ class GithubAuthService {
     const userId = parseInt(user.id);
     console.log('checking userId', user, userId);
 
-    if (!authConfig.approved_users.includes(userId)) {
+    if (!config.approved_users.includes(userId)) {
       return false;
     }
 

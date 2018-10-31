@@ -25,4 +25,4 @@ yarn-error.log*
 .idea
 
 # Configuration
-AuthConfig.js
+Config.js

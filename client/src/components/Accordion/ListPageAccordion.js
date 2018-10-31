@@ -37,21 +37,23 @@ export default class ListPageAccordion extends Component {
                   <ListIngredient key={index} ingredient={ingredient} />
                 ))}
               </ul>
-              <div>
-                <Button
-                  text="Edit recipe"
-                  link={"recipe/edit/" + recipe.id}
-                  className="btn btn_tertiary"
-                  isBtn={true}
-                />
-                <Button
-                  text="Delete recipe"
-                  link="#"
-                  className="btn btn_secondary"
-                  isBtn={true}
-                  onClick={() => this.props.showModal(recipe)}
-                />
-              </div>
+              {this.props.userUtility.isUserAdmin && (
+                <div>
+                  <Button
+                    text="Edit recipe"
+                    link={'recipe/edit/' + recipe.id}
+                    className="btn btn_tertiary"
+                    isBtn={true}
+                  />
+                  <Button
+                    text="Delete recipe"
+                    link="#"
+                    className="btn btn_secondary"
+                    isBtn={true}
+                    onClick={() => this.props.showModal(recipe)}
+                  />
+                </div>
+              )}
             </div>
           ))}
         </Accordion>

@@ -13,7 +13,8 @@ export default class Page extends Component {
   static propTypes = {
     children: PropTypes.instanceOf(Object).isRequired,
     pageTitle: PropTypes.string.isRequired,
-    messageUtility: PropTypes.object.isRequired
+    messageUtility: PropTypes.object.isRequired,
+    userUtility: PropTypes.object.isRequired
   };
 
   /**
@@ -21,8 +22,16 @@ export default class Page extends Component {
    *
    * @public
    */
-  componentDidMount = () => {
-    if (this.props.messageUtility && this.props.messageUtility.message.shown === false) {
+  componentDidMount = async () => {
+    if (this.props.userUtility.user.clientId === '') {
+      await this.props.userUtility.setClientId();
+      await this.props.userUtility.getIsUserAdmin();
+    }
+
+    if (
+      this.props.messageUtility &&
+      this.props.messageUtility.message.shown === false
+    ) {
       this.props.messageUtility.toggleMessageShown();
     }
   };
@@ -47,7 +56,7 @@ export default class Page extends Component {
     return (
       <div>
         <div>
-          <Message messageUtility={this.props.messageUtility}/>
+          <Message messageUtility={this.props.messageUtility} />
         </div>
         <div className="page container">
           <div>

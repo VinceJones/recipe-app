@@ -132,19 +132,22 @@ export default class ListPage extends Component {
    */
   render() {
     return (
-      <Page pageTitle="Recipes" messageUtility={this.props.messageUtility}>
+      <Page pageTitle="Recipes" messageUtility={this.props.messageUtility} userUtility={this.props.userUtility}>
         <ListPageFilterForm
           filterValue={this.state.filterValue}
           recipes={this.state.filteredRecipes}
           showModal={recipe => this.showModal(recipe)}
           filterList={event => this.filterList(event)}
+          userUtility={this.props.userUtility}
         />
-        <DeleteRecipeModal
-          showModal={this.state.showModal}
-          handleDeleteRecipe={() => this.handleDeleteRecipe()}
-          hideModal={() => this.hideModal()}
-          deleteRecipe={this.state.deleteRecipe}
-        />
+        {this.props.userUtility.isUserAdmin && (
+          <DeleteRecipeModal
+            showModal={this.state.showModal}
+            handleDeleteRecipe={() => this.handleDeleteRecipe()}
+            hideModal={() => this.hideModal()}
+            deleteRecipe={this.state.deleteRecipe}
+          />
+        )}
       </Page>
     );
   }

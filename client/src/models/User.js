@@ -13,7 +13,6 @@ export default class User {
     constructor(user = {}) {
       this.accessToken = user.accessToken ? user.accessToken : '';
       this.clientId = user.clientId ? user.clientId : '';
-      this.isUserAdmin = user.isUserAdmin ? user.isUserAdmin : false;
     }
   }
   

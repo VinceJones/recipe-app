@@ -6,7 +6,7 @@ const port = process.env.PORT || 5000;
 const path = require('path');
 const recipeService = require('./src/Recipe/RecipeService');
 const githubAuthService = require('./src/Auth/GithubAuthService');
-const authConfig = require('./AuthConfig');
+const config = require('./Config');
 
 var whitelist = ['http://localhost:3000', 'http://localhost:5000'];
 var corsOptions = {
@@ -90,8 +90,8 @@ app.get('/auth/login/:code', async (req, res) => {
  * GET client id.
  */
 app.get('/auth/get/client_id', (req, res) => {
-  console.log('GET client_id:\n', authConfig.client_id);
-  res.send({ data: authConfig.client_id });
+  console.log('GET client_id:\n', config.client_id);
+  res.send({ data: config.client_id });
 });
 
 /**
@@ -104,7 +104,7 @@ app.get('/auth/get/isUserAdmin/:accessToken', async (req, res) => {
   }
 
   if (!accessToken) { 
-    data.error = 'Access is needed to get user.',
+    data.error = 'Access token is needed to get user.',
     res.send(data);
   }
   console.log('GET access token:\n', accessToken);

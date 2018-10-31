@@ -48,6 +48,7 @@ export default class ListPageFilterForm extends Component {
         <ListPageAccordion
           recipes={this.props.recipes}
           showModal={recipe => this.props.showModal(recipe)}
+          userUtility={this.props.userUtility}
         />
       </div>
     );
