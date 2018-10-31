@@ -17,6 +17,7 @@ class GithubAuthService {
    */
   constructor() {
     this.endpoints = {
+      redirectUri: 'http://localhost:5000/login',
       accessToken: 'https://github.com/login/oauth/access_token',
       user: 'https://api.github.com/user',
     };
@@ -24,6 +25,8 @@ class GithubAuthService {
 
   /**
    * Get request headers.
+   * 
+   * @public
    */
   getHeaders() {
     return {
@@ -36,6 +39,7 @@ class GithubAuthService {
    * Get Github Access token
    *
    * @param {string} code
+   * @public
    */
   async getAccessToken(code) {
     const headers = this.getHeaders();
@@ -50,7 +54,7 @@ class GithubAuthService {
       client_id: authConfig.client_id,
       client_secret: authConfig.client_secret,
       scope: ['user'],
-      redirectUri: 'http://localhost:5000/login'
+      redirectUri: this.endpoints.redirectUri
     });
 
     const accessTokenObj = await this.makeRequest(
@@ -59,18 +63,54 @@ class GithubAuthService {
     );
 
     console.log('Access token:\n', accessTokenObj);
+    return accessTokenObj.access_token;
+  }
 
+  /**
+   * Is user admin?
+   * 
+   * @param {string} accessToken
+   * @public
+   */
+  async isUserAdmin(accessToken) {
+    const user = await this.getUser(accessToken);
+
+    if (!user.hasOwnProperty('id') && user.id !== '' && user.id !== undefined && user.id !== null) {
+      return false;
+    }
+
+    const userId = parseInt(user.id);
+    console.log('checking userId', user, userId);
+
+    if (!authConfig.approved_users.includes(userId)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Get the user object.
+   * 
+   * @param {string} accessToken
+   * @public
+   */
+  async getUser(accessToken) {
     const userQueryString = qs.stringify({
-      access_token: accessTokenObj.access_token,
+      access_token: accessToken,
     });
 
     const user = await this.makeRequest(this.endpoints.user + '?' + userQueryString);
-
-    console.log('User: ', user);
-
     return user;
   }
 
+  /**
+   * Make a request.
+   * 
+   * @param {string} endpoint 
+   * @param {Object} options
+   * @public
+   */
   async makeRequest(endpoint, options) {
     return await fetch(endpoint, options)
       .then(response => response.json())

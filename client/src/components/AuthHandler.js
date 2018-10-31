@@ -12,18 +12,27 @@ export default class AuthHandler {
   constructor() {
     this.endpoints = {
       host: 'http://localhost:5000',
-      accessToken: '/auth/login/',
-      clientId: '/auth/get/client_id',
       redirectUri: 'http://localhost:5000/login',
+      accessToken: '/auth/login',
+      clientId: '/auth/get/client_id',
+      isUserAdmin: '/auth/get/isUserAdmin'
     };
   }
 
   /**
    * Get the client_id from the server.
+   *
+   * @public
    */
   getClientId = async () => {
-      return await this.makeRequest(this.endpoints.clientId);
-  }
+    const response = await this.makeRequest(this.endpoints.clientId);
+
+    if (!response.hasOwnProperty('data')) {
+      return '';
+    }
+
+    return response.data;
+  };
 
   /**
    * Get the access github access token
@@ -32,21 +41,33 @@ export default class AuthHandler {
    * @public
    */
   getAccessToken = async code => {
-    const headers = new Headers();
-    headers.append('Content-type', 'application/json');
-    headers.append('Accept', 'application/json');
+    const endpoint = this.endpoints.accessToken + '/' + code;
+    const response = await this.makeRequest(endpoint);
 
-    const json = JSON.stringify(code);
+    if (!response.hasOwnProperty('data')) {
+      return '';
+    }
 
-    const options = {
-      method: 'POST',
-      headers,
-      body: json
-    };
+    console.log('getAccessToken', response.data);
 
-    console.log('Try to get access token');
+    return response;
+  };
 
-    return await this.makeRequest(this.endpoints.accessToken, options);
+  /**
+   * Find out whether the user that loggec in is admin.
+   *
+   * @param {User} user
+   * @public
+   */
+  isUserAdmin = async user => {
+    if (!user.accessToken) {
+      return false;
+    }
+
+    const endpoint = this.endpoints.isUserAdmin + '/' + user.accessToken;
+    const response = await this.makeRequest(endpoint);
+    console.log('isUserAdmin', response);
+    return response.user;
   };
 
   /**

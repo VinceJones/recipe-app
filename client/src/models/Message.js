@@ -12,7 +12,7 @@ export default class Message {
    * @param {string} text
    * @param {Boolean} shown
    */
-  constructor({ status = '', text = '', shown = false }) {
+  constructor({ status = '', text = '', shown = true }) {
     this.status = status ? status : '';
     this.text = text ? text : '';
     this.shown = shown;

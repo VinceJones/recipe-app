@@ -22,7 +22,7 @@ export default class Page extends Component {
    * @public
    */
   componentDidMount = () => {
-    if (this.props.messageUtility && !this.props.messageUtility.message.shown) {
+    if (this.props.messageUtility && this.props.messageUtility.message.shown === false) {
       this.props.messageUtility.toggleMessageShown();
     }
   };

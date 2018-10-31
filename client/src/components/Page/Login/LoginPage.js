@@ -6,29 +6,22 @@ import AuthHandler from '../../AuthHandler';
 const authHandler = new AuthHandler();
 
 export default class LoginPage extends Component {
-  constructor() {
-    super();
-    this.state = {
-      client_id: ''
-    };
-  }
-
-  componentDidMount = async () => {
-    const client_id = await authHandler.getClientId();
-    console.log('client_id', client_id.data);
-    this.setState({ client_id: client_id.data });
-  };
-
   /**
    * Handle successful login
    *
    * @param {Object} response
    * @public
    */
-  onSuccess = async code => {
-    console.log('success', code);
-    const accessToken = await authHandler.getAccessToken(code);
-    console.log('accessToken', accessToken.data);
+  onSuccess = async response => {
+    let accessToken = '';
+    console.log('code:', response.code);
+    const accessTokenResponse = await authHandler.getAccessToken(response.code);
+    
+    if (accessTokenResponse.hasOwnProperty('data')) {
+      accessToken = accessTokenResponse.data;
+    }
+
+    this.props.userUtility.setUser(accessToken);
   };
 
   /**
@@ -48,7 +41,7 @@ export default class LoginPage extends Component {
     return (
       <Page pageTitle="Login" messageUtility={this.props.messageUtility}>
         <GitHubLogin
-          clientId={this.state.client_id}
+          clientId={this.props.userUtility.user.clientId}
           onSuccess={this.onSuccess}
           onFailure={this.onFailure}
           redirectUri={authHandler.endpoints.redirectUri}

@@ -74,14 +74,15 @@ app.delete('/recipes/delete/:recipeId', (req, res) => {
 /**
  * Login with Github
  */
-app.post('/auth/login/', async (req, res) => {
-  if (!req.body.hasOwnProperty('code')) {
+app.get('/auth/login/:code', async (req, res) => {
+  const code = req.params.code;
+  if (!code) {
     res.send({ data: 'Code is needed to get acccess token.' });
   }
 
-  console.log('Try to get access token');
+  console.log('Try to get access token with code: \n', code);
 
-  const accessToken = await githubAuthService.getAccessToken(req.body.code);
+  const accessToken = await githubAuthService.getAccessToken(code);
   res.send({ data: accessToken });
 });
 
@@ -89,8 +90,28 @@ app.post('/auth/login/', async (req, res) => {
  * GET client id.
  */
 app.get('/auth/get/client_id', (req, res) => {
+  console.log('GET client_id:\n', authConfig.client_id);
   res.send({ data: authConfig.client_id });
 });
+
+/**
+ * Is user admin?.
+ */
+app.get('/auth/get/isUserAdmin/:accessToken', async (req, res) => {
+  const accessToken = req.params.accessToken;
+  const data = {
+    user: false,
+  }
+
+  if (!accessToken) { 
+    data.error = 'Access is needed to get user.',
+    res.send(data);
+  }
+  console.log('GET access token:\n', accessToken);
+
+  data.user = await githubAuthService.isUserAdmin(accessToken);
+  res.send(data);
+})
 
 /**
  * Server App to client.
