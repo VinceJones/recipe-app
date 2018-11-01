@@ -14,14 +14,14 @@ export default class LoginPage extends Component {
    */
   onSuccess = async response => {
     let accessToken = '';
-    console.log('code:', response.code);
     const accessTokenResponse = await authHandler.getAccessToken(response.code);
-    
+
     if (accessTokenResponse.hasOwnProperty('data')) {
       accessToken = accessTokenResponse.data;
     }
 
     await this.props.userUtility.setUser(accessToken);
+    await this.props.userUtility.setUserIsAdmin();
     this.props.history.push('/');
   };
 
@@ -40,7 +40,11 @@ export default class LoginPage extends Component {
    */
   render() {
     return (
-      <Page pageTitle="Login" messageUtility={this.props.messageUtility} userUtility={this.props.userUtility}>
+      <Page
+        pageTitle="Login"
+        messageUtility={this.props.messageUtility}
+        userUtility={this.props.userUtility}
+      >
         <GitHubLogin
           clientId={this.props.userUtility.user.clientId}
           onSuccess={this.onSuccess}

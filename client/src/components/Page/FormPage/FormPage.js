@@ -211,7 +211,7 @@ export default class FormPage extends Component {
       <Page
         pageTitle={this.state.pageTitle}
         messageUtility={this.props.messageUtility}
-        userUtility={this.props.userUtility}
+        // userUtility={this.props.userUtility}
       >
         <RecipeForm
           recipe={this.state.recipe}

@@ -14,7 +14,7 @@ export default class Page extends Component {
     children: PropTypes.instanceOf(Object).isRequired,
     pageTitle: PropTypes.string.isRequired,
     messageUtility: PropTypes.object.isRequired,
-    userUtility: PropTypes.object.isRequired
+    // userUtility: PropTypes.object.isRequired
   };
 
   /**
@@ -23,10 +23,10 @@ export default class Page extends Component {
    * @public
    */
   componentDidMount = async () => {
-    if (this.props.userUtility.user.clientId === '') {
-      await this.props.userUtility.setClientId();
-      await this.props.userUtility.getIsUserAdmin();
-    }
+    // if (this.props.userUtility.user.clientId === '') {
+    //   await this.props.userUtility.setClientId();
+    //   await this.props.userUtility.setUserIsAdmin();
+    // }
 
     if (
       this.props.messageUtility &&

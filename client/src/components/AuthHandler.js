@@ -61,14 +61,12 @@ export default class AuthHandler {
    * @public
    */
   isUserAdmin = async user => {
-    if (!user.accessToken) {
+    if (!user.hasOwnProperty('accessToken') || user.accessToken === '') {
       return false;
     }
 
-    console.log('authHandler.isUserAdmin', user.accessToken);
     const endpoint = this.endpoints.isUserAdmin + '/' + user.accessToken;
     const response = await this.makeRequest(endpoint);
-    console.log('isUserAdmin', response);
     return response.user;
   };
 

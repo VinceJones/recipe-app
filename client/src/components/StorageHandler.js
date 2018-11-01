@@ -1,4 +1,5 @@
 import Recipe from '../models/Recipe';
+import User from '../models/User';
 
 /**
  * Handle storage of data.
@@ -11,7 +12,7 @@ export default class StorageHandler {
    */
   constructor() {
     this.endpoints = {
-      host: this.host + '://localhost:5000',
+      host: 'http://localhost:5000',
       postRecipes: '/recipes/post',
       updateRecipe: '/recipes/update',
       deleteRecipe: '/recipes/delete',
@@ -19,12 +20,15 @@ export default class StorageHandler {
     };
   }
 
-  get host() {
-    if (process.env.NODE_ENV === 'production') {
-      return 'http';
-    }
+  getUser = async storageKey => {
+    let user = await localStorage.getItem(storageKey);
 
-    return 'http';
+    if (!user) {
+      user = new User({});
+    } else {
+      user = JSON.parse(user);
+    }
+    return user;
   }
 
   /**

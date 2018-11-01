@@ -13,8 +13,10 @@ import Message from './models/Message';
 import AuthHandler from './components/AuthHandler';
 import User from './models/User';
 import './App.css';
+import StorageHandler from './components/StorageHandler';
 
 const authHandler = new AuthHandler();
+const storageHandler = new StorageHandler();
 
 /**
  * App component.
@@ -26,6 +28,8 @@ class App extends Component {
    * @public
    */
   constructor(props) {
+    // userServiceSingleton.setAppComponent(this);
+
     super(props);
     this.state = {
       messageUtility: {
@@ -41,7 +45,7 @@ class App extends Component {
         isUserAdmin: false,
         setUser: accessToken => this.setUser(accessToken),
         setClientId: () => this.setClientId(),
-        getIsUserAdmin: () => this.getIsUserAdmin()
+        setUserIsAdmin: () => this.setUserIsAdmin()
       }
     };
   }
@@ -52,12 +56,15 @@ class App extends Component {
    * @public
    */
   componentDidMount = async () => {
-    this.getUser();
+    const nextState = Object.assign({}, this.state);
 
-    if (this.state.userUtility.user.clientId !== '') {
-      await this.setClientId();
-      await this.getIsUserAdmin();
-    }
+    await this.setUser();
+    await this.setClientId()
+    await this.setUserIsAdmin();
+
+    this.hasMounted = true;
+
+    this.setState(nextState);
   };
 
   /**
@@ -66,7 +73,9 @@ class App extends Component {
    * @public
    */
   clearMessages = async () => {
-    await this.setState(new Message({}));
+    const nextState = Object.assign({}, this.state);
+    nextState.messageUtility.message = new Message({});
+    await this.setState(nextState);
   };
 
   /**
@@ -84,9 +93,9 @@ class App extends Component {
    * @public
    */
   setMessage = async (status, text) => {
-    const state = this.state;
-    state.messageUtility.message = new Message({ status, text });
-    await this.setState(state);
+    const nextState = Object.assign({}, this.state);
+    nextState.messageUtility.message = new Message({ status, text });
+    this.setState(nextState);
   };
 
   /**
@@ -96,11 +105,10 @@ class App extends Component {
    */
   toggleMessageShown = async () => {
     if (this.state.messageUtility !== undefined) {
-      const state = this.state.messageUtility.message;
-      state.messageUtility.message.shown =
-        state.messageUtility.message.shown === true ? false : true;
-
-      await this.setState(state);
+      const nextState = Object.assign({}, this.state);
+      nextState.messageUtility.message.shown =
+        nextState.messageUtility.message.shown === true ? false : true;
+      this.setState(nextState);
     }
   };
 
@@ -110,10 +118,13 @@ class App extends Component {
    * @public
    */
   setClientId = async () => {
-    const state = this.state;
-    this.state.userUtility.user.clientId = await authHandler.getClientId();
-    console.log('setClientId:', this.state.userUtility.user);
-    this.setState(state);
+    if (this.state.userUtility.user.clientId !== '') {
+      return;
+    }
+
+    const nextState = Object.assign({}, this.state);
+    nextState.userUtility.user.clientId = await authHandler.getClientId();
+    this.setState(nextState);
   };
 
   /**
@@ -130,24 +141,9 @@ class App extends Component {
       return;
     }
 
-    const state = this.state;
-    state.userUtility.user = new User(JSON.parse(storageItem));
-    this.setState(state);
-  };
-
-  /**
-   * Get whether a user is admin.
-   *
-   * @public
-   */
-  getIsUserAdmin = async () => {
-    const isUserAdmin = await authHandler.isUserAdmin(
-      this.state.userUtility.user
-    );
-    console.log('getIsUserAdmin', isUserAdmin);
-    const state = this.state;
-    state.userUtility.isUserAdmin = isUserAdmin;
-    this.setState(state);
+    const nextState = Object.assign({}, this.state);
+    nextState.userUtility.user = new User(JSON.parse(storageItem));
+    this.setState(nextState);
   };
 
   /**
@@ -161,17 +157,27 @@ class App extends Component {
       this.setState({});
     }
 
-    const state = this.state;
-    state.userUtility.user.accessToken = accessToken;
+    const nextState = Object.assign({}, this.state);
+    nextState.userUtility.user.accessToken = accessToken;
 
-    this.setState(state);
-    console.log('setUser user', this.state.userUtility.user);
-
-    // Set the user to local storage for future use.
-    await localStorage.setItem(
-      this.state.userUtility.storageKey,
-      JSON.stringify(this.state.userUtility.user)
+    localStorage.setItem(
+      nextState.userUtility.storageKey,
+      JSON.stringify(nextState.userUtility.user)
     );
+
+    this.setState(nextState);
+  };
+
+  /**
+   * Get whether a user is admin.
+   *
+   * @public
+   */
+  setUserIsAdmin = async () => {
+    const isUserAdmin = await authHandler.isUserAdmin(this.state.userUtility.user);
+    const nextState = Object.assign({}, this.state);
+    nextState.userUtility.isUserAdmin = isUserAdmin;
+    this.setState(nextState);
   };
 
   /**
@@ -180,6 +186,12 @@ class App extends Component {
    * @public
    */
   render() {
+    // If the component hasn't mounted yet we need to wait so
+    // that we can handle user auth.
+    if (!this.hasMounted) {
+      return <div />;
+    }
+
     return (
       <Router>
         <div className="App">
@@ -188,6 +200,13 @@ class App extends Component {
           </header>
           <section className="App-body">
             <Switch>
+              <PrivatePropsRoute
+                exact
+                path="/recipe/add"
+                component={FormPage}
+                messageUtility={this.state.messageUtility}
+                userUtility={this.state.userUtility}
+              />
               <PropsRoute
                 exact
                 path="/"
@@ -199,13 +218,6 @@ class App extends Component {
                 exact
                 path="/login"
                 component={LoginPage}
-                messageUtility={this.state.messageUtility}
-                userUtility={this.state.userUtility}
-              />
-              <PropsRoute
-                exact
-                path="/recipe/add"
-                component={FormPage}
                 messageUtility={this.state.messageUtility}
                 userUtility={this.state.userUtility}
               />
@@ -265,11 +277,6 @@ const PrivatePropsRoute = ({ component, ...props }) => {
     <Route
       {...props}
       render={routeProps => {
-        console.log(
-          'PrivatePropRoute isUserAdmin',
-          props.userUtility.isUserAdmin
-        );
-        console.log('\n\n\n');
         if (props.userUtility.isUserAdmin) {
           return renderMergedProps(component, routeProps, props);
         } else {

@@ -1,11 +1,11 @@
 import React from 'react';
-import Button from '../Button/Button';
+import { Link } from 'react-router-dom';
 
 /**
  * MenuItem component.
  */
 const MenuItem = ({ path, text }) => {
-  return <Button className="MainMenu-menuItem" link={path} text={text} />;
+  return <Link to={path}>{text}</Link>
 };
 
 export default MenuItem;
