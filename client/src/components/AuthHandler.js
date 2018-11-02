@@ -11,8 +11,8 @@ export default class AuthHandler {
    */
   constructor() {
     this.endpoints = {
-      host: window.location.host + ':5000',
-      redirectUri: window.location.host + '/login',
+      host: window.location.protocol + '//' + window.location.host + ':5000',
+      redirectUri: window.location.protocol + '//' + window.location.host + '/login',
       accessToken: '/auth/login',
       clientId: '/auth/get/client_id',
       isUserAdmin: '/auth/get/isUserAdmin'
