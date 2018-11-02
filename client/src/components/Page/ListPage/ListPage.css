@@ -26,6 +26,12 @@
   margin: 20px auto;
 }
 
+.ListIngredient-fieldInline {
+  width: 30%;
+  display: inline-block;
+  margin: 0 10px 0 0;
+}
+
 @media (max-width: 768px) {
   .ListRecipe-title {
     width: 100%;

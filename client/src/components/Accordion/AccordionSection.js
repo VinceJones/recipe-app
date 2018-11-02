@@ -53,8 +53,8 @@ class AccordionSection extends Component {
   render() {
     return (
       <div className={this.getContainerClass()}>
-        <div className="Accordion-details" onClick={this.onClick}>
-          <div>
+        <div className="Accordion-details">
+          <div onClick={this.onClick}>
             <h3 className="Accordion-title">{this.props.label}</h3>
             <span className="Accordion-icon">
               {this.getArrowIcon(this.props.isOpen)}

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Accordion from './Accordion';
 import ListIngredient from '../Page/ListPage/ListIngredient';
 import Button from '../Button/Button';
+import RecipeScalingForm from '../Form/RecipeScalingForm';
 import Recipe from '../../models/Recipe';
 import userServiceSingleton from '../UserService';
 
@@ -16,6 +17,8 @@ export default class ListPageAccordion extends Component {
     showModal: PropTypes.func.isRequired,
     recipes: PropTypes.arrayOf(PropTypes.instanceOf(Recipe)).isRequired
   };
+
+  scaleRecipeIngredients = index => {};
 
   /**
    * Render ListPageAccordion.
@@ -32,10 +35,22 @@ export default class ListPageAccordion extends Component {
               label={recipe.name}
               description={recipe.description}
             >
+              <RecipeScalingForm
+                index={index}
+                scaleRecipe={(index, scaleType, scaleAmount) =>
+                  this.props.scaleRecipe(index, scaleType, scaleAmount)
+                }
+              />
               <ul>
                 <h4>Ingredients</h4>
                 {recipe.ingredients.map((ingredient, index) => (
-                  <ListIngredient key={index} ingredient={ingredient} />
+                  <ListIngredient
+                    key={index}
+                    ingredient={ingredient}
+                    scaleRecipeIngredients={index =>
+                      this.scaleRecipeIngredients(index)
+                    }
+                  />
                 ))}
               </ul>
               {userServiceSingleton.isUserAdmin && (

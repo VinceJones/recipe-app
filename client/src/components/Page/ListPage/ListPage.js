@@ -8,6 +8,7 @@ import StorageHandler from '../../StorageHandler';
 import messageServiceSingleton from '../../MessageService';
 import userServiceSingleton from '../../UserService';
 import './ListPage.css';
+import Ingredient from '../../../models/Ingredient';
 
 const storageHandler = new StorageHandler();
 const filterHandler = new FilterHandler();
@@ -45,7 +46,10 @@ export default class ListPage extends Component {
    * @public
    */
   showModal = recipe => {
-    this.setState({ showModal: true, deleteRecipe: recipe });
+    const state = Object.assign({}, this.state);
+    state.showModal = true;
+    state.deleteRecipe = recipe;
+    this.setState(state);
   };
 
   /**
@@ -54,7 +58,9 @@ export default class ListPage extends Component {
    * @public
    */
   hideModal = () => {
-    this.setState({ showModal: false });
+    const state = Object.assign({}, this.state);
+    state.showModal = false;
+    this.setState(state);
   };
 
   /**
@@ -62,14 +68,20 @@ export default class ListPage extends Component {
    *
    * @public
    */
-  updateStateWithRecipes = () => {
-    storageHandler.getRecipes().then(recipes => {
-      if (recipes && recipes.length > 0 && recipes[0] instanceof Recipe) {
-        this.setState({ recipes: recipes, filteredRecipes: recipes });
-      } else {
-        this.setState({ recipes: [], filteredRecipes: [] });
-      }
-    });
+  updateStateWithRecipes = async () => {
+    console.log('updateStateWithRecipes');
+    const state = Object.assign({}, this.state);
+    const recipes = await storageHandler.getRecipes();
+
+    if (recipes && recipes.length > 0 && recipes[0] instanceof Recipe) {
+      state.recipes = recipes;
+      state.filteredRecipes = [...recipes]
+      await this.setState(state);
+    } else {
+      state.recipes = [];
+      state.filteredRecipes = [];
+      await this.setState(state);
+    }
   };
 
   /**
@@ -77,24 +89,25 @@ export default class ListPage extends Component {
    *
    * @public
    */
-  handleDeleteRecipe = () => {
+  handleDeleteRecipe = async () => {
     const recipe = this.state.deleteRecipe;
-    storageHandler.deleteRecipeById(recipe.id).then(res => {
-      if (res) {
-        messageServiceSingleton.setMessage(
-          messageServiceSingleton.getRecipeDeleteStatus(),
-          messageServiceSingleton.getRecipeDeleteMessage(recipe.name)
-        );
-      } else {
-        messageServiceSingleton.setMessage(
-          messageServiceSingleton.getRecipeDeleteFailStatus(),
-          messageServiceSingleton.getRecipeDeleteFailMessage(recipe.name)
-        );
-      }
+    const response = await storageHandler.deleteRecipeById(recipe.id);
+    if (response) {
+      messageServiceSingleton.setMessage(
+        messageServiceSingleton.getRecipeDeleteStatus(),
+        messageServiceSingleton.getRecipeDeleteMessage(recipe.name)
+      );
+    } else {
+      messageServiceSingleton.setMessage(
+        messageServiceSingleton.getRecipeDeleteFailStatus(),
+        messageServiceSingleton.getRecipeDeleteFailMessage(recipe.name)
+      );
+    }
+    const state = Object.assign({}, this.state);
+    state.showModal = false;
 
-      this.setState({ showModal: false });
-      this.updateStateWithRecipes();
-    });
+    await this.setState(state);
+    this.updateStateWithRecipes();
   };
 
   /**
@@ -104,7 +117,7 @@ export default class ListPage extends Component {
    * @public
    */
   filterList = event => {
-    const state = this.state;
+    const state = Object.assign({}, this.state);
     state.filterValue = event.target.value;
     this.setState(state);
 
@@ -122,7 +135,52 @@ export default class ListPage extends Component {
       event.target.value
     );
 
-    this.setState({ filteredRecipes: updatedList });
+    state.filteredRecipes = updatedList;
+
+    this.setState(state);
+  };
+
+  /**
+   * Scale a recipe based on user input.
+   *
+   * @param {number} index
+   * @param {string} scaleType
+   * @param {number} scaleAmount
+   * @public
+   */
+  scaleRecipe = async (index, scaleType, scaleAmount) => {
+    const state = Object.assign({}, this.state);
+    const recipe = new Recipe(this.state.recipes[index]);
+    const changedRecipe = new Recipe(this.state.recipes[index]);
+
+    if (scaleAmount > 1) {
+      // Multiple or divide the amount by the original value and
+      // then change the value of the filtered recipes.
+      const newIngArray = [];
+      for (let i = 0; i < changedRecipe.ingredients.length; i++) {
+        const originalIngredient = new Ingredient(recipe.ingredients[i]);
+        const changedIngredient = new Ingredient(recipe.ingredients[i]);
+
+        changedIngredient.amount = String(
+          scaleType === '*'
+            ? originalIngredient.amount * scaleAmount
+            : originalIngredient.amount / scaleAmount
+        );
+
+        newIngArray.push(changedIngredient);
+      }
+
+      changedRecipe.ingredients = newIngArray; 
+      state.filteredRecipes[index] = new Recipe(changedRecipe);
+      state.filteredRecipes[index].scaled = {
+        scaleType: scaleType,
+        scaleAmount: scaleAmount
+      };
+    } else {
+      state.filteredRecipes[index] = new Recipe(recipe);
+    }
+
+    await this.setState(state);
   };
 
   /**
@@ -138,6 +196,9 @@ export default class ListPage extends Component {
           recipes={this.state.filteredRecipes}
           showModal={recipe => this.showModal(recipe)}
           filterList={event => this.filterList(event)}
+          scaleRecipe={(index, scaleType, scaleAmount) =>
+            this.scaleRecipe(index, scaleType, scaleAmount)
+          }
         />
         {userServiceSingleton.isUserAdmin && (
           <DeleteRecipeModal
