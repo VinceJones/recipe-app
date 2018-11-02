@@ -31,8 +31,6 @@ export default class AuthHandler {
       return '';
     }
 
-    console.log('getClientId response', response);
-
     return response.data;
   };
 
