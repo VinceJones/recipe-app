@@ -31,6 +31,8 @@ export default class AuthHandler {
       return '';
     }
 
+    console.log('getClientId response', response);
+
     return response.data;
   };
 
@@ -75,9 +77,14 @@ export default class AuthHandler {
    * @public
    */
   makeRequest = async (endpoint, options = {}) => {
+    console.log('makeRequest', this);
     return fetch(this.endpoints.host + endpoint, options)
-      .then(response => response.json())
+      .then(response => {
+        console.log('AuthHandler response', response);
+        return response.json();
+      })
       .then(result => {
+        console.log('AuthHandler result', result);
         return result;
       })
       .catch(error => {
