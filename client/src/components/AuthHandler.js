@@ -68,7 +68,6 @@ export default class AuthHandler {
 
     const endpoint = this.endpoints.isUserAdmin + '/' + user.accessToken;
     const response = await this.makeRequest(endpoint);
-    console.log('response', response);
     return JSON.parse(response.user);
   };
 

@@ -17,7 +17,7 @@ export default class LoginPage extends Component {
    */
   onSuccess = async response => {
     await userServiceSingleton.handleLoginSuccess(response);
-    this.props.history.push('/');
+    // this.props.history.push('/');
   };
 
   /**
