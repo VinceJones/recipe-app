@@ -11,8 +11,8 @@ export default class AuthHandler {
    */
   constructor() {
     this.endpoints = {
-      host: 'http://vincentjonesmuth.com:5000',
-      redirectUri: 'http://vincentjonesmuth.com/login',
+      host: window.location.host + ':5000',
+      redirectUri: window.location.host + '/login',
       accessToken: '/auth/login',
       clientId: '/auth/get/client_id',
       isUserAdmin: '/auth/get/isUserAdmin'
@@ -77,16 +77,9 @@ export default class AuthHandler {
    * @public
    */
   makeRequest = async (endpoint, options = {}) => {
-    console.log('makeRequest', this);
     return fetch(this.endpoints.host + endpoint, options)
-      .then(response => {
-        console.log('AuthHandler response', response);
-        return response.json();
-      })
-      .then(result => {
-        console.log('AuthHandler result', result);
-        return result;
-      })
+      .then(response => response.json())
+      .then(result => result)
       .catch(error => {
         console.log('error', error);
         return error;

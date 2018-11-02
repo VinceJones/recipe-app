@@ -12,7 +12,7 @@ export default class StorageHandler {
    */
   constructor() {
     this.endpoints = {
-      host: 'http://vincentjonesmuth.com:5000',
+      host: window.location.host + ':5000',
       postRecipes: '/recipes/post',
       updateRecipe: '/recipes/update',
       deleteRecipe: '/recipes/delete',
