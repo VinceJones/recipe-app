@@ -16,7 +16,7 @@ export default class AuthHandler {
   constructor() {
     this.endpoints = {
       host: storageHandler.host,
-      redirectUri: storageHandler.host + '/login',
+      redirectUri: window.location.protocol + '//' + window.location.host + '/login',
       accessToken: '/auth/login',
       clientId: '/auth/get/client_id',
       isUserAdmin: '/auth/get/isUserAdmin'

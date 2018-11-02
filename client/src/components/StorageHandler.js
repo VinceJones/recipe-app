@@ -27,11 +27,9 @@ export default class StorageHandler {
    */
   get host() {
     let host = window.location.protocol + '//localhost:5000';
-    if (window.location.host !== 'localhost:3000') {
+    if (window.location.host !== 'localhost:3000')
       host = window.location.protocol + '//' + window.location.host + ':5000';
-    }
 
-    console.log('host', host);
     return host;
   }
 
