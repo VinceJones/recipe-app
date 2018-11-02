@@ -69,6 +69,19 @@ input[type='submit'],
   min-width: 110px;
 }
 
+p a {
+  display: inline-block;
+  font: 400 16px Arial, sans-serif;
+  font-weight: normal;
+  text-align: none;
+  border-radius: 0;
+  border: 0;
+  background: transparent;
+  margin: 0;
+  padding: 0;
+  box-sizing: none;
+}
+
 input[type='submit'] {
  min-width: 160px; 
 }

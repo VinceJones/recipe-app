@@ -12,12 +12,25 @@ export default class StorageHandler {
    */
   constructor() {
     this.endpoints = {
-      host: window.location.protocol + '//' + window.location.host + ':5000',
+      host: this.host,
       postRecipes: '/recipes/post',
       updateRecipe: '/recipes/update',
       deleteRecipe: '/recipes/delete',
       getRecipes: '/recipes/get'
     };
+  }
+
+  /**
+   * Get host for API requests.
+   * 
+   * @public
+   */
+  get host() {
+    if (window.location.host === 'localhost:3000') {
+      return window.location.protocol + '//localhost:5000';
+    }
+
+    return window.location.protocol + '//' + window.location.host + ':5000';
   }
 
   /**

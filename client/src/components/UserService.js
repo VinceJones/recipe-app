@@ -40,6 +40,10 @@ class UserService {
     return this.appComponent.state.userUtility.user.clientId;
   }
 
+  get githubId() {
+    return this.appComponent.state.userUtility.user.githubId;
+  }
+
   /**
    * Get whether the user is admin.
    *
@@ -145,11 +149,12 @@ class UserService {
    * @public
    */
   setUserIsAdmin = async () => {
-    const isUserAdmin = await authHandler.isUserAdmin(
+    const user = await authHandler.isUserAdmin(
       this.appComponent.state.userUtility.user
     );
     const nextState = Object.assign({}, this.appComponent.state);
-    nextState.userUtility.isUserAdmin = isUserAdmin;
+    nextState.userUtility.isUserAdmin = user.approved;
+    nextState.userUtility.user.githubId = user.userId;
     this.appComponent.setState(nextState);
   };
 }

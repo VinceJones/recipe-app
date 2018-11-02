@@ -13,6 +13,7 @@ export default class User {
     constructor(user = {}) {
       this.accessToken = user.accessToken ? user.accessToken : '';
       this.clientId = user.clientId ? user.clientId : '';
+      this.githubId = user.githubId ? user.githubId : '';
     }
   }
   

@@ -1,0 +1,12 @@
+.LoginPageContent-container {
+}
+
+.LoginPageContent-container a,
+.LoginPageContent-container p,
+.LoginPageContent-container h3 {
+  text-align: center;
+}
+
+.ListPage-githubLogin {
+  text-align: center;
+}
