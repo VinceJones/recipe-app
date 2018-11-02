@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import Page from '../Page';
-import DeleteRecipeModal from '../../Modal/DeleteRecipeModal';
-import StorageHandler from '../../StorageHandler';
-import MessageService from '../../Message/MessageService';
 import Recipe from '../../../models/Recipe';
+import DeleteRecipeModal from '../../Modal/DeleteRecipeModal';
 import ListPageFilterForm from '../../Form/ListPageFilterForm';
 import FilterHandler from '../../FilterHandler';
+import StorageHandler from '../../StorageHandler';
+import messageServiceSingleton from '../../MessageService';
+import userServiceSingleton from '../../UserService';
 import './ListPage.css';
 
 const storageHandler = new StorageHandler();
-const messageService = new MessageService();
 const filterHandler = new FilterHandler();
 
 export default class ListPage extends Component {
@@ -81,14 +81,14 @@ export default class ListPage extends Component {
     const recipe = this.state.deleteRecipe;
     storageHandler.deleteRecipeById(recipe.id).then(res => {
       if (res) {
-        this.props.messageUtility.setMessage(
-          messageService.getRecipeDeleteStatus(),
-          messageService.getRecipeDeleteMessage(recipe.name)
+        messageServiceSingleton.setMessage(
+          messageServiceSingleton.getRecipeDeleteStatus(),
+          messageServiceSingleton.getRecipeDeleteMessage(recipe.name)
         );
       } else {
-        this.props.messageUtility.setMessage(
-          messageService.getRecipeDeleteFailStatus(),
-          messageService.getRecipeDeleteFailMessage(recipe.name)
+        messageServiceSingleton.setMessage(
+          messageServiceSingleton.getRecipeDeleteFailStatus(),
+          messageServiceSingleton.getRecipeDeleteFailMessage(recipe.name)
         );
       }
 
@@ -132,15 +132,14 @@ export default class ListPage extends Component {
    */
   render() {
     return (
-      <Page pageTitle="Recipes" messageUtility={this.props.messageUtility} userUtility={this.props.userUtility}>
+      <Page pageTitle="Recipes">
         <ListPageFilterForm
           filterValue={this.state.filterValue}
           recipes={this.state.filteredRecipes}
           showModal={recipe => this.showModal(recipe)}
           filterList={event => this.filterList(event)}
-          userUtility={this.props.userUtility}
         />
-        {this.props.userUtility.isUserAdmin && (
+        {userServiceSingleton.isUserAdmin && (
           <DeleteRecipeModal
             showModal={this.state.showModal}
             handleDeleteRecipe={() => this.handleDeleteRecipe()}

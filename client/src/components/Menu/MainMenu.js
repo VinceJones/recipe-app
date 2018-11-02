@@ -1,15 +1,21 @@
 import React from 'react';
 import MenuItem from './MenuItem';
 import Routes from '../../Routes';
+import userServiceSingleton from '../UserService';
 
 import './MainMenu.css';
+import Button from '../Button/Button';
 
-const MainMenu = ({ userUtility }) => {
+const MainMenu = () => {
   let routes = Routes;
 
-  if (userUtility.isUserAdmin === false) {
+  if (userServiceSingleton.isUserAdmin) {
     routes = routes.filter((route, index) => {
-      return !route.isAdmin;
+      return route.showWhenLoggedIn;
+    });
+  } else {
+    routes = routes.filter((route, index) => {
+      return route.showWhenLoggedOut;
     });
   }
 
@@ -23,6 +29,15 @@ const MainMenu = ({ userUtility }) => {
           text={route.text}
         />
       ))}
+      {userServiceSingleton.isUserAdmin && (
+        <Button
+          text="Logout"
+          link="#"
+          className="btn btn_secondary"
+          isBtn={true}
+          onClick={() => userServiceSingleton.logout()}
+        />
+      )}
     </div>
   );
 };

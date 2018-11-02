@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Page from '../Page';
 import GitHubLogin from 'react-github-login';
 import AuthHandler from '../../AuthHandler';
+import userServiceSingleton from '../../UserService';
 
 const authHandler = new AuthHandler();
 
@@ -13,15 +14,7 @@ export default class LoginPage extends Component {
    * @public
    */
   onSuccess = async response => {
-    let accessToken = '';
-    const accessTokenResponse = await authHandler.getAccessToken(response.code);
-
-    if (accessTokenResponse.hasOwnProperty('data')) {
-      accessToken = accessTokenResponse.data;
-    }
-
-    await this.props.userUtility.setUser(accessToken);
-    await this.props.userUtility.setUserIsAdmin();
+    await userServiceSingleton.handleLoginSuccess(response);
     this.props.history.push('/');
   };
 
@@ -40,13 +33,9 @@ export default class LoginPage extends Component {
    */
   render() {
     return (
-      <Page
-        pageTitle="Login"
-        messageUtility={this.props.messageUtility}
-        userUtility={this.props.userUtility}
-      >
+      <Page pageTitle="Login">
         <GitHubLogin
-          clientId={this.props.userUtility.user.clientId}
+          clientId={userServiceSingleton.clientId}
           onSuccess={this.onSuccess}
           onFailure={this.onFailure}
           redirectUri={authHandler.endpoints.redirectUri}

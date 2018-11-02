@@ -4,19 +4,22 @@ const Routes = () => {
         path: '/recipe/add',
         text: 'Add a Recipe',
         className: '',
-        isAdmin: true,
+        showWhenLoggedOut: false,
+        showWhenLoggedIn: true,
       },
       {
         path: '/',
         text: 'View Recipes',
         className: '',
-        isAdmin: false,
+        showWhenLoggedOut: true,
+        showWhenLoggedIn: true,
       },
       {
         path: '/login',
         text: 'Login',
         className: '',
-        isAdmin: false,
+        showWhenLoggedOut: true,
+        showWhenLoggedIn: false,
       }
     ];
   };

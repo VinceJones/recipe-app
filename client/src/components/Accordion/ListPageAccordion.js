@@ -4,6 +4,7 @@ import Accordion from './Accordion';
 import ListIngredient from '../Page/ListPage/ListIngredient';
 import Button from '../Button/Button';
 import Recipe from '../../models/Recipe';
+import userServiceSingleton from '../UserService';
 
 /**
  * ListPageAccordion component.
@@ -37,7 +38,7 @@ export default class ListPageAccordion extends Component {
                   <ListIngredient key={index} ingredient={ingredient} />
                 ))}
               </ul>
-              {this.props.userUtility.isUserAdmin && (
+              {userServiceSingleton.isUserAdmin && (
                 <div>
                   <Button
                     text="Edit recipe"

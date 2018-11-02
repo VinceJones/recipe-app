@@ -27,23 +27,71 @@ class UserService {
     this.appComponent.state.userUtility = {
       user: new User(),
       storageKey: 'recipeAppUser',
-      isUserAdmin: false,
-      setUser: accessToken => this.setUser(accessToken),
-      setClientId: () => this.setClientId(),
-      setUserIsAdmin: () => this.setUserIsAdmin()
+      isUserAdmin: false
     };
   }
 
   /**
+   * Get the client id.
+   *
+   * @public
+   */
+  get clientId() {
+    return this.appComponent.state.userUtility.user.clientId;
+  }
+
+  /**
+   * Get whether the user is admin.
+   *
+   * @public
+   */
+  get isUserAdmin() {
+    return this.appComponent.state.userUtility.isUserAdmin;
+  }
+
+  /**
    * AppComponent setup
-   * 
+   *
    * @public
    */
   appSetup = async () => {
-    await this.setUser();
-    await this.setClientId()
+    await this.getUser();
+    await this.setClientId();
     await this.setUserIsAdmin();
-  }
+  };
+
+  /**
+   * Handle successful login.
+   *
+   * @param {Object} response
+   * @public
+   */
+  handleLoginSuccess = async response => {
+    let accessToken = '';
+    const accessTokenResponse = await authHandler.getAccessToken(response.code);
+
+    if (accessTokenResponse.hasOwnProperty('data')) {
+      accessToken = accessTokenResponse.data;
+    }
+
+    await this.setUser(accessToken);
+    await this.setUserIsAdmin();
+  };
+
+  logout = async () => {
+    await localStorage.removeItem(
+      this.appComponent.state.userUtility.storageKey
+    );
+    const nextState = Object.assign({}, this.appComponent.state);
+
+    nextState.userUtility.user = new User({
+      accessToken: '',
+      clientId: this.clientId
+    });
+    nextState.userUtility.isUserAdmin = false;
+
+    await this.appComponent.setState(nextState);
+  };
 
   /**
    * Get the client id.
@@ -67,7 +115,7 @@ class UserService {
    */
   getUser = async () => {
     const nextState = Object.assign({}, this.appComponent.state);
-    nextState.userUtility.user = storageHandler.getUser(
+    nextState.userUtility.user = await storageHandler.getUser(
       this.appComponent.state.userUtility.storageKey
     );
     this.appComponent.setState(nextState);
@@ -79,11 +127,7 @@ class UserService {
    * @param {string} accessToken
    * @public
    */
-  setUser = async accessToken => {
-    if (!accessToken) {
-      this.setState({});
-    }
-
+  setUser = async (accessToken = '') => {
     const nextState = Object.assign({}, this.appComponent.state);
     nextState.userUtility.user.accessToken = accessToken;
 

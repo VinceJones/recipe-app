@@ -1,21 +1,11 @@
 import React, { Component } from 'react';
+import messageServiceSingleton from '../MessageService';
 import './Message.css';
 
 /**
  * Handle messages set in the header.
  */
 export default class Message extends Component {
-  /**
-   * Get the message properties from message utility.
-   */
-  get message() {
-    if (this.props && this.props.messageUtility) {
-      return this.props.messageUtility.getMessage();
-    }
-    
-    return {};
-  }
-
   /**
    * Get the container class based on the status.
    *
@@ -49,9 +39,15 @@ export default class Message extends Component {
   render() {
     return (
       <div>
-        {this.message && (
-          <div className={this.getContainerClass(this.message.status)}>
-            <p className="Message-body">{this.message.text}</p>
+        {messageServiceSingleton.message && (
+          <div
+            className={this.getContainerClass(
+              messageServiceSingleton.message.status
+            )}
+          >
+            <p className="Message-body">
+              {messageServiceSingleton.message.text}
+            </p>
           </div>
         )}
       </div>

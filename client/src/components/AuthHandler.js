@@ -49,8 +49,6 @@ export default class AuthHandler {
       return '';
     }
 
-    console.log('getAccessToken', response.data);
-
     return response;
   };
 

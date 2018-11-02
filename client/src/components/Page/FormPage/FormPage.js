@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import Page from '../Page';
 import Recipe from '../../../models/Recipe';
 import Ingredient from '../../../models/Ingredient';
-import StorageHandler from '../../StorageHandler';
-import RecipeForm from '../../Form/RecipeForm';
-import MessageService from '../../Message/MessageService';
-
-import './FormPage.css';
 import Tag from '../../../models/Tag';
+import RecipeForm from '../../Form/RecipeForm';
+import StorageHandler from '../../StorageHandler';
+import messageServiceSingleton from '../../MessageService';
+import './FormPage.css';
 
 const storageHandler = new StorageHandler();
-const messageService = new MessageService();
 
 /**
  * FormPage component.
@@ -31,7 +29,6 @@ export default class FormPage extends Component {
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
-
   }
 
   /**
@@ -76,9 +73,9 @@ export default class FormPage extends Component {
       if (recipe instanceof Recipe) {
         this.setState({ recipe: recipe });
       } else {
-        this.props.messageUtility.setMessage(
-          messageService.getRecipeNotFoundStatus(),
-          messageService.getRecipeNotFoundMessage()
+        messageServiceSingleton.setMessage(
+          messageServiceSingleton.getRecipeNotFoundStatus(),
+          messageServiceSingleton.getRecipeNotFoundMessage()
         );
         this.props.history.push('/recipe/add');
       }
@@ -181,18 +178,18 @@ export default class FormPage extends Component {
     ) {
       // Handle update recipe.
       await storageHandler.putRecipe(this.state.recipe).then(res => {
-        this.props.messageUtility.setMessage(
-          messageService.getRecipeUpdateStatus(res.data),
-          messageService.getRecipeUpdateMessage(this.state.recipe.name)
+        messageServiceSingleton.setMessage(
+          messageServiceSingleton.getRecipeUpdateStatus(res.data),
+          messageServiceSingleton.getRecipeUpdateMessage(this.state.recipe.name)
         );
         return res;
       });
     } else {
       // Handle save new recipe.
       await storageHandler.postRecipe(this.state.recipe).then(res => {
-        this.props.messageUtility.setMessage(
-          messageService.getPostMessageStatus(res.data),
-          messageService.getSavedRecipeMessage(res.data)
+        messageServiceSingleton.setMessage(
+          messageServiceSingleton.getPostMessageStatus(res.data),
+          messageServiceSingleton.getSavedRecipeMessage(res.data)
         );
         return res;
       });
@@ -208,11 +205,7 @@ export default class FormPage extends Component {
    */
   render() {
     return (
-      <Page
-        pageTitle={this.state.pageTitle}
-        messageUtility={this.props.messageUtility}
-        // userUtility={this.props.userUtility}
-      >
+      <Page pageTitle={this.state.pageTitle}>
         <RecipeForm
           recipe={this.state.recipe}
           handleSubmit={event => this.handleSubmit(event)}

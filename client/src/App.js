@@ -9,17 +9,14 @@ import FormPage from './components/Page/FormPage/FormPage';
 import ListPage from './components/Page/ListPage/ListPage';
 import LoginPage from './components/Page/Login/LoginPage';
 import MainMenu from './components/Menu/MainMenu';
-import Message from './models/Message';
-import AuthHandler from './components/AuthHandler';
-import User from './models/User';
+import userServiceSingleton from './components/UserService';
+import messageServiceSingleton from './components/MessageService';
 import './App.css';
-import StorageHandler from './components/StorageHandler';
-
-const authHandler = new AuthHandler();
-const storageHandler = new StorageHandler();
 
 /**
  * App component.
+ * 
+ * @public
  */
 class App extends Component {
   /**
@@ -28,26 +25,14 @@ class App extends Component {
    * @public
    */
   constructor(props) {
-    // userServiceSingleton.setAppComponent(this);
-
     super(props);
-    this.state = {
-      messageUtility: {
-        message: new Message({}),
-        getMessage: () => this.getMessage(),
-        clearMessages: () => this.clearMessages(),
-        setMessage: (status, text) => this.setMessage(status, text),
-        toggleMessageShown: () => this.toggleMessageShown()
-      },
-      userUtility: {
-        user: new User(),
-        storageKey: 'recipeAppUser',
-        isUserAdmin: false,
-        setUser: accessToken => this.setUser(accessToken),
-        setClientId: () => this.setClientId(),
-        setUserIsAdmin: () => this.setUserIsAdmin()
-      }
-    };
+    this.state = {};
+
+    // Set app state for user service.
+    userServiceSingleton.setAppComponent(this);
+
+    // Set app state for message service.
+    messageServiceSingleton.setAppComponent(this);
   }
 
   /**
@@ -56,128 +41,8 @@ class App extends Component {
    * @public
    */
   componentDidMount = async () => {
-    const nextState = Object.assign({}, this.state);
-
-    await this.setUser();
-    await this.setClientId()
-    await this.setUserIsAdmin();
-
+    userServiceSingleton.appSetup();
     this.hasMounted = true;
-
-    this.setState(nextState);
-  };
-
-  /**
-   * Clear message.
-   *
-   * @public
-   */
-  clearMessages = async () => {
-    const nextState = Object.assign({}, this.state);
-    nextState.messageUtility.message = new Message({});
-    await this.setState(nextState);
-  };
-
-  /**
-   * Get the message properties
-   *
-   * @public
-   */
-  getMessage = () => {
-    return this.state.messageUtility.message.props;
-  };
-
-  /**
-   * Set message.
-   *
-   * @public
-   */
-  setMessage = async (status, text) => {
-    const nextState = Object.assign({}, this.state);
-    nextState.messageUtility.message = new Message({ status, text });
-    this.setState(nextState);
-  };
-
-  /**
-   * Toggle whether the message has been shown.
-   *
-   * @public
-   */
-  toggleMessageShown = async () => {
-    if (this.state.messageUtility !== undefined) {
-      const nextState = Object.assign({}, this.state);
-      nextState.messageUtility.message.shown =
-        nextState.messageUtility.message.shown === true ? false : true;
-      this.setState(nextState);
-    }
-  };
-
-  /**
-   * Get the client id.
-   *
-   * @public
-   */
-  setClientId = async () => {
-    if (this.state.userUtility.user.clientId !== '') {
-      return;
-    }
-
-    const nextState = Object.assign({}, this.state);
-    nextState.userUtility.user.clientId = await authHandler.getClientId();
-    this.setState(nextState);
-  };
-
-  /**
-   * Get the user from local storage if it exists.
-   *
-   * @public
-   */
-  getUser = async () => {
-    const storageItem = await localStorage.getItem(
-      this.state.userUtility.storageKey
-    );
-
-    if (!storageItem) {
-      return;
-    }
-
-    const nextState = Object.assign({}, this.state);
-    nextState.userUtility.user = new User(JSON.parse(storageItem));
-    this.setState(nextState);
-  };
-
-  /**
-   * Set the user information using the accesstoken.
-   *
-   * @param {string} accessToken
-   * @public
-   */
-  setUser = async accessToken => {
-    if (!accessToken) {
-      this.setState({});
-    }
-
-    const nextState = Object.assign({}, this.state);
-    nextState.userUtility.user.accessToken = accessToken;
-
-    localStorage.setItem(
-      nextState.userUtility.storageKey,
-      JSON.stringify(nextState.userUtility.user)
-    );
-
-    this.setState(nextState);
-  };
-
-  /**
-   * Get whether a user is admin.
-   *
-   * @public
-   */
-  setUserIsAdmin = async () => {
-    const isUserAdmin = await authHandler.isUserAdmin(this.state.userUtility.user);
-    const nextState = Object.assign({}, this.state);
-    nextState.userUtility.isUserAdmin = isUserAdmin;
-    this.setState(nextState);
   };
 
   /**
