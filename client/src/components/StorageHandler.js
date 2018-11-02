@@ -20,16 +20,33 @@ export default class StorageHandler {
     };
   }
 
+  /**
+   * Get user from local storage.
+   *
+   * @param {string} storageKey
+   * @public
+   */
   getUser = async storageKey => {
     let user = await localStorage.getItem(storageKey);
+    let userData = {};
 
-    if (!user) {
-      user = new User({});
-    } else {
-      user = JSON.parse(user);
+    if (user) {
+      userData = JSON.parse(user);
     }
-    return user;
-  }
+
+    return new User(userData);
+  };
+
+  /**
+   * Set user to local storage.
+   *
+   * @param {User} user
+   * @param {string} storageKey
+   * @public
+   */
+  setUser = async (user, storageKey) => {
+    await localStorage.setItem(storageKey, JSON.stringify(user));
+  };
 
   /**
    * Get headers to send a POST request.

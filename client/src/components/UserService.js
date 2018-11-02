@@ -11,6 +11,9 @@ const storageHandler = new StorageHandler();
  * @public
  */
 class UserService {
+  /**
+   * Default value for appComponent.
+   */
   appComponent = null;
 
   /**
@@ -21,6 +24,25 @@ class UserService {
    */
   setAppComponent(appComponent) {
     this.appComponent = appComponent;
+    this.appComponent.state.userUtility = {
+      user: new User(),
+      storageKey: 'recipeAppUser',
+      isUserAdmin: false,
+      setUser: accessToken => this.setUser(accessToken),
+      setClientId: () => this.setClientId(),
+      setUserIsAdmin: () => this.setUserIsAdmin()
+    };
+  }
+
+  /**
+   * AppComponent setup
+   * 
+   * @public
+   */
+  appSetup = async () => {
+    await this.setUser();
+    await this.setClientId()
+    await this.setUserIsAdmin();
   }
 
   /**
@@ -65,9 +87,9 @@ class UserService {
     const nextState = Object.assign({}, this.appComponent.state);
     nextState.userUtility.user.accessToken = accessToken;
 
-    localStorage.setItem(
-      nextState.userUtility.storageKey,
-      JSON.stringify(nextState.userUtility.user)
+    storageHandler.setUser(
+      nextState.userUtility.user,
+      nextState.userUtility.storageKey
     );
 
     this.appComponent.setState(nextState);
