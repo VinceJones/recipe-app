@@ -12,7 +12,7 @@ export default class StorageHandler {
    */
   constructor() {
     this.endpoints = {
-      host: 'http://localhost:5000',
+      host: 'http://vincentjonesmuth:5000',
       postRecipes: '/recipes/post',
       updateRecipe: '/recipes/update',
       deleteRecipe: '/recipes/delete',
@@ -47,6 +47,10 @@ export default class StorageHandler {
   setUser = async (user, storageKey) => {
     await localStorage.setItem(storageKey, JSON.stringify(user));
   };
+
+  removeUser = async (storageKey) => {
+    
+  }
 
   /**
    * Get headers to send a POST request.
