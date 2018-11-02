@@ -22,15 +22,17 @@ export default class StorageHandler {
 
   /**
    * Get host for API requests.
-   * 
+   *
    * @public
    */
   get host() {
-    if (window.location.host === 'localhost:3000') {
-      return window.location.protocol + '//localhost:5000';
+    let host = window.location.protocol + '//localhost:5000';
+    if (window.location.host !== 'localhost:3000') {
+      host = window.location.protocol + '//' + window.location.host + ':5000';
     }
 
-    return window.location.protocol + '//' + window.location.host + ':5000';
+    console.log('host', host);
+    return host;
   }
 
   /**
@@ -61,9 +63,7 @@ export default class StorageHandler {
     await localStorage.setItem(storageKey, JSON.stringify(user));
   };
 
-  removeUser = async (storageKey) => {
-    
-  }
+  removeUser = async storageKey => {};
 
   /**
    * Get headers to send a POST request.
