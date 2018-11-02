@@ -11,8 +11,8 @@ export default class AuthHandler {
    */
   constructor() {
     this.endpoints = {
-      host: 'http://localhost:5000',
-      redirectUri: 'http://localhost:3000/login',
+      host: 'http://vincentjonesmuth.com:5000',
+      redirectUri: 'http://vincentjonesmuth.com/login',
       accessToken: '/auth/login',
       clientId: '/auth/get/client_id',
       isUserAdmin: '/auth/get/isUserAdmin'
@@ -25,7 +25,6 @@ export default class AuthHandler {
    * @public
    */
   getClientId = async () => {
-    return 'f952648e1b2ccf35cdf5';
     const response = await this.makeRequest(this.endpoints.clientId);
 
     if (!response.hasOwnProperty('data')) {
