@@ -5,13 +5,14 @@ import DeleteRecipeModal from '../../Modal/DeleteRecipeModal';
 import ListPageFilterForm from '../../Form/ListPageFilterForm';
 import FilterHandler from '../../FilterHandler';
 import StorageHandler from '../../StorageHandler';
+import ScalingHandler from '../../ScalingHandler';
 import messageServiceSingleton from '../../MessageService';
 import userServiceSingleton from '../../UserService';
 import './ListPage.css';
-import Ingredient from '../../../models/Ingredient';
 
 const storageHandler = new StorageHandler();
 const filterHandler = new FilterHandler();
+const scalingHandler = new ScalingHandler();
 
 export default class ListPage extends Component {
   /**
@@ -69,13 +70,12 @@ export default class ListPage extends Component {
    * @public
    */
   updateStateWithRecipes = async () => {
-    console.log('updateStateWithRecipes');
     const state = Object.assign({}, this.state);
     const recipes = await storageHandler.getRecipes();
 
     if (recipes && recipes.length > 0 && recipes[0] instanceof Recipe) {
       state.recipes = recipes;
-      state.filteredRecipes = [...recipes]
+      state.filteredRecipes = [...recipes];
       await this.setState(state);
     } else {
       state.recipes = [];
@@ -149,36 +149,12 @@ export default class ListPage extends Component {
    * @public
    */
   scaleRecipe = async (index, scaleType, scaleAmount) => {
-    const state = Object.assign({}, this.state);
-    const recipe = new Recipe(this.state.recipes[index]);
-    const changedRecipe = new Recipe(this.state.recipes[index]);
-
-    if (scaleAmount > 1) {
-      // Multiple or divide the amount by the original value and
-      // then change the value of the filtered recipes.
-      const newIngArray = [];
-      for (let i = 0; i < changedRecipe.ingredients.length; i++) {
-        const originalIngredient = new Ingredient(recipe.ingredients[i]);
-        const changedIngredient = new Ingredient(recipe.ingredients[i]);
-
-        changedIngredient.amount = String(
-          scaleType === '*'
-            ? originalIngredient.amount * scaleAmount
-            : originalIngredient.amount / scaleAmount
-        );
-
-        newIngArray.push(changedIngredient);
-      }
-
-      changedRecipe.ingredients = newIngArray; 
-      state.filteredRecipes[index] = new Recipe(changedRecipe);
-      state.filteredRecipes[index].scaled = {
-        scaleType: scaleType,
-        scaleAmount: scaleAmount
-      };
-    } else {
-      state.filteredRecipes[index] = new Recipe(recipe);
-    }
+    const state = await scalingHandler.scaleRecipe(
+      this.state,
+      index,
+      scaleType,
+      scaleAmount
+    );
 
     await this.setState(state);
   };

@@ -12,17 +12,8 @@ export default class ListPageFilterForm extends Component {
   static propTypes = {
     showModal: PropTypes.func.isRequired,
     filterList: PropTypes.func.isRequired,
+    filterValue: PropTypes.string,
     recipes: PropTypes.arrayOf(PropTypes.instanceOf(Recipe))
-  };
-
-  /**
-   * Handle the filtering of the list.
-   * 
-   * @param {Object} event
-   * @public
-   */
-  filterList = event => {
-    this.props.filterList(event);
   };
 
   /**
@@ -41,7 +32,7 @@ export default class ListPageFilterForm extends Component {
               value={this.props.filterValue}
               className="ListPage-filterInput"
               placeholder="Search by Recipe name, Ingredient name, or Tag name"
-              onChange={this.filterList}
+              onChange={event => this.props.filterList(event)}
             />
           </fieldset>
         </form>

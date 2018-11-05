@@ -32,8 +32,25 @@
   margin: 0 10px 0 0;
 }
 
+.ListIngredient-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.ListIngredient-amount {
+  flex: 1 1 5%;
+}
+
+.ListIngredient-label {
+  flex: 5 0 50%
+}
+
 @media (max-width: 768px) {
   .ListRecipe-title {
     width: 100%;
+  }
+
+  .ListIngredient-amount {
+    flex: 1 1 20%;
   }
 }

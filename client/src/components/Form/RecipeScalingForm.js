@@ -17,22 +17,17 @@ export default class RecipeScalingForm extends Component {
     };
   }
 
-  scaleRecipeIngredients = index => {
-    console.log('scaling');
-  };
-
   /**
    * Handle form field changes.
    *
    * @param {Object} event
    * @public
    */
-  handleFieldChange =  () => async event => {
+  handleFieldChange = () => async event => {
     const fieldElement = event.target;
     const state = Object.assign({}, this.state);
     state[fieldElement.name] = fieldElement.value;
     await this.setState(state);
-    console.log('handleFieldChange', state);
   };
 
   /**
@@ -44,7 +39,6 @@ export default class RecipeScalingForm extends Component {
    */
   handleSubmit = async event => {
     event.preventDefault();
-    console.log('handleSubmit', this.state);
     this.props.scaleRecipe(
       this.props.index,
       this.state.scalingType,
@@ -84,7 +78,11 @@ export default class RecipeScalingForm extends Component {
           </select>
         </div>
         <div>
-          <input className="btn btn_primary" type="submit" value="Scale Recipe" />
+          <input
+            className="btn btn_primary"
+            type="submit"
+            value="Scale Recipe"
+          />
         </div>
       </form>
     );
