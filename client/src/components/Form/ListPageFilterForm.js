@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ListPageAccordion from '../Accordion/ListPageAccordion';
 import Recipe from '../../models/Recipe';
+import Button from '../Button/Button';
 
 /**
  * ListPageFilterForm component.
@@ -12,6 +13,7 @@ export default class ListPageFilterForm extends Component {
   static propTypes = {
     showModal: PropTypes.func.isRequired,
     filterList: PropTypes.func.isRequired,
+    clearFilterValue: PropTypes.func.isRequired,
     filterValue: PropTypes.string,
     recipes: PropTypes.arrayOf(PropTypes.instanceOf(Recipe))
   };
@@ -48,6 +50,14 @@ export default class ListPageFilterForm extends Component {
               className="ListPage-filterInput"
               placeholder="Search by Recipe name, Ingredient name, or Tag name"
               onChange={this.filterList}
+            />
+            <Button
+              text="Clear filter"
+              link="#"
+              isBtn={false}
+              className="btn btn_secondary btn_clearFilter"
+              preventDefault={true}
+              onClick={() => this.props.clearFilterValue()}
             />
           </fieldset>
         </form>

@@ -3,6 +3,7 @@ body {
   min-height: 600px;
   height: auto !important;
   background-color: #f5f6f7;
+  font-size: 16px;
 }
 
 h1,
@@ -63,7 +64,7 @@ input[type='submit'],
   background: #fff;
   color: #474747;
   margin: 15px 10px;
-  padding: 13px 20px 11px;
+  padding: 14px 20px 11px;
   box-sizing: border-box;
   width: auto;
   min-width: 110px;

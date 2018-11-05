@@ -18,8 +18,9 @@
 }
 
 .ListPage-filterInput {
-  width: 100%;
+  width: 70%;
   margin: 20px auto;
+  display: inline-block;
 }
 
 .ListPage-container {
@@ -45,6 +46,10 @@
   flex: 5 0 50%
 }
 
+.btn.btn_clearFilter {
+  margin: 5px 10px;
+}
+
 @media (max-width: 768px) {
   .ListRecipe-title {
     width: 100%;
@@ -52,5 +57,13 @@
 
   .ListIngredient-amount {
     flex: 1 1 20%;
+  }
+
+  .ListPage-filterInput {
+    width: 100%;
+  }
+
+  .btn.btn_clearFilter {
+    margin: 5px auto;
   }
 }

@@ -141,6 +141,18 @@ export default class ListPage extends Component {
   };
 
   /**
+   * Clear the filtered value.
+   * 
+   * @public
+   */
+  clearFilterValue = () => {
+    const state = Object.assign({}, this.state);
+    state.filterValue = '';
+    state.filteredRecipes = [...this.state.recipes];
+    this.setState(state);
+  }
+
+  /**
    * Scale a recipe based on user input.
    *
    * @param {number} index
@@ -172,6 +184,7 @@ export default class ListPage extends Component {
           recipes={this.state.filteredRecipes}
           showModal={recipe => this.showModal(recipe)}
           filterList={event => this.filterList(event)}
+          clearFilterValue={() => this.clearFilterValue()}
           scaleRecipe={(index, scaleType, scaleAmount) =>
             this.scaleRecipe(index, scaleType, scaleAmount)
           }
