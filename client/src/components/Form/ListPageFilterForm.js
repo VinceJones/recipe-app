@@ -17,6 +17,21 @@ export default class ListPageFilterForm extends Component {
   };
 
   /**
+   * Handle filter list items.
+   *
+   * @param {Object} event
+   * @public
+   */
+  filterList = event => {
+    event.preventDefault();
+
+    // Only filter when the input changes, not on form submit.
+    if (event.target.name === 'filterInput') {
+      this.props.filterList(event);
+    }
+  };
+
+  /**
    * Render ListPageFilterForm
    *
    * @public
@@ -24,7 +39,7 @@ export default class ListPageFilterForm extends Component {
   render() {
     return (
       <div className="ListPage-container">
-        <form>
+        <form onSubmit={this.filterList}>
           <fieldset>
             <input
               type="text"
@@ -32,7 +47,7 @@ export default class ListPageFilterForm extends Component {
               value={this.props.filterValue}
               className="ListPage-filterInput"
               placeholder="Search by Recipe name, Ingredient name, or Tag name"
-              onChange={event => this.props.filterList(event)}
+              onChange={this.filterList}
             />
           </fieldset>
         </form>
