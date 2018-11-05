@@ -40,18 +40,18 @@ export default class ListPageAccordion extends Component {
                 }
               />
 
+              <h3>Ingredients</h3>
+              {recipe.hasOwnProperty('scaled') && (
+                <div>
+                  <h4>
+                    {recipe.scaled.scaleType === '*'
+                      ? 'Multiplied '
+                      : 'Divided '}
+                    by {recipe.scaled.scaleAmount}
+                  </h4>
+                </div>
+              )}
               <ul>
-                <h3>Ingredients</h3>
-                {recipe.hasOwnProperty('scaled') && (
-                  <div>
-                    <h4>
-                      {recipe.scaled.scaleType === '*'
-                        ? 'Multiplied '
-                        : 'Divided '}
-                       by {recipe.scaled.scaleAmount}
-                    </h4>
-                  </div>
-                )}
                 {recipe.ingredients.map((ingredient, index) => (
                   <ListIngredient
                     key={index}
