@@ -54,7 +54,7 @@ class AccordionSection extends Component {
     return (
       <div className={this.getContainerClass()}>
         <div className="Accordion-details">
-          <div onClick={this.onClick}>
+          <div className="Accordion-titleContainer" onClick={this.onClick}>
             <h3 className="Accordion-title">{this.props.label}</h3>
             <span className="Accordion-icon">
               {this.getArrowIcon(this.props.isOpen)}
@@ -62,7 +62,7 @@ class AccordionSection extends Component {
           </div>
 
           {this.props.isOpen && (
-            <div>
+            <div className="Accordion-bodyContainer">
               <hr />
               <p>{this.props.description}</p>
               <div className="Accordion-inner">{this.props.children}</div>

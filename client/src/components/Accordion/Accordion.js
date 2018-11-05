@@ -76,7 +76,7 @@ class Accordion extends Component {
    */
   render() {
     return (
-      <li>
+      <div>
         {this.props.children.map((child, index) => (
           <AccordionSection
             key={index}
@@ -88,7 +88,7 @@ class Accordion extends Component {
             {child.props.children}
           </AccordionSection>
         ))}
-      </li>
+      </div>
     );
   }
 }

@@ -25,7 +25,7 @@ export default class ListPageAccordion extends Component {
    */
   render() {
     return (
-      <ul className="ListRecipe-container">
+      <div className="ListRecipe-container">
         <Accordion allowMultipleOpen>
           {this.props.recipes.map((recipe, index) => (
             <div
@@ -82,7 +82,7 @@ export default class ListPageAccordion extends Component {
             </div>
           ))}
         </Accordion>
-      </ul>
+      </div>
     );
   }
 }

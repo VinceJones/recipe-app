@@ -11,8 +11,15 @@
 }
 
 .Accordion-details {
-  padding: 8px;
   cursor: pointer;
+}
+
+.Accordion-titleContainer {
+  padding: 8px;
+}
+
+.Accordion-bodyContainer {
+  padding: 0px 8px 8px 8px;
 }
 
 .Accordion-icon {
