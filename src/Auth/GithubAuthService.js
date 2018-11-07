@@ -82,11 +82,16 @@ class GithubAuthService {
     const userId = parseInt(user.id);
     console.log('checking userId', user, userId);
 
-    if (!config.approved_users.includes(userId)) {
-      return false;
+    const response = {
+      approved: false,
+      userId: userId,
     }
 
-    return true;
+    if (config.approved_users.includes(userId)) {
+      response.approved = true;
+    }
+
+    return JSON.stringify(response);
   }
 
   /**

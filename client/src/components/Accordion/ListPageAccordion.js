@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Accordion from './Accordion';
 import ListIngredient from '../Page/ListPage/ListIngredient';
 import Button from '../Button/Button';
+import RecipeScalingForm from '../Form/RecipeScalingForm';
 import Recipe from '../../models/Recipe';
 import userServiceSingleton from '../UserService';
 
@@ -24,7 +25,7 @@ export default class ListPageAccordion extends Component {
    */
   render() {
     return (
-      <ul className="ListRecipe-container">
+      <div className="ListRecipe-container">
         <Accordion allowMultipleOpen>
           {this.props.recipes.map((recipe, index) => (
             <div
@@ -32,10 +33,33 @@ export default class ListPageAccordion extends Component {
               label={recipe.name}
               description={recipe.description}
             >
+              <RecipeScalingForm
+                index={index}
+                scaleRecipe={(index, scaleType, scaleAmount) =>
+                  this.props.scaleRecipe(index, scaleType, scaleAmount)
+                }
+              />
+
+              <h3>Ingredients</h3>
+              {recipe.hasOwnProperty('scaled') && (
+                <div>
+                  <h4>
+                    {recipe.scaled.scaleType === '*'
+                      ? 'Multiplied '
+                      : 'Divided '}
+                    by {recipe.scaled.scaleAmount}
+                  </h4>
+                </div>
+              )}
               <ul>
-                <h4>Ingredients</h4>
                 {recipe.ingredients.map((ingredient, index) => (
-                  <ListIngredient key={index} ingredient={ingredient} />
+                  <ListIngredient
+                    key={index}
+                    ingredient={ingredient}
+                    scaleRecipeIngredients={index =>
+                      this.scaleRecipeIngredients(index)
+                    }
+                  />
                 ))}
               </ul>
               {userServiceSingleton.isUserAdmin && (
@@ -58,7 +82,7 @@ export default class ListPageAccordion extends Component {
             </div>
           ))}
         </Accordion>
-      </ul>
+      </div>
     );
   }
 }

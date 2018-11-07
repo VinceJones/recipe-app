@@ -12,12 +12,25 @@ export default class StorageHandler {
    */
   constructor() {
     this.endpoints = {
-      host: 'http://localhost:5000',
+      host: this.host,
       postRecipes: '/recipes/post',
       updateRecipe: '/recipes/update',
       deleteRecipe: '/recipes/delete',
       getRecipes: '/recipes/get'
     };
+  }
+
+  /**
+   * Get host for API requests.
+   *
+   * @public
+   */
+  get host() {
+    let host = window.location.protocol + '//localhost:5000';
+    if (window.location.host !== 'localhost:3000')
+      host = window.location.protocol + '//' + window.location.host + ':5000';
+
+    return host;
   }
 
   /**
@@ -47,6 +60,8 @@ export default class StorageHandler {
   setUser = async (user, storageKey) => {
     await localStorage.setItem(storageKey, JSON.stringify(user));
   };
+
+  removeUser = async storageKey => {};
 
   /**
    * Get headers to send a POST request.

@@ -18,16 +18,52 @@
 }
 
 .ListPage-filterInput {
-  width: 100%;
+  width: 70%;
   margin: 20px auto;
+  display: inline-block;
 }
 
 .ListPage-container {
   margin: 20px auto;
 }
 
+.ListIngredient-fieldInline {
+  width: 30%;
+  display: inline-block;
+  margin: 0 10px 0 0;
+}
+
+.ListIngredient-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.ListIngredient-amount {
+  flex: 1 1 5%;
+}
+
+.ListIngredient-label {
+  flex: 5 0 50%
+}
+
+.btn.btn_clearFilter {
+  margin: 5px 10px;
+}
+
 @media (max-width: 768px) {
   .ListRecipe-title {
     width: 100%;
+  }
+
+  .ListIngredient-amount {
+    flex: 1 1 20%;
+  }
+
+  .ListPage-filterInput {
+    width: 100%;
+  }
+
+  .btn.btn_clearFilter {
+    margin: 5px auto;
   }
 }

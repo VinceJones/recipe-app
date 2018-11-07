@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import Page from '../Page';
 import GitHubLogin from 'react-github-login';
+import LoginPageContent from './LoginPageContent';
 import AuthHandler from '../../AuthHandler';
 import userServiceSingleton from '../../UserService';
+import './LoginPage.css';
 
 const authHandler = new AuthHandler();
 
@@ -15,7 +17,7 @@ export default class LoginPage extends Component {
    */
   onSuccess = async response => {
     await userServiceSingleton.handleLoginSuccess(response);
-    this.props.history.push('/');
+    // this.props.history.push('/');
   };
 
   /**
@@ -34,12 +36,16 @@ export default class LoginPage extends Component {
   render() {
     return (
       <Page pageTitle="Login">
+        <LoginPageContent githubId={userServiceSingleton.githubId}/>
+        <div className="ListPage-githubLogin">
         <GitHubLogin
           clientId={userServiceSingleton.clientId}
           onSuccess={this.onSuccess}
           onFailure={this.onFailure}
           redirectUri={authHandler.endpoints.redirectUri}
         />
+        </div>
+        
       </Page>
     );
   }

@@ -1,3 +1,7 @@
+import StorageHandler from './StorageHandler';
+
+const storageHandler = new StorageHandler();
+
 /**
  * AuthHandler service.
  *
@@ -11,8 +15,8 @@ export default class AuthHandler {
    */
   constructor() {
     this.endpoints = {
-      host: 'http://localhost:5000',
-      redirectUri: 'http://localhost:3000/login',
+      host: storageHandler.host,
+      redirectUri: window.location.protocol + '//' + window.location.host + '/login',
       accessToken: '/auth/login',
       clientId: '/auth/get/client_id',
       isUserAdmin: '/auth/get/isUserAdmin'
@@ -25,7 +29,6 @@ export default class AuthHandler {
    * @public
    */
   getClientId = async () => {
-    return 'f952648e1b2ccf35cdf5';
     const response = await this.makeRequest(this.endpoints.clientId);
 
     if (!response.hasOwnProperty('data')) {
@@ -53,7 +56,7 @@ export default class AuthHandler {
   };
 
   /**
-   * Find out whether the user that loggec in is admin.
+   * Find out whether the user that logged in is admin.
    *
    * @param {User} user
    * @public
@@ -65,7 +68,7 @@ export default class AuthHandler {
 
     const endpoint = this.endpoints.isUserAdmin + '/' + user.accessToken;
     const response = await this.makeRequest(endpoint);
-    return response.user;
+    return JSON.parse(response.user);
   };
 
   /**
@@ -78,9 +81,7 @@ export default class AuthHandler {
   makeRequest = async (endpoint, options = {}) => {
     return fetch(this.endpoints.host + endpoint, options)
       .then(response => response.json())
-      .then(result => {
-        return result;
-      })
+      .then(result => result)
       .catch(error => {
         console.log('error', error);
         return error;
