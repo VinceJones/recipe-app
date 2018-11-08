@@ -1,0 +1,36 @@
+language: node_js
+node_js:
+  - "stable"
+cache:
+  bundler: true
+  directories:
+  - "$HOME/.npm"
+  - "$HOME/.nvm"
+  - "$HOME/.node"
+  - "node_modules"
+  - "client/node_modules"
+before_install:
+  - npm i -g npm
+  - npm install
+  - cd client && npm install
+  - git config --global user.name "Travis-CI"
+  - git config --global user.email "noreply@travis-ci.org"
+script:
+  - cd client && npm run build
+deploy:
+  - provider: script
+     script: ./deploy.sh master
+     skip_cleanup: true
+     on:
+       branch: master
+  - provider: script
+     script: ./deploy.sh develop
+     skip_cleanup: true
+     on:
+       branch: develop
+
+# Only allow pushes to master to build with travis
+branches:
+  only:
+    - master
+    - develop
