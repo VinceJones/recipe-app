@@ -19,10 +19,7 @@
 * Delete a recipe
 
 ## Parts to build
-* List page
-  * Filters
-    * Autocomplete text field
-    * Recipe name,  recipe description, and ingredient names will also be used for filtering.
+* Recipe form ingredient ordering.
 
 ## Schema
   * Recipe
