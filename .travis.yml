@@ -10,15 +10,20 @@ cache:
   - "node_modules"
   - "client/node_modules"
 before_install:
+  # Install npm globally.
   - npm i -g npm
+  # Install the server side node modules.
   - npm install
   - pwd
+  # Install the client side node modules.
   - cd client && npm install
+  # Configure Git username and email.
   - git config --global user.name "Travis-CI"
   - git config --global user.email "noreply@travis-ci.org"
 script:
   - pwd
-  - cd client && npm run build
+  # Build the client side App.
+  - npm run build
 deploy:
   - provider: script
     script: ./deploy.sh master
