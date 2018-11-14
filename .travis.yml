@@ -28,9 +28,3 @@ deploy:
      skip_cleanup: true
      on:
        branch: develop
-
-# Only allow pushes to master to build with travis
-branches:
-  only:
-    - master
-    - develop
