@@ -47,7 +47,7 @@ export default class Page extends Component {
         </div>
         <div className="page container">
           <div>
-            <h1 className="Page-title">{this.props.pageTitle}</h1>
+            <h1 className="page__title">{this.props.pageTitle}</h1>
           </div>
           <div>{this.props.children}</div>
         </div>

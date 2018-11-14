@@ -40,7 +40,7 @@ export default class ListPageFilterForm extends Component {
    */
   render() {
     return (
-      <div className="ListPage-container">
+      <div className="container">
         <form onSubmit={this.filterList}>
           <fieldset>
             <input

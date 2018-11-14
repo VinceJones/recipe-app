@@ -39,7 +39,7 @@ export default class IngredientForm extends Component {
    */
   render() {
     return (
-      <div className="Ingredient-group">
+      <div className="ingredient">
         <div className="Ingredient-field">
           <label>Name</label>
           <input

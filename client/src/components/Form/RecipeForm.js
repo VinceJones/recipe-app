@@ -40,7 +40,7 @@ export default class RecipeForm extends Component {
    */
   render() {
     return (
-      <form className="Recipe-container" onSubmit={this.props.handleSubmit}>
+      <form className="container" onSubmit={this.props.handleSubmit}>
         <div className="Recipe-field">
           <label>Name</label>
           <input

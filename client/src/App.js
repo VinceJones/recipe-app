@@ -59,11 +59,11 @@ class App extends Component {
 
     return (
       <Router>
-        <div className="App">
-          <header className="App-header">
+        <div>
+          <header className="header">
             <MainMenu userUtility={this.state.userUtility} />
           </header>
-          <section className="App-body">
+          <section className="body">
             <Switch>
               <PrivatePropsRoute
                 exact
