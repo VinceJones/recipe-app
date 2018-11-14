@@ -4,11 +4,11 @@ node_js:
 cache:
   bundler: true
   directories:
-  - "$HOME/.npm"
-  - "$HOME/.nvm"
-  - "$HOME/.node"
-  - "node_modules"
-  - "client/node_modules"
+    - "$HOME/.npm"
+    - "$HOME/.nvm"
+    - "$HOME/.node"
+    - "node_modules"
+    - "client/node_modules"
 before_install:
   - npm i -g npm
   - npm install
