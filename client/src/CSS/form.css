@@ -68,3 +68,9 @@ label {
 .TagForm-input {
   width: 90%;
 }
+
+@media (max-width: 768px) {
+  .Ingredient-group {
+    width: 100%;
+  }
+}

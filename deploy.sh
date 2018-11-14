@@ -4,6 +4,8 @@
 #
 # @params $1 branch that is deploying
 
+printf "Deploying..."
+
 TAG_ENV=$1
 
 # Setup Github config

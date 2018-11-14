@@ -32,6 +32,13 @@
   display: inline-block;
 }
 
+.title {
+  width: auto;
+  margin: 15px auto;
+  min-width: 160px;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   .body {
     width: 90%;
@@ -41,5 +48,17 @@
   .container {
     width: 100%;
     margin: 5px auto;
+  }
+
+  .title {
+    width: 100%;
+  }
+
+  .Recipe-container {
+    width: 100%;
+  }
+
+  .TagForm-container {
+    width: 48%;
   }
 }
