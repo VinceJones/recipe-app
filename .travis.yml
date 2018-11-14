@@ -17,6 +17,7 @@ before_install:
   - git config --global user.name "Travis-CI"
   - git config --global user.email "noreply@travis-ci.org"
 script:
+  - pwd
   - cd client && npm run build
 deploy:
   - provider: script
