@@ -4,11 +4,11 @@ node_js:
 cache:
   bundler: true
   directories:
-    - "$HOME/.npm"
-    - "$HOME/.nvm"
-    - "$HOME/.node"
-    - "node_modules"
-    - "client/node_modules"
+  - "$HOME/.npm"
+  - "$HOME/.nvm"
+  - "$HOME/.node"
+  - "node_modules"
+  - "client/node_modules"
 before_install:
   - npm i -g npm
   - npm install
@@ -19,12 +19,12 @@ script:
   - cd client && npm run build
 deploy:
   - provider: script
-     script: ./deploy.sh master
-     skip_cleanup: true
-     on:
-       branch: master
+    script: ./deploy.sh master
+    skip_cleanup: true
+    on:
+      branch: master
   - provider: script
-     script: ./deploy.sh develop
-     skip_cleanup: true
-     on:
-       branch: develop
+    script: ./deploy.sh develop
+    skip_cleanup: true
+    on:
+      branch: develop
