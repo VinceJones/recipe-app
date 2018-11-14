@@ -1,0 +1,11 @@
+.isHidden {
+  display: none;
+}
+
+.display {
+  display: block;
+}
+
+.inline {
+  display: inline-block;
+}

@@ -1,0 +1,94 @@
+/* button,
+a,
+input[type='submit'], */
+.btn {
+  display: inline-block;
+  font: 400 12px Arial, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 5px;
+  border: 1px solid #474747;
+  background: #fff;
+  color: #474747;
+  margin: 15px 10px;
+  padding: 14px 20px 11px;
+  box-sizing: border-box;
+  width: auto;
+  min-width: 110px;
+}
+
+.btn_primary,
+.btn.btn_primary {
+  background-color: #3abde5;
+  border: 2px solid #257a94;
+  color: #000;
+}
+
+.btn_secondary,
+.btn.btn_secondary {
+  background-color: #e56f3a;
+  border: 2px solid #b1572d;
+  color: #fff;
+}
+
+.btn_tertiary,
+.btn.btn_tertiary {
+  background-color: #5b7d8a;
+  border: 2px solid #47616b;
+  color: #fff;
+}
+
+.btn_clearFilter,
+.btn.btn_clearFilter {
+  margin: 5px 10px;
+}
+
+.btn.btn_modalClose {
+  margin: 20px auto;
+}
+
+/* TODO: refactor to not target button tag */
+.ListRecipe-deleteModal .ListRecipe-buttonGroup button {
+  margin: 20px;
+}
+
+/* TODO: refactor to not target button tag */
+.ListRecipe-editBtn button {
+  font-weight: 900;
+  background-color: #e56f3a;
+  border: 2px solid #b1572d;
+  color: #fff;
+}
+
+/* TODO: refactor to not target anchor tag */
+.Ingredient-removeBtn button,
+.Ingredient-removeBtn a {
+  background-color: #e56f3a;
+  border: 2px solid #b1572d;
+  color: #fff;
+}
+
+/* TODO: refactor to not target anchor tag */
+.Ingredient-addBtn button,
+.Ingredient-addBtn a {
+  margin: auto 0;
+  margin: 0;
+  background-color: #5b7d8a;
+  border: 2px solid #47616b;
+  color: #fff;
+}
+
+/* Button Containers */
+.Ingredient-removeBtn,
+.Ingredient-addBtn,
+.Tag-addBtn {
+  width: 100%;
+  text-align: center;
+}
+/* Button Containers END */
+
+@media (max-width: 768px) {
+  .btn.btn_clearFilter {
+    margin: 5px auto;
+  }
+}

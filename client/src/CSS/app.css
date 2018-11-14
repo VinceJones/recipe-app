@@ -1,0 +1,45 @@
+.header {
+  background-color: #282c34;
+  min-height: 1vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  color: white;
+}
+
+.body {
+  margin: 0 50px 50px 50px;
+  text-align: left;
+}
+
+.container {
+  width: 85%;
+  margin: 5px auto;
+}
+
+.container--flex-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; /* @todo: Not sure if this is needed */
+}
+
+.container--narrow {
+}
+
+.container--inline {
+  width: 20%;
+  margin: 2px;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .body {
+    width: 90%;
+    margin: 0 15px 15px 15px;
+  }
+
+  .container {
+    width: 100%;
+    margin: 5px auto;
+  }
+}

@@ -43,7 +43,7 @@ export default class TagForm extends Component {
    */
   render() {
     return (
-      <div className="TagForm-container">
+      <div className="container--inline">
         <label className="isHidden">Tag</label>
         <input
           className="TagForm-input"
@@ -56,7 +56,7 @@ export default class TagForm extends Component {
           text="&times;"
           link="#"
           isBtn={false}
-          className="Tag-removeIcon"
+          className="icon icon--remove"
           onClick={() => this.props.requestDeleteTag()}
         />
       </div>

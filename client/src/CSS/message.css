@@ -1,0 +1,31 @@
+.Message-container {
+    width: 98%;
+    margin: 10px auto;
+    border-radius: 10px;
+    background-color: rgba(231, 234, 237, 0.7);
+    border: 2px solid rgba(40, 44, 52, 0.85);
+  }
+  
+  .Message-body {
+    margin: 10px auto;
+    min-width: 100px;
+    text-align: center;
+    color: #000;
+    font-weight: 900;
+  }
+  
+  .Message-error {
+    background-color: rgba(224,106,102,0.7);
+    border: 2px solid rgba(170,79,76,0.85);
+  }
+  
+  .Message-success {
+    background-color: rgba(122,224,102,0.7);
+    border: 2px solid rgba(84,170,76,0.85);
+  }
+  
+  .Message-warning {
+    background-color: rgba(224,222,102,0.7);
+    border: 2px solid rgba(170,156,76,0.85);
+  }
+  

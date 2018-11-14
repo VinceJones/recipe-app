@@ -25,7 +25,7 @@ export default class ListPageAccordion extends Component {
    */
   render() {
     return (
-      <div className="ListRecipe-container">
+      <div className="container">
         <Accordion allowMultipleOpen>
           {this.props.recipes.map((recipe, index) => (
             <div

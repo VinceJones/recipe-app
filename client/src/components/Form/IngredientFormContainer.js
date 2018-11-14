@@ -46,7 +46,7 @@ export default class IngredientFormContainer extends Component {
     return (
       <div>
         <h4>Ingredients</h4>
-        <div className="Ingredient-container">
+        <div className="container--flex-row">
           {this.props.ingredients.map((ingredient, index) => (
             <IngredientForm
               key={index}
@@ -59,7 +59,7 @@ export default class IngredientFormContainer extends Component {
           <div className="Ingredient-addBtn">
             <Button
               text="Add Ingredient"
-              link='#'
+              link="#"
               className="btn btn_tertiary"
               isBtn={true}
               onClick={this.props.requestAddGroup}
