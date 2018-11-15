@@ -40,8 +40,8 @@ export default class RecipeForm extends Component {
    */
   render() {
     return (
-      <form className="container" onSubmit={this.props.handleSubmit}>
-        <div className="Recipe-field">
+      <form className="container--wide" onSubmit={this.props.handleSubmit}>
+        <div className="input__container">
           <label>Name</label>
           <input
             type="text"
@@ -50,7 +50,7 @@ export default class RecipeForm extends Component {
             onChange={this.props.handleRecipeFieldChange()}
           />
         </div>
-        <div className="Recipe-field">
+        <div className="input__container">
           <label>Description:</label>
           <textarea
             name="description"
@@ -60,20 +60,27 @@ export default class RecipeForm extends Component {
             onChange={this.props.handleRecipeFieldChange()}
           />
         </div>
-        <TagFormContainer
-          tags={this.props.recipe.tags}
-          onChange={this.props.handleChildFieldChange('tags')}
-          requestDeleteTag={index => this.props.handleDeleteItemFromArray(index, 'tags')}
-          requestAddTag={() => this.props.handleAddTag()}
-        />
-        <IngredientFormContainer
-          ingredients={this.props.recipe.ingredients}
-          onChange={this.props.handleChildFieldChange('ingredients')}
-          requestDeleteGroup={index =>
-            this.props.handleDeleteIngredientGroup(index)
-          }
-          requestAddGroup={this.props.handleAddIngredientGroup}
-        />
+        <div className="input__container">
+          <TagFormContainer
+            tags={this.props.recipe.tags}
+            onChange={this.props.handleChildFieldChange('tags')}
+            requestDeleteTag={index =>
+              this.props.handleDeleteItemFromArray(index, 'tags')
+            }
+            requestAddTag={() => this.props.handleAddTag()}
+          />
+        </div>
+        <div className="input__container">
+          <IngredientFormContainer
+            ingredients={this.props.recipe.ingredients}
+            onChange={this.props.handleChildFieldChange('ingredients')}
+            requestDeleteGroup={index =>
+              this.props.handleDeleteIngredientGroup(index)
+            }
+            requestAddGroup={this.props.handleAddIngredientGroup}
+          />
+        </div>
+
         <div>
           <input className="btn btn_primary" type="submit" value="Submit" />
         </div>

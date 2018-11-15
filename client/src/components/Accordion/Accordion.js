@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AccordionSection from './AccordionSection';
 
-import './Accordion.css';
+import './accordion.css';
 
 /**
  * Accordion component.

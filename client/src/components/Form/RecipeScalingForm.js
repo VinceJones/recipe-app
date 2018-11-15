@@ -48,8 +48,8 @@ export default class RecipeScalingForm extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <div className="ListIngredient-field ListIngredient-fieldInline">
+      <form className="form__scale" onSubmit={this.handleSubmit}>
+        <div className="input__wrapper--full inline left">
           <label>Scaling Type</label>
           <select
             name="scalingType"
@@ -63,7 +63,7 @@ export default class RecipeScalingForm extends Component {
             ))}
           </select>
         </div>
-        <div className="ListIngredient-field ListIngredient-fieldInline">
+        <div className="input__wrapper--full inline left">
           <label>Change by</label>
           <select
             name="scalingAmount"
@@ -77,9 +77,9 @@ export default class RecipeScalingForm extends Component {
             ))}
           </select>
         </div>
-        <div>
+        <div className="inline left">
           <input
-            className="btn btn_primary"
+            className="btn btn_primary btn_scale"
             type="submit"
             value="Scale Recipe"
           />

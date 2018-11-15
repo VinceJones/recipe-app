@@ -56,16 +56,16 @@ export default class IngredientFormContainer extends Component {
               requestDeleteGroup={() => this.props.requestDeleteGroup(index)}
             />
           ))}
-          <div className="Ingredient-addBtn">
-            <Button
-              text="Add Ingredient"
-              link="#"
-              className="btn btn_tertiary"
-              isBtn={true}
-              onClick={this.props.requestAddGroup}
-              preventDefault={true}
-            />
-          </div>
+        </div>
+        <div className="form__btnContainer--center">
+          <Button
+            text="Add Ingredient"
+            link="#"
+            className="btn btn_tertiary"
+            isBtn={true}
+            onClick={this.props.requestAddGroup}
+            preventDefault={true}
+          />
         </div>
       </div>
     );
