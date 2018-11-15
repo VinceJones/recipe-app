@@ -11,7 +11,7 @@ import LoginPage from './components/Page/Login/LoginPage';
 import MainMenu from './components/Menu/MainMenu';
 import userServiceSingleton from './components/UserService';
 import messageServiceSingleton from './components/MessageService';
-import './app.css';
+import './_app.css';
 import './form.css';
 import './icon.css';
 
