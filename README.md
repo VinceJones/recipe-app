@@ -1,5 +1,7 @@
 # Recipes
 
+[![Build Status](https://travis-ci.com/VinceJones/recipe-app.svg?branch=master)](https://travis-ci.com/VinceJones/recipe-app)
+
 ## Setup
 * Clone this [repo](https://github.com/VinceJones/recipe-app)
 * npm install at the root of the project to setup the server.
@@ -17,31 +19,8 @@
 * List recipes
 * Edit a recipe
 * Delete a recipe
+* Log in with Github to authenticate for Add/Edit/Delete functionality.
 
-## Parts to build
-* Recipe form ingredient ordering.
-
-## Schema
-  * Recipe
-    * Name
-    * Description
-    * Ingredients
-      * A recipe can have unlimited number of ingredients
-  * Ingredient
-    * Name
-    * Amount
-    * Measurement Type
-      * US
-        * each
-        * pinch
-        * tsp
-        * tbsp
-        * cp
-        * quart
-        * gallon
-        * oz
-        * lbs
-      * Metric
-        * liter
-        * grams
-        * kilo
+## Roadmap
+* Add cucumber-js.
+* Add drag and drop functionality to recipe add/edit page to reorder ingredients.
