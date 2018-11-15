@@ -40,17 +40,9 @@ export default class ListPageFilterForm extends Component {
    */
   render() {
     return (
-      <div className="container">
+      <div className="container--wide">
         <form onSubmit={this.filterList}>
           <fieldset>
-            <input
-              type="text"
-              name="filterInput"
-              value={this.props.filterValue}
-              className="ListPage-filterInput"
-              placeholder="Search by Recipe name, Ingredient name, or Tag name"
-              onChange={this.filterList}
-            />
             <Button
               text="Clear filter"
               link="#"
@@ -59,6 +51,16 @@ export default class ListPageFilterForm extends Component {
               preventDefault={true}
               onClick={() => this.props.clearFilterValue()}
             />
+            <span className="input__wrapper--full">
+              <input
+                type="text"
+                name="filterInput"
+                value={this.props.filterValue}
+                className="input__text"
+                placeholder="Search by Recipe name, Ingredient name, or Tag name"
+                onChange={this.filterList}
+              />
+            </span>
           </fieldset>
         </form>
         <ListPageAccordion

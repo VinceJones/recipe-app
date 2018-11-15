@@ -8,7 +8,7 @@ import StorageHandler from '../../StorageHandler';
 import ScalingHandler from '../../ScalingHandler';
 import messageServiceSingleton from '../../MessageService';
 import userServiceSingleton from '../../UserService';
-import './ListPage.css';
+import './ingredient.css';
 
 const storageHandler = new StorageHandler();
 const filterHandler = new FilterHandler();

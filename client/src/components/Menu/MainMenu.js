@@ -2,9 +2,8 @@ import React from 'react';
 import MenuItem from './MenuItem';
 import Routes from '../../Routes';
 import userServiceSingleton from '../UserService';
-
-import './MainMenu.css';
 import Button from '../Button/Button';
+import './menu.css';
 
 const MainMenu = () => {
   let routes = Routes;
@@ -20,7 +19,7 @@ const MainMenu = () => {
   }
 
   return (
-    <div className="MainMenu-container">
+    <div>
       {routes.map((route, index) => (
         <MenuItem
           key={index}
@@ -33,8 +32,8 @@ const MainMenu = () => {
         <Button
           text="Logout"
           link="#"
-          className="btn btn_secondary"
-          isBtn={true}
+          className="menu__item menu__item--secondary"
+          isBtn={false}
           onClick={() => userServiceSingleton.logout()}
         />
       )}

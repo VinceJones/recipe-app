@@ -43,22 +43,24 @@ export default class TagForm extends Component {
    */
   render() {
     return (
-      <div className="container--inline">
-        <label className="isHidden">Tag</label>
-        <input
-          className="TagForm-input"
-          type="text"
-          name="name"
-          value={this.props.tag.name}
-          onChange={this.handleFieldChange()}
-        />
-        <Button
-          text="&times;"
-          link="#"
-          isBtn={false}
-          className="icon icon--remove"
-          onClick={() => this.props.requestDeleteTag()}
-        />
+      <div className="input__tag">
+        <div>
+          <label className="isHidden">Tag</label>
+          <input
+            className="TagForm-input"
+            type="text"
+            name="name"
+            value={this.props.tag.name}
+            onChange={this.handleFieldChange()}
+          />
+          <Button
+            text="&times;"
+            link="#"
+            isBtn={false}
+            className="icon icon--remove"
+            onClick={() => this.props.requestDeleteTag()}
+          />
+        </div>
       </div>
     );
   }

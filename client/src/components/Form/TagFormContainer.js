@@ -13,7 +13,7 @@ export default class TagFormContainer extends Component {
   static propTypes = {
     onChange: PropTypes.func.isRequired,
     requestDeleteTag: PropTypes.func.isRequired,
-    tags: PropTypes.arrayOf(PropTypes.instanceOf(Tag)),
+    tags: PropTypes.arrayOf(PropTypes.instanceOf(Tag))
   };
 
   /**
@@ -24,7 +24,6 @@ export default class TagFormContainer extends Component {
    * @public
    */
   handleFieldChange = index => newTagValues => {
-    
     const tags = [...this.props.tags];
     tags[index] = new Tag(newTagValues);
     this.props.onChange(tags);
@@ -37,18 +36,20 @@ export default class TagFormContainer extends Component {
    */
   render() {
     return (
-      <div>
+      <div className="form__tags">
         <h4>Tags</h4>
-        {this.props.tags.map((tag, index) => (
-          <TagForm
-            key={index}
-            tag={tag}
-            index={index}
-            onChange={this.handleFieldChange(index)}
-            requestDeleteTag={() => this.props.requestDeleteTag(index)}
-          />
-        ))}
-        <div className="Tag-addBtn">
+        <div className="input__tagContainer">
+          {this.props.tags.map((tag, index) => (
+            <TagForm
+              key={index}
+              tag={tag}
+              index={index}
+              onChange={this.handleFieldChange(index)}
+              requestDeleteTag={() => this.props.requestDeleteTag(index)}
+            />
+          ))}
+        </div>
+        <div className="form__btnContainer--center">
           <Button
             text="Add Tag"
             link="#"

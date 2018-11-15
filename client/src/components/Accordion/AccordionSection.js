@@ -31,9 +31,9 @@ class AccordionSection extends Component {
    * @public
    */
   getContainerClass() {
-    if (this.props.isOpen) return 'Accordion-container Accordion-selected';
+    if (this.props.isOpen) return 'accordion accordion--selected';
 
-    return 'Accordion-container';
+    return 'accordion';
   }
 
   /**
@@ -53,22 +53,18 @@ class AccordionSection extends Component {
   render() {
     return (
       <div className={this.getContainerClass()}>
-        <div className="Accordion-details">
-          <div className="Accordion-titleContainer" onClick={this.onClick}>
-            <h3 className="Accordion-title">{this.props.label}</h3>
-            <span className="Accordion-icon">
-              {this.getArrowIcon(this.props.isOpen)}
-            </span>
-          </div>
-
-          {this.props.isOpen && (
-            <div className="Accordion-bodyContainer">
-              <hr />
-              <p>{this.props.description}</p>
-              <div className="Accordion-inner">{this.props.children}</div>
-            </div>
-          )}
+        <div className="accordion__title" onClick={this.onClick}>
+          <h3 className="inline">{this.props.label}</h3>
+          <span className="right">{this.getArrowIcon(this.props.isOpen)}</span>
         </div>
+
+        {this.props.isOpen && (
+          <div className="accordion__body">
+            <hr />
+            {this.props.description !== '' && <p>{this.props.description}</p>}
+            <div className="accordion__bodyInner">{this.props.children}</div>
+          </div>
+        )}
       </div>
     );
   }

@@ -9,3 +9,11 @@
 .inline {
   display: inline-block;
 }
+
+.right {
+  float: right;
+}
+
+.left {
+  float: left;
+}

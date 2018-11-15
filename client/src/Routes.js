@@ -3,21 +3,21 @@ const Routes = () => {
       {
         path: '/recipe/add',
         text: 'Add a Recipe',
-        className: '',
+        className: 'menu__item',
         showWhenLoggedOut: false,
         showWhenLoggedIn: true,
       },
       {
         path: '/',
         text: 'View Recipes',
-        className: '',
+        className: 'menu__item',
         showWhenLoggedOut: true,
         showWhenLoggedIn: true,
       },
       {
         path: '/login',
         text: 'Login',
-        className: '',
+        className: 'menu__item',
         showWhenLoggedOut: true,
         showWhenLoggedIn: false,
       }

@@ -16,7 +16,7 @@ export default class IngredientForm extends Component {
     ingredient: PropTypes.instanceOf(Ingredient),
     onChange: PropTypes.func.isRequired,
     showDeleteButton: PropTypes.bool.isRequired,
-    requestDeleteGroup: PropTypes.func.isRequired,
+    requestDeleteGroup: PropTypes.func.isRequired
   };
 
   /**
@@ -39,8 +39,8 @@ export default class IngredientForm extends Component {
    */
   render() {
     return (
-      <div className="ingredient">
-        <div className="Ingredient-field">
+      <div className="form__ingredient">
+        <div>
           <label>Name</label>
           <input
             type="text"
@@ -49,29 +49,34 @@ export default class IngredientForm extends Component {
             onChange={this.handleFieldChange()}
           />
         </div>
-        <div className="Ingredient-field Ingredient-fieldInline">
-          <label>Amount</label>
-          <input
-            className="Ingredient-amount"
-            type="text"
-            name="amount"
-            value={this.props.ingredient.amount}
-            onChange={this.handleFieldChange()}
-          />
-        </div>
-        <div className="Ingredient-field Ingredient-fieldInline">
-          <label>Measurement Type</label>
-          <select
-            name="measurementType"
-            value={this.props.ingredient.measurementType}
-            onChange={this.handleFieldChange()}
-          >
-            {recipeConfig.measurementTypes.map((measurement, index) => (
-              <option value={measurement.value} key={index}>
-                {measurement.name}
-              </option>
-            ))}
-          </select>
+        <div className="form__amountMeasurementWrapper">
+          <div className="form__input--sideBySide inline left">
+            <div className="input__amountMeasurementWrapper">
+              <label>Amount</label>
+              <input
+                type="text"
+                name="amount"
+                value={this.props.ingredient.amount}
+                onChange={this.handleFieldChange()}
+              />
+            </div>
+          </div>
+          <div className="form__input--sideBySide inline left">
+            <div className="input__amountMeasurementWrapper">
+              <label>Type</label>
+              <select
+                name="measurementType"
+                value={this.props.ingredient.measurementType}
+                onChange={this.handleFieldChange()}
+              >
+                {recipeConfig.measurementTypes.map((measurement, index) => (
+                  <option value={measurement.value} key={index}>
+                    {measurement.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
         </div>
 
         <div className="Ingredient-removeBtn">

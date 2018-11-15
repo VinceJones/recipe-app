@@ -100,18 +100,17 @@ app.get('/auth/get/client_id', (req, res) => {
 app.get('/auth/get/isUserAdmin/:accessToken', async (req, res) => {
   const accessToken = req.params.accessToken;
   const data = {
-    user: false,
-  }
+    user: false
+  };
 
-  if (!accessToken) { 
-    data.error = 'Access token is needed to get user.',
-    res.send(data);
+  if (!accessToken) {
+    (data.error = 'Access token is needed to get user.'), res.send(data);
   }
   console.log('GET access token:\n', accessToken);
 
   data.user = await githubAuthService.isUserAdmin(accessToken);
   res.send(data);
-})
+});
 
 /**
  * Server App to client.

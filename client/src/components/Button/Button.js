@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import './button.css';
 
 /**
  * Button component.
@@ -44,11 +45,11 @@ export default class Button extends Component {
   get attributes() {
     let attr = {};
 
-    attr['href'] = this.props.link;
-
+    if (this.props.className) attr['className'] = this.props.className;
     if (this.props.isBtn) attr['role'] = 'button';
     if (this.props.onClick) attr['onClick'] = this.onClick;
-    if (this.props.className) attr['className'] = this.props.className;
+
+    attr['href'] = this.props.link;
 
     return {...attr, ...this.props.attr};
   }
