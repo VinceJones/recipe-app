@@ -17,7 +17,6 @@ export default class LoginPage extends Component {
    */
   onSuccess = async response => {
     await userServiceSingleton.handleLoginSuccess(response);
-    // this.props.history.push('/');
   };
 
   /**
@@ -36,16 +35,16 @@ export default class LoginPage extends Component {
   render() {
     return (
       <Page pageTitle="Login">
-        <LoginPageContent githubId={userServiceSingleton.githubId}/>
-        <div className="ListPage-githubLogin">
-        <GitHubLogin
-          clientId={userServiceSingleton.clientId}
-          onSuccess={this.onSuccess}
-          onFailure={this.onFailure}
-          redirectUri={authHandler.endpoints.redirectUri}
-        />
+        <LoginPageContent githubId={userServiceSingleton.githubId} />
+        <div>
+          <GitHubLogin
+            clientId={userServiceSingleton.clientId}
+            onSuccess={this.onSuccess}
+            onFailure={this.onFailure}
+            redirectUri={authHandler.endpoints.redirectUri}
+            className="btn btn_secondary btn_login"
+          />
         </div>
-        
       </Page>
     );
   }

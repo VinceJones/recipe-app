@@ -1,6 +1,22 @@
-.Page-title {
+.page__title {
   width: auto;
   margin: 15px auto;
   min-width: 160px;
+  text-align: center;
+}
+
+.login__container {
+  display: block;
+  margin: 20px auto;
+}
+
+.login__container ol li {
+  padding-left: 5px;
+  list-style-position: inside;
+  list-style-type: decimal;
+  margin: 3px;
+}
+
+.login__container h3 {
   text-align: center;
 }
