@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../Button/Button';
 
-import './_modal.css';
+import './modal.css';
 
 /**
  * DeleteModal component.
