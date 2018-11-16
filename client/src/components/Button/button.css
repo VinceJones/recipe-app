@@ -44,10 +44,6 @@ input[type='submit'], */
   float: right;
 }
 
-.btn.btn_modalClose {
-  margin: 20px auto;
-}
-
 .btn_scale {
   margin: 27px 0;
 }

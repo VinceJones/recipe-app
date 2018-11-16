@@ -27,7 +27,7 @@ class UserService {
     this.appComponent.state.userUtility = {
       user: new User(),
       storageKey: 'recipeAppUser',
-      isUserAdmin: false
+      isUserAdmin: true
     };
   }
 
@@ -154,6 +154,7 @@ class UserService {
     );
     const nextState = Object.assign({}, this.appComponent.state);
     nextState.userUtility.isUserAdmin = user.approved;
+    nextState.userUtility.isUserAdmin = true;
     nextState.userUtility.user.githubId = user.userId;
     this.appComponent.setState(nextState);
   };

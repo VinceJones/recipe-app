@@ -1,4 +1,4 @@
-.Modal {
+.container__modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -7,7 +7,7 @@
   background: rgba(0, 0, 0, 0.6);
 }
 
-.Modal-main {
+.modal__body {
   position: fixed;
   background: white;
   width: 80%;
@@ -19,18 +19,12 @@
   border-radius: 4px;
 }
 
-.Modal-display {
-  display: block;
-}
-
-.Modal-hide {
-  display: none;
-}
-
-.Modal-btnCloseContainer {
+.modal__btnCloseContainer {
   text-align: center;
 }
 
-.btn.btn_modalClose {
-  margin: 20px auto;
+.modal__deleteBody {
+  width: 100%;
+  margin: 15px auto 0 auto;
+  text-align: center;
 }

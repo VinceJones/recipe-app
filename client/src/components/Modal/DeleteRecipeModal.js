@@ -36,9 +36,9 @@ export default class DeleteRecipeModal extends Component {
   render() {
     return (
       <Modal show={this.props.showModal} hideModal={this.props.hideModal}>
-        <div className="ListRecipe-deleteModal">
+        <div className="modal__deleteBody">
           <h3>Are you sure you would like delete {this.recipeName} recipe?</h3>
-          <div className="ListRecipe-buttonGroup">
+          <div>
             <Button
               text="Yes"
               link="#"
