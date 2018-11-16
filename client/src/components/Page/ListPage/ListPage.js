@@ -5,14 +5,12 @@ import DeleteRecipeModal from '../../Modal/DeleteRecipeModal';
 import ListPageFilterForm from '../../Form/ListPageFilterForm';
 import FilterHandler from '../../FilterHandler';
 import StorageHandler from '../../StorageHandler';
-import ScalingHandler from '../../ScalingHandler';
 import messageServiceSingleton from '../../MessageService';
 import userServiceSingleton from '../../UserService';
 import './ingredient.css';
 
 const storageHandler = new StorageHandler();
 const filterHandler = new FilterHandler();
-const scalingHandler = new ScalingHandler();
 
 export default class ListPage extends Component {
   /**
@@ -153,7 +151,9 @@ export default class ListPage extends Component {
   }
 
   /**
-   * Scale a recipe based on user input.
+   * Add a recipes scaler to the recipe. 
+   * 
+   * Ingredient amount manipulation is done in ListIngredient.
    *
    * @param {number} index
    * @param {string} scaleType
@@ -161,14 +161,14 @@ export default class ListPage extends Component {
    * @public
    */
   scaleRecipe = async (index, scaleType, scaleAmount) => {
-    const state = await scalingHandler.scaleRecipe(
-      this.state,
-      index,
-      scaleType,
-      scaleAmount
-    );
+    const { filteredRecipes } = this.state;
 
-    await this.setState(state);
+    filteredRecipes[index].scaled = {
+      type: scaleType,
+      amount: scaleAmount
+    };
+
+    this.setState({ filteredRecipes });
   };
 
   /**

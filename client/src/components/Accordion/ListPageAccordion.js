@@ -44,10 +44,10 @@ export default class ListPageAccordion extends Component {
               {recipe.hasOwnProperty('scaled') && (
                 <div>
                   <h4>
-                    {recipe.scaled.scaleType === '*'
+                    {recipe.scaled.type === '*'
                       ? 'Multiplied '
                       : 'Divided '}
-                    by {recipe.scaled.scaleAmount}
+                    by {recipe.scaled.amount}
                   </h4>
                 </div>
               )}
@@ -56,9 +56,7 @@ export default class ListPageAccordion extends Component {
                   <ListIngredient
                     key={index}
                     ingredient={ingredient}
-                    scaleRecipeIngredients={index =>
-                      this.scaleRecipeIngredients(index)
-                    }
+                    scaled={recipe.scaled}
                   />
                 ))}
               </ul>
