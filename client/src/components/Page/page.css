@@ -1,0 +1,24 @@
+.page {
+  width: 85%;
+  margin: 5px auto;
+}
+
+.page__title {
+  width: auto;
+  margin: 15px auto;
+  min-width: 160px;
+  text-align: center;
+}
+
+.page__content {
+  width: 85%;
+  margin: 5px auto;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .page {
+    width: 100%;
+    margin: 5px auto;
+  }
+}

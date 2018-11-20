@@ -2,6 +2,7 @@ import React from 'react';
 import GitHubLogin from 'react-github-login';
 import AuthHandler from '../../AuthHandler';
 import userServiceSingleton from '../../UserService';
+import './login.css';
 
 const authHandler = new AuthHandler();
 
@@ -12,11 +13,11 @@ const authHandler = new AuthHandler();
  */
 const LoginPageContent = ({ githubId = '00000000', onSuccess, onFailure }) => {
   return (
-    <div className="container__login">
-      <div className="header__login">
+    <div className="login">
+      <div className="login__hd">
         <h3>If you wish to contribute recipes</h3>
       </div>
-      <div className="body__login">
+      <div className="login__bd">
         <ol>
           <li>Login with Github using the button below</li>
           <li>
@@ -34,7 +35,7 @@ const LoginPageContent = ({ githubId = '00000000', onSuccess, onFailure }) => {
         </ol>
       </div>
 
-      <div className="footer__login">
+      <div className="login__ft">
         <h3>Github ID: {githubId}</h3>
         <GitHubLogin
           clientId={userServiceSingleton.clientId}

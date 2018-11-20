@@ -3,7 +3,7 @@ import Message from '../Message/Message';
 import PropTypes from 'prop-types';
 import messageServiceSingleton from '../MessageService';
 
-import './Page.css';
+import './page.css';
 
 /**
  * Page component.
@@ -45,11 +45,9 @@ export default class Page extends Component {
         <div>
           <Message />
         </div>
-        <div className="page container">
-          <div>
-            <h1 className="page__title">{this.props.pageTitle}</h1>
-          </div>
-          <div>{this.props.children}</div>
+        <div className="page">
+          <h1 className="page__title">{this.props.pageTitle}</h1>
+          <div className="page__content">{this.props.children}</div>
         </div>
       </div>
     );

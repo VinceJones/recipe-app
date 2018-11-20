@@ -4,6 +4,7 @@ body {
   height: auto !important;
   background-color: #f5f6f7;
   font-size: 16px;
+  text-align: left;
 }
 
 h1,
@@ -124,11 +125,6 @@ input {
   color: white;
 }
 
-.body {
-  margin: 0 50px 50px 50px;
-  text-align: left;
-}
-
 .container {
   width: 85%;
   margin: 5px auto;
@@ -166,7 +162,6 @@ input {
 @media (max-width: 768px) {
   .body {
     width: 90%;
-    margin: 0 15px 15px 15px;
   }
 
   .container {

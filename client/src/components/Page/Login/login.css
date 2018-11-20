@@ -1,0 +1,18 @@
+.login {
+  margin: 15px auto;
+}
+
+.login__hd {
+  text-align: center;
+}
+
+.login__bd > * > li {
+  padding-left: 5px;
+  list-style-position: inside;
+  list-style-type: decimal;
+  margin: 3px;
+}
+
+.login__ft {
+  text-align: center;
+}
