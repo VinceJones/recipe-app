@@ -41,15 +41,13 @@ export default class Page extends Component {
    */
   render() {
     return (
-      <div>
-        <div>
-          <Message />
-        </div>
+      <section className="body">
+        <Message />
         <div className="page">
           <h1 className="page__title">{this.props.pageTitle}</h1>
           <div className="page__content">{this.props.children}</div>
         </div>
-      </div>
+      </section>
     );
   }
 }

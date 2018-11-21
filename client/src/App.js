@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch } from 'react-router-dom';
+import PrivatePropsRoute from './components/Routes/PrivatePropsRoute';
+import PropsRoute from './components/Routes/PropsRoute';
 import FormPage from './components/Page/FormPage/FormPage';
 import ListPage from './components/Page/ListPage/ListPage';
 import LoginPage from './components/Page/Login/LoginPage';
-import MainMenu from './components/Menu/MainMenu';
+import Header from './components/Header/Header';
 import userServiceSingleton from './components/UserService';
 import messageServiceSingleton from './components/MessageService';
 import './app.css';
@@ -17,7 +14,7 @@ import './icon.css';
 
 /**
  * App component.
- * 
+ *
  * @public
  */
 class App extends Component {
@@ -61,97 +58,40 @@ class App extends Component {
 
     return (
       <Router>
-        <div>
-          <header className="header">
-            <MainMenu userUtility={this.state.userUtility} />
-          </header>
-          <section className="body">
-            <Switch>
-              <PrivatePropsRoute
-                exact
-                path="/recipe/add"
-                component={FormPage}
-                messageUtility={this.state.messageUtility}
-                userUtility={this.state.userUtility}
-              />
-              <PropsRoute
-                exact
-                path="/"
-                component={ListPage}
-                messageUtility={this.state.messageUtility}
-                userUtility={this.state.userUtility}
-              />
-              <PropsRoute
-                exact
-                path="/login"
-                component={LoginPage}
-                messageUtility={this.state.messageUtility}
-                userUtility={this.state.userUtility}
-              />
-              <PropsRoute
-                exact
-                path="/recipe/edit/:recipeId"
-                component={FormPage}
-                messageUtility={this.state.messageUtility}
-                userUtility={this.state.userUtility}
-              />
-            </Switch>
-          </section>
-        </div>
+        <Header />
+        <Switch>
+          <PrivatePropsRoute
+            exact
+            path="/recipe/add"
+            component={FormPage}
+            messageUtility={this.state.messageUtility}
+            userUtility={this.state.userUtility}
+          />
+          <PropsRoute
+            exact
+            path="/"
+            component={ListPage}
+            messageUtility={this.state.messageUtility}
+            userUtility={this.state.userUtility}
+          />
+          <PropsRoute
+            exact
+            path="/login"
+            component={LoginPage}
+            messageUtility={this.state.messageUtility}
+            userUtility={this.state.userUtility}
+          />
+          <PropsRoute
+            exact
+            path="/recipe/edit/:recipeId"
+            component={FormPage}
+            messageUtility={this.state.messageUtility}
+            userUtility={this.state.userUtility}
+          />
+        </Switch>
       </Router>
     );
   }
 }
-
-/**
- * Render component with merged props.
- *
- * @param {Object} component
- * @param  {...any} props
- */
-const renderMergedProps = (component, ...props) => {
-  const finalProps = Object.assign({}, ...props);
-  return React.createElement(component, finalProps);
-};
-
-/**
- * Add props to a route.
- *
- * @param {Object} Object
- * @param {Object} component
- * @param {...any} props
- */
-const PropsRoute = ({ component, ...props }) => {
-  return (
-    <Route
-      {...props}
-      render={routeProps => {
-        return renderMergedProps(component, routeProps, props);
-      }}
-    />
-  );
-};
-
-/**
- * Add props to a private route.
- *
- * @param {Object} Object
- * @param {Object} component
- * @param {...any} props
- */
-const PrivatePropsRoute = ({ component, ...props }) => {
-  return (
-    <Route
-      {...props}
-      render={routeProps => {
-        if (props.userUtility.isUserAdmin) {
-          return renderMergedProps(component, routeProps, props);
-        } else {
-          return <Redirect to="/login" />;
-        }
-      }}
-    />
-  );
-};
 
 export default App;

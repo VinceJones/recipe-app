@@ -1,6 +1,6 @@
 import React from 'react';
 import MenuItem from './MenuItem';
-import Routes from '../../Routes';
+import Routes from '../Routes/Routes';
 import userServiceSingleton from '../UserService';
 import Button from '../Button/Button';
 import './menu.css';
