@@ -24,3 +24,4 @@
 ## Roadmap
 * Add cucumber-js.
 * Add drag and drop functionality to recipe add/edit page to reorder ingredients.
+* Automatic deploys on master merge?
